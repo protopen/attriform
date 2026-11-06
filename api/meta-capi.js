@@ -117,6 +117,7 @@ module.exports = async (req, res) => {
       event_time: Math.floor(Date.now() / 1000),
       event_id: body.event_id.slice(0, 100),
       event_source_url: sourceUrl.slice(0, 2000),
+      referrer_url: typeof body.referrer_url === "string" && body.referrer_url ? body.referrer_url.slice(0, 2000) : undefined,
       action_source: "website",
       user_data: userData,
     }],

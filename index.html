@@ -35,25 +35,34 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
     document.cookie = "af_vid=" + vid + "; path=/; max-age=31536000; SameSite=Lax; Secure";
   }
   fbq("init", "1082089381523575", {external_id: vid});
+  /* Meta's Parameter Builder sets _fbp and _fbc in Meta's recommended format, including the click ID that Facebook and Instagram's in-app browsers can provide when the link has no fbclid. Server events wait for it (at most 2.5 seconds). */
+  var paramsReady = new Promise(function(done){
+    var s = document.createElement("script");
+    s.src = "https://cdn.jsdelivr.net/npm/meta-capi-param-builder-clientjs@1.3.3/dist/clientParamBuilder.bundle.js";
+    s.async = true;
+    s.onload = function(){
+      try { window.clientParamBuilder.processAndCollectAllParams(location.href).then(done, done); } catch(e){ done(); }
+    };
+    s.onerror = done;
+    document.head.appendChild(s);
+    setTimeout(done, 2500);
+  });
   window.metaTrack = function(name, extra){
     var id = name.toLowerCase() + "." + Date.now() + "." + Math.random().toString(36).slice(2, 10);
     fbq("track", name, {}, {eventID: id});
-    /* The pixel sets the _fbp browser ID once its script loads, so wait for it (at most 2 seconds) before the server copy goes out. */
-    var waited = 0;
-    (function go(){
+    paramsReady.then(function(){
       var fbp = cookie("_fbp");
-      if(!fbp && waited < 2000){ waited += 100; return setTimeout(go, 100); }
-      /* Pixel blocked (ad blocker, Safari): set the browser ID ourselves in Meta's format, so server events still carry one. */
+      /* Pixel and Parameter Builder both blocked (ad blocker): set the browser ID ourselves in Meta's format, so server events still carry one. */
       if(!fbp){
         fbp = "fb.1." + Date.now() + "." + Math.floor(1e9 + Math.random() * 9e9);
         document.cookie = "_fbp=" + fbp + "; path=/; max-age=7776000; SameSite=Lax; Secure" + (/(^|\.)attriform\.com$/.test(location.hostname) ? "; domain=.attriform.com" : "");
       }
       var fbc = cookie("_fbc"), click = new URLSearchParams(location.search).get("fbclid");
       if(!fbc && click) fbc = "fb.1." + Date.now() + "." + click;
-      var body = {event_name: name, event_id: id, event_source_url: location.href, fbp: fbp, fbc: fbc, external_id: vid};
+      var body = {event_name: name, event_id: id, event_source_url: location.href, referrer_url: document.referrer, fbp: fbp, fbc: fbc, external_id: vid};
       for(var k in extra) body[k] = extra[k];
       send(body);
-    })();
+    });
   };
   metaTrack("PageView");
 })();

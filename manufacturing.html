@@ -9,6 +9,42 @@
 </script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Meta Pixel + Conversions API. metaTrack(name) sends each event from the browser (pixel) and from our server (/api/meta-capi) with the same event ID, so Meta counts it once. -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1082089381523575');
+(function(){
+  function cookie(k){ var m = document.cookie.match(new RegExp("(?:^|; )" + k + "=([^;]*)")); return m ? decodeURIComponent(m[1]) : undefined; }
+  function send(body){
+    var data = JSON.stringify(body);
+    try {
+      if(navigator.sendBeacon && navigator.sendBeacon("/api/meta-capi", new Blob([data], {type: "application/json"}))) return;
+      fetch("/api/meta-capi", {method: "POST", headers: {"Content-Type": "application/json"}, body: data, keepalive: true});
+    } catch(e){}
+  }
+  window.metaTrack = function(name){
+    var id = name.toLowerCase() + "." + Date.now() + "." + Math.random().toString(36).slice(2, 10);
+    fbq("track", name, {}, {eventID: id});
+    /* The pixel sets the _fbp browser ID once its script loads, so wait for it (at most 2 seconds) before the server copy goes out. */
+    var waited = 0;
+    (function go(){
+      var fbp = cookie("_fbp");
+      if(!fbp && waited < 2000){ waited += 100; return setTimeout(go, 100); }
+      var fbc = cookie("_fbc"), click = new URLSearchParams(location.search).get("fbclid");
+      if(!fbc && click) fbc = "fb.1." + Date.now() + "." + click;
+      send({event_name: name, event_id: id, event_source_url: location.href, fbp: fbp, fbc: fbc});
+    })();
+  };
+  metaTrack("PageView");
+})();
+</script>
 <title>RFQ Source Tracking for Manufacturers | Attriform</title>
 <meta name="description" content="Know whether Thomasnet, IQS, Google Ads or a referral sent each RFQ. We add the source, keyword, pages read and visit count to your quote form, in your inbox or CRM.">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
@@ -346,6 +382,7 @@ footer a{color:var(--ink)}
 </style>
 </head>
 <body>
+<noscript><img height="1" width="1" style="display:none" alt="" src="https://www.facebook.com/tr?id=1082089381523575&ev=PageView&noscript=1"></noscript>
 
 <header>
 <div class="wrap">
@@ -611,6 +648,12 @@ footer a{color:var(--ink)}
   document.querySelectorAll("[data-book]").forEach(function(a){
     a.href = BOOKING_URL; a.target = "_blank"; a.rel = "noopener";
     a.addEventListener("click", openCalendly);
+    a.addEventListener("click", function(){ if(window.metaTrack) metaTrack("Contact"); });
+  });
+
+  /* Meta: "Schedule" once a call is actually booked in the Calendly popup or badge. */
+  window.addEventListener("message", function(e){
+    if(e.origin === "https://calendly.com" && e.data && e.data.event === "calendly.event_scheduled" && window.metaTrack) metaTrack("Schedule");
   });
 
   /* Load Calendly once the page is idle (or on the first scroll/tap), then show the floating badge (bottom-right). */

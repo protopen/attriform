@@ -2,7 +2,7 @@
 
 `index.html` is the home page, written for small businesses in general. `manufacturing.html` is the version for US manufacturers that quote from a web RFQ form (machine shops, fabricators, molders, contract manufacturers, machinery makers), live at `/manufacturing`. The old `/v1` and `/main` URLs redirect to the home page.
 
-`index.html` is the complete page in one file: HTML with inline styles, no build step and no JavaScript. Fonts load from Google Fonts (Bricolage Grotesque, IBM Plex Sans, IBM Plex Mono) with system fallbacks.
+`index.html` is the complete page in one file: HTML with inline styles and scripts, no build step. Fonts load from Google Fonts (Bricolage Grotesque, IBM Plex Sans, IBM Plex Mono) with system fallbacks.
 
 ## Replace these placeholders
 
@@ -21,6 +21,21 @@ The dollar figures, percentages and order counts in the hero card and previews a
 ## Connect the scan form
 
 The form posts two fields, `store_url` and `email`. The simplest option is a form service such as Formspree, Basin or Tally: create a form there, then replace `[YOUR_FORM_ENDPOINT]` with the URL they give you. If you build the page in Webflow, Framer or similar, use that tool's native form block instead and keep the same two fields.
+
+## Meta Pixel and Conversions API
+
+Both pages load the Meta Pixel (dataset `1082089381523575`) in the `<head>`. `metaTrack(name)` sends each event twice with the same event ID: once from the browser pixel and once through `api/meta-capi.js`, a Vercel function that adds the visitor's IP and user agent and forwards the event to Meta's Conversions API. Meta deduplicates the pair.
+
+Events sent:
+
+- `PageView`: every page load
+- `Contact`: a "Book a call" button is clicked
+- `Schedule`: a call is booked in the Calendly popup or badge
+
+Vercel environment variables:
+
+- `META_CAPI_TOKEN` (required): access token from Events Manager → dataset → Settings → Conversions API. Without it, the pixel still works and the server copy is skipped.
+- `META_TEST_EVENT_CODE` (optional): code from Events Manager → Test events, so server events show up there while testing. Remove it afterwards.
 
 ## Colours
 

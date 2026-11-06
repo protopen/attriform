@@ -32,7 +32,7 @@ Events sent:
 - `Contact`: a "Book a call" button is clicked
 - `Schedule`: a call is booked in the Calendly popup or badge
 
-Every event carries `external_id`, an anonymous visitor ID kept in the `af_vid` cookie for a year (hashed before it goes to Meta). On `Schedule`, the server looks up the booker in Calendly's API and adds their email, name and phone (if given), normalised and SHA-256 hashed. The details always come from Calendly, never from the browser, and only bookings made in the last hour count.
+Every event carries `external_id`, an anonymous visitor ID kept in the `af_vid` cookie for a year, plus the visitor's country, region, city and postcode from Vercel's IP geolocation (all hashed before they go to Meta). If the pixel is blocked, the page sets the `_fbp` browser ID itself so server events still carry one. On `Schedule`, the server looks up the booker in Calendly's API and adds their email, name and phone, normalised and SHA-256 hashed. Phone comes from Calendly's SMS reminder number or from any booking question that mentions phone, so add a phone question to the Calendly event type to get it. The details always come from Calendly, never from the browser, and only bookings made in the last hour count.
 
 Vercel environment variables:
 

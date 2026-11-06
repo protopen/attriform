@@ -43,6 +43,11 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
     (function go(){
       var fbp = cookie("_fbp");
       if(!fbp && waited < 2000){ waited += 100; return setTimeout(go, 100); }
+      /* Pixel blocked (ad blocker, Safari): set the browser ID ourselves in Meta's format, so server events still carry one. */
+      if(!fbp){
+        fbp = "fb.1." + Date.now() + "." + Math.floor(1e9 + Math.random() * 9e9);
+        document.cookie = "_fbp=" + fbp + "; path=/; max-age=7776000; SameSite=Lax; Secure" + (/(^|\.)attriform\.com$/.test(location.hostname) ? "; domain=.attriform.com" : "");
+      }
       var fbc = cookie("_fbc"), click = new URLSearchParams(location.search).get("fbclid");
       if(!fbc && click) fbc = "fb.1." + Date.now() + "." + click;
       var body = {event_name: name, event_id: id, event_source_url: location.href, fbp: fbp, fbc: fbc, external_id: vid};

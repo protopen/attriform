@@ -28,8 +28,30 @@ function hash(value) {
   return v ? crypto.createHash("sha256").update(v).digest("hex") : undefined;
 }
 
+// Visitor location from Vercel's IP geolocation headers, normalised the way Meta asks (lower case, no spaces or punctuation).
+function geoFromHeaders(headers) {
+  const get = (k) => { try { return decodeURIComponent(headers[k] || ""); } catch { return ""; } };
+  const country = get("x-vercel-ip-country").toLowerCase();
+  const geo = {
+    country: hash(country),
+    st: hash(get("x-vercel-ip-country-region").toLowerCase().replace(/[^a-z0-9]/g, "")),
+    ct: hash(get("x-vercel-ip-city").toLowerCase().replace(/[^\p{L}\p{N}]/gu, "")),
+    zp: hash((country === "us" ? get("x-vercel-ip-postal-code").slice(0, 5) : get("x-vercel-ip-postal-code")).toLowerCase().replace(/[^a-z0-9]/g, "")),
+  };
+  for (const k of Object.keys(geo)) if (!geo[k]) delete geo[k];
+  return geo;
+}
+
+// Digits only, with country code. A bare 10-digit number from a US or Canadian visitor gets the leading 1.
+function normalisePhone(raw, country) {
+  const hadPlus = /^\s*\+/.test(raw);
+  let digits = String(raw || "").replace(/\D/g, "");
+  if (!hadPlus && digits.length === 10 && (country === "us" || country === "ca")) digits = "1" + digits;
+  return digits.length >= 8 ? digits : "";
+}
+
 // Fetch the booker from Calendly. Only bookings made in the last hour count, so an old invitee link can't be replayed.
-async function lookUpInvitee(uri) {
+async function lookUpInvitee(uri, country) {
   const token = process.env.CALENDLY_TOKEN;
   if (!token || typeof uri !== "string" || !INVITEE_URI.test(uri)) return null;
   try {
@@ -44,7 +66,10 @@ async function lookUpInvitee(uri) {
     const first = invitee.first_name || parts[0];
     const last = invitee.last_name || (parts.length > 1 ? parts[parts.length - 1] : "");
     const user = { em: hash(invitee.email), fn: hash(first), ln: hash(last) };
-    const phone = String(invitee.text_reminder_number || "").replace(/\D/g, "");
+    // Phone comes from SMS reminders or from any booking question that asks for a phone number.
+    const answers = Array.isArray(invitee.questions_and_answers) ? invitee.questions_and_answers : [];
+    const asked = answers.find((qa) => /phone|mobile|cell|whatsapp/i.test(qa.question || "") && qa.answer);
+    const phone = normalisePhone(invitee.text_reminder_number || (asked && asked.answer) || "", country);
     if (phone) user.ph = hash(phone);
     for (const k of Object.keys(user)) if (!user[k]) delete user[k];
     return user;
@@ -81,7 +106,10 @@ module.exports = async (req, res) => {
   if (typeof body.fbp === "string" && body.fbp) userData.fbp = body.fbp;
   if (typeof body.fbc === "string" && body.fbc) userData.fbc = body.fbc;
   if (typeof body.external_id === "string" && body.external_id) userData.external_id = hash(body.external_id.slice(0, 100));
-  if (body.event_name === "Schedule") Object.assign(userData, await lookUpInvitee(body.calendly_invitee));
+  Object.assign(userData, geoFromHeaders(req.headers));
+  if (body.event_name === "Schedule") {
+    Object.assign(userData, await lookUpInvitee(body.calendly_invitee, String(req.headers["x-vercel-ip-country"] || "").toLowerCase()));
+  }
 
   const payload = {
     data: [{

@@ -32,9 +32,12 @@ Events sent:
 - `Contact`: a "Book a call" button is clicked
 - `Schedule`: a call is booked in the Calendly popup or badge
 
+Every event carries `external_id`, an anonymous visitor ID kept in the `af_vid` cookie for a year (hashed before it goes to Meta). On `Schedule`, the server looks up the booker in Calendly's API and adds their email, name and phone (if given), normalised and SHA-256 hashed. The details always come from Calendly, never from the browser, and only bookings made in the last hour count.
+
 Vercel environment variables:
 
 - `META_CAPI_TOKEN` (required): access token from Events Manager → dataset → Settings → Conversions API. Without it, the pixel still works and the server copy is skipped.
+- `CALENDLY_TOKEN` (optional): Calendly personal access token (Integrations → API & Webhooks). Without it, `Schedule` is sent without the booker's details.
 - `META_TEST_EVENT_CODE` (optional): code from Events Manager → Test events, so server events show up there while testing. Remove it afterwards.
 
 ## Colours

@@ -5,14 +5,53 @@
 // Environment variables (Vercel → Settings → Environment Variables):
 //   META_CAPI_TOKEN        required. Access token from Events Manager → dataset → Settings → Conversions API.
 //   META_TEST_EVENT_CODE   optional. Code from Events Manager → Test events; remove it once testing is done.
+//   CALENDLY_TOKEN         optional. Calendly personal access token. On "Schedule", the booker's email and name
+//                          are looked up from Calendly (never trusted from the browser) and sent hashed.
+
+const crypto = require("crypto");
 
 const PIXEL_ID = process.env.META_PIXEL_ID || "1082089381523575";
 const GRAPH_URL = `https://graph.facebook.com/v23.0/${PIXEL_ID}/events`;
 const EVENTS = new Set(["PageView", "Contact", "Schedule", "Lead"]);
 const ALLOWED_HOSTS = /(^|\.)attriform\.com$|\.vercel\.app$|^localhost$/;
 
+const INVITEE_URI = /^https:\/\/api\.calendly\.com\/scheduled_events\/[A-Za-z0-9-]+\/invitees\/[A-Za-z0-9-]+$/;
+const MAX_BOOKING_AGE_MS = 60 * 60 * 1000;
+
 function hostOf(url) {
   try { return new URL(url).hostname; } catch { return ""; }
+}
+
+// Meta wants customer details normalised (trimmed, lower case) and SHA-256 hashed.
+function hash(value) {
+  const v = String(value || "").trim().toLowerCase();
+  return v ? crypto.createHash("sha256").update(v).digest("hex") : undefined;
+}
+
+// Fetch the booker from Calendly. Only bookings made in the last hour count, so an old invitee link can't be replayed.
+async function lookUpInvitee(uri) {
+  const token = process.env.CALENDLY_TOKEN;
+  if (!token || typeof uri !== "string" || !INVITEE_URI.test(uri)) return null;
+  try {
+    const r = await fetch(uri, { headers: { Authorization: `Bearer ${token}` } });
+    if (!r.ok) {
+      console.error("Calendly lookup failed", r.status, await r.text());
+      return null;
+    }
+    const invitee = (await r.json()).resource || {};
+    if (Date.now() - Date.parse(invitee.created_at) > MAX_BOOKING_AGE_MS) return null;
+    const parts = String(invitee.name || "").trim().split(/\s+/);
+    const first = invitee.first_name || parts[0];
+    const last = invitee.last_name || (parts.length > 1 ? parts[parts.length - 1] : "");
+    const user = { em: hash(invitee.email), fn: hash(first), ln: hash(last) };
+    const phone = String(invitee.text_reminder_number || "").replace(/\D/g, "");
+    if (phone) user.ph = hash(phone);
+    for (const k of Object.keys(user)) if (!user[k]) delete user[k];
+    return user;
+  } catch (err) {
+    console.error("Calendly lookup error", err);
+    return null;
+  }
 }
 
 module.exports = async (req, res) => {
@@ -41,6 +80,8 @@ module.exports = async (req, res) => {
   if (ip) userData.client_ip_address = ip;
   if (typeof body.fbp === "string" && body.fbp) userData.fbp = body.fbp;
   if (typeof body.fbc === "string" && body.fbc) userData.fbc = body.fbc;
+  if (typeof body.external_id === "string" && body.external_id) userData.external_id = hash(body.external_id.slice(0, 100));
+  if (body.event_name === "Schedule") Object.assign(userData, await lookUpInvitee(body.calendly_invitee));
 
   const payload = {
     data: [{

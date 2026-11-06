@@ -19,7 +19,6 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1082089381523575');
 (function(){
   function cookie(k){ var m = document.cookie.match(new RegExp("(?:^|; )" + k + "=([^;]*)")); return m ? decodeURIComponent(m[1]) : undefined; }
   function send(body){
@@ -29,7 +28,14 @@ fbq('init', '1082089381523575');
       fetch("/api/meta-capi", {method: "POST", headers: {"Content-Type": "application/json"}, body: data, keepalive: true});
     } catch(e){}
   }
-  window.metaTrack = function(name){
+  /* Anonymous first-party visitor ID, sent with every event as external_id so Meta can tie one visitor's events together. */
+  var vid = cookie("af_vid");
+  if(!vid){
+    vid = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : Date.now().toString(36) + Math.random().toString(36).slice(2);
+    document.cookie = "af_vid=" + vid + "; path=/; max-age=31536000; SameSite=Lax; Secure";
+  }
+  fbq("init", "1082089381523575", {external_id: vid});
+  window.metaTrack = function(name, extra){
     var id = name.toLowerCase() + "." + Date.now() + "." + Math.random().toString(36).slice(2, 10);
     fbq("track", name, {}, {eventID: id});
     /* The pixel sets the _fbp browser ID once its script loads, so wait for it (at most 2 seconds) before the server copy goes out. */
@@ -39,7 +45,9 @@ fbq('init', '1082089381523575');
       if(!fbp && waited < 2000){ waited += 100; return setTimeout(go, 100); }
       var fbc = cookie("_fbc"), click = new URLSearchParams(location.search).get("fbclid");
       if(!fbc && click) fbc = "fb.1." + Date.now() + "." + click;
-      send({event_name: name, event_id: id, event_source_url: location.href, fbp: fbp, fbc: fbc});
+      var body = {event_name: name, event_id: id, event_source_url: location.href, fbp: fbp, fbc: fbc, external_id: vid};
+      for(var k in extra) body[k] = extra[k];
+      send(body);
     })();
   };
   metaTrack("PageView");
@@ -619,9 +627,11 @@ footer a{color:var(--ink)}
     a.addEventListener("click", function(){ if(window.metaTrack) metaTrack("Contact"); });
   });
 
-  /* Meta: "Schedule" once a call is actually booked in the Calendly popup or badge. */
+  /* Meta: "Schedule" once a call is actually booked in the Calendly popup or badge. The invitee link lets the server look up the booker's email and name from Calendly. */
   window.addEventListener("message", function(e){
-    if(e.origin === "https://calendly.com" && e.data && e.data.event === "calendly.event_scheduled" && window.metaTrack) metaTrack("Schedule");
+    if(e.origin !== "https://calendly.com" || !e.data || e.data.event !== "calendly.event_scheduled" || !window.metaTrack) return;
+    var invitee = e.data.payload && e.data.payload.invitee && e.data.payload.invitee.uri;
+    metaTrack("Schedule", invitee ? {calendly_invitee: invitee} : {});
   });
 
   /* Load Calendly once the page is idle (or on the first scroll/tap), then show the floating badge (bottom-right). */

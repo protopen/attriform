@@ -140,7 +140,8 @@ module.exports = async (req, res) => {
     return res.status(200).json({
       events_received: meta.events_received,
       fbtrace_id: meta.fbtrace_id,
-      test_mode: Boolean(process.env.META_TEST_EVENT_CODE),
+      dataset: PIXEL_ID,
+      test_event_code: process.env.META_TEST_EVENT_CODE || null,
     });
   } catch (err) {
     console.error("Meta CAPI request failed", err);

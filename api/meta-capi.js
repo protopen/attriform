@@ -135,14 +135,7 @@ module.exports = async (req, res) => {
       console.error("Meta CAPI error", r.status, await r.text());
       return res.status(502).json({ error: "meta rejected the event" });
     }
-    // Meta's reply (events_received, fbtrace_id) plus whether test mode is on, for checking the setup.
-    const meta = await r.json().catch(() => ({}));
-    return res.status(200).json({
-      events_received: meta.events_received,
-      fbtrace_id: meta.fbtrace_id,
-      dataset: PIXEL_ID,
-      test_event_code: process.env.META_TEST_EVENT_CODE || null,
-    });
+    return res.status(204).end();
   } catch (err) {
     console.error("Meta CAPI request failed", err);
     return res.status(502).json({ error: "meta request failed" });

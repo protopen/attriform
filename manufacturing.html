@@ -58,7 +58,11 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
         document.cookie = "_fbp=" + fbp + "; path=/; max-age=7776000; SameSite=Lax; Secure" + (/(^|\.)attriform\.com$/.test(location.hostname) ? "; domain=.attriform.com" : "");
       }
       var fbc = cookie("_fbc"), click = new URLSearchParams(location.search).get("fbclid");
-      if(!fbc && click) fbc = "fb.1." + Date.now() + "." + click;
+      /* Same fallback for the ad click ID, saved so it stays with the visitor on later pages. */
+      if(!fbc && click){
+        fbc = "fb.1." + Date.now() + "." + click;
+        document.cookie = "_fbc=" + fbc + "; path=/; max-age=7776000; SameSite=Lax; Secure" + (/(^|\.)attriform\.com$/.test(location.hostname) ? "; domain=.attriform.com" : "");
+      }
       var body = {event_name: name, event_id: id, event_source_url: location.href, referrer_url: document.referrer, fbp: fbp, fbc: fbc, external_id: vid};
       for(var k in extra) body[k] = extra[k];
       send(body);

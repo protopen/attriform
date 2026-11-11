@@ -383,20 +383,23 @@ details p{margin:0 0 20px;color:var(--text)}
 /* sticky mobile bar */
 /* "Send us your details": a text link under each booking button, and the small form it opens */
 /* "Send your details": an outlined button next to each booking button */
-.cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
-.band .cta-pair{display:flex;flex-wrap:wrap;gap:12px}
+.cta-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%}
+.cta-row .btn{padding:0 14px;font-size:clamp(16px,1.45vw,19px);white-space:nowrap}
+.band .cta-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.band > div:first-child{flex:1 1 360px}
+header nav .btn.sm{min-width:180px}
 .btn.alt{background:var(--brand);color:#FFFFFF;box-shadow:none;border:0}
 .btn.alt:hover{background:var(--accent-dark);color:#FFFFFF;filter:none;box-shadow:none}
-.hero .cta .btn.alt{background:var(--brand);color:#FFFFFF;box-shadow:none;padding:0 24px}
+.hero .cta .btn.alt{background:var(--brand);color:#FFFFFF;box-shadow:none}
 .hero .cta .btn.alt:hover{background:var(--accent-dark);color:#FFFFFF;filter:none;box-shadow:none}
 .band .btn.alt,.pricebox .btn.alt{background:#FFFFFF;color:var(--brand);box-shadow:none}
 .band .btn.alt:hover,.pricebox .btn.alt:hover{background:var(--panel);color:var(--brand);filter:none;box-shadow:none}
 .pricebox .btn.alt,.step .btn.alt{margin-top:12px}
 .step .btn.alt{width:100%;min-height:44px;font-size:16px;border-radius:8px}
-.book .btn.alt{min-height:56px;font-size:17px}
+.book .btn.alt{min-height:56px;font-size:17px;white-space:normal;text-align:center;line-height:1.3;padding:10px 20px}
 header nav .btn+.btn{margin-left:-12px}
 @media (max-width:1000px){header nav .btn.alt{display:none}}
-@media (max-width:760px){.hero .cta,.cta-row,.band .cta-pair{width:100%}.cta-row .btn,.band .cta-pair .btn{flex:1 1 100%}}
+@media (max-width:760px){.hero .cta,.band .cta-pair{width:100%}.cta-row,.band .cta-pair{grid-template-columns:1fr}.cta-row .btn{font-size:19px}}
 .msg{width:min(440px,calc(100% - 32px));max-height:calc(100% - 32px);overflow:auto;border:0;border-radius:18px;padding:0;background:var(--card);color:var(--ink);box-shadow:0 24px 60px rgba(28,21,24,.28)}
 .msg::backdrop{background:rgba(28,21,24,.55)}
 .msg form,.msg .done{padding:28px;display:flex;flex-direction:column;gap:14px}

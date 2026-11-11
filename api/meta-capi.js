@@ -1,46 +1,16 @@
 // Meta Conversions API relay. The pages call metaTrack(name), which fires the browser pixel and POSTs the
 // same event here; this function adds the visitor's IP and user agent and forwards it to Meta server-side.
-// Both copies share event_id, so Meta deduplicates them.
+// Both copies share event_id, so Meta deduplicates them. Shared helpers and Meta settings are in lib/meta.js.
 //
-// Environment variables (Vercel → Settings → Environment Variables):
-//   META_CAPI_TOKEN        required. Access token from Events Manager → dataset → Settings → Conversions API.
-//   META_TEST_EVENT_CODE   optional. Code from Events Manager → Test events; remove it once testing is done.
+// Environment variables (Vercel → Settings → Environment Variables), besides the Meta ones in lib/meta.js:
 //   CALENDLY_TOKEN         optional. Calendly personal access token. On "Schedule", the booker's email and name
 //                          are looked up from Calendly (never trusted from the browser) and sent hashed.
 
-const crypto = require("crypto");
+const { ALLOWED_HOSTS, hostOf, hash, baseUserData, sendEvent } = require("../lib/meta");
 
-const PIXEL_ID = process.env.META_PIXEL_ID || "1082089381523575";
-const GRAPH_URL = `https://graph.facebook.com/v23.0/${PIXEL_ID}/events`;
-const EVENTS = new Set(["PageView", "Contact", "Schedule", "Lead"]);
-const ALLOWED_HOSTS = /(^|\.)attriform\.com$|\.vercel\.app$|^localhost$/;
-
+const EVENTS = new Set(["PageView", "Contact", "Schedule"]);
 const INVITEE_URI = /^https:\/\/api\.calendly\.com\/scheduled_events\/[A-Za-z0-9-]+\/invitees\/[A-Za-z0-9-]+$/;
 const MAX_BOOKING_AGE_MS = 60 * 60 * 1000;
-
-function hostOf(url) {
-  try { return new URL(url).hostname; } catch { return ""; }
-}
-
-// Meta wants customer details normalised (trimmed, lower case) and SHA-256 hashed.
-function hash(value) {
-  const v = String(value || "").trim().toLowerCase();
-  return v ? crypto.createHash("sha256").update(v).digest("hex") : undefined;
-}
-
-// Visitor location from Vercel's IP geolocation headers, normalised the way Meta asks (lower case, no spaces or punctuation).
-function geoFromHeaders(headers) {
-  const get = (k) => { try { return decodeURIComponent(headers[k] || ""); } catch { return ""; } };
-  const country = get("x-vercel-ip-country").toLowerCase();
-  const geo = {
-    country: hash(country),
-    st: hash(get("x-vercel-ip-country-region").toLowerCase().replace(/[^a-z0-9]/g, "")),
-    ct: hash(get("x-vercel-ip-city").toLowerCase().replace(/[^\p{L}\p{N}]/gu, "")),
-    zp: hash((country === "us" ? get("x-vercel-ip-postal-code").slice(0, 5) : get("x-vercel-ip-postal-code")).toLowerCase().replace(/[^a-z0-9]/g, "")),
-  };
-  for (const k of Object.keys(geo)) if (!geo[k]) delete geo[k];
-  return geo;
-}
 
 // Digits only, with country code. A bare 10-digit number from a US or Canadian visitor gets the leading 1.
 function normalisePhone(raw, country) {
@@ -81,9 +51,7 @@ async function lookUpInvitee(uri, country) {
 
 module.exports = async (req, res) => {
   if (req.method !== "POST") return res.status(405).end();
-
-  const token = process.env.META_CAPI_TOKEN;
-  if (!token) return res.status(503).json({ error: "META_CAPI_TOKEN is not set" });
+  if (!process.env.META_CAPI_TOKEN) return res.status(503).json({ error: "META_CAPI_TOKEN is not set" });
 
   let body = req.body;
   if (typeof body === "string") {
@@ -100,44 +68,11 @@ module.exports = async (req, res) => {
     return res.status(403).json({ error: "origin not allowed" });
   }
 
-  const ip = String(req.headers["x-forwarded-for"] || req.headers["x-real-ip"] || "").split(",")[0].trim();
-  const userData = { client_user_agent: req.headers["user-agent"] || "" };
-  if (ip) userData.client_ip_address = ip;
-  if (typeof body.fbp === "string" && body.fbp) userData.fbp = body.fbp;
-  if (typeof body.fbc === "string" && body.fbc) userData.fbc = body.fbc;
-  if (typeof body.external_id === "string" && body.external_id) userData.external_id = hash(body.external_id.slice(0, 100));
-  Object.assign(userData, geoFromHeaders(req.headers));
+  const userData = baseUserData(req, body);
   if (body.event_name === "Schedule") {
     Object.assign(userData, await lookUpInvitee(body.calendly_invitee, String(req.headers["x-vercel-ip-country"] || "").toLowerCase()));
   }
 
-  const payload = {
-    data: [{
-      event_name: body.event_name,
-      event_time: Math.floor(Date.now() / 1000),
-      event_id: body.event_id.slice(0, 100),
-      event_source_url: sourceUrl.slice(0, 2000),
-      referrer_url: typeof body.referrer_url === "string" && body.referrer_url ? body.referrer_url.slice(0, 2000) : undefined,
-      action_source: "website",
-      user_data: userData,
-    }],
-    access_token: token,
-  };
-  if (process.env.META_TEST_EVENT_CODE) payload.test_event_code = process.env.META_TEST_EVENT_CODE;
-
-  try {
-    const r = await fetch(GRAPH_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    if (!r.ok) {
-      console.error("Meta CAPI error", r.status, await r.text());
-      return res.status(502).json({ error: "meta rejected the event" });
-    }
-    return res.status(204).end();
-  } catch (err) {
-    console.error("Meta CAPI request failed", err);
-    return res.status(502).json({ error: "meta request failed" });
-  }
+  const ok = await sendEvent({ name: body.event_name, id: body.event_id, sourceUrl, referrerUrl: body.referrer_url, userData });
+  return ok ? res.status(204).end() : res.status(502).json({ error: "meta rejected the event" });
 };

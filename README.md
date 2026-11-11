@@ -40,6 +40,17 @@ Vercel environment variables:
 - `CALENDLY_TOKEN` (optional): Calendly personal access token (Integrations → API & Webhooks). Without it, `Schedule` is sent without the booker's details.
 - `META_TEST_EVENT_CODE` (optional): code from Events Manager → Test events, so server events show up there while testing. Remove it afterwards.
 
+## Contact form
+
+Every "Book a call" button has a "Contact us" button next to it, which opens a small form (name, work email, company name, company website, all required). `api/contact.js` emails each submission through Resend to `ritwik@attriform.com`, with where the visitor first came from, how they came this visit, their visit count and the pages they read (recorded in the visitor's browser under `af_journey`). On the live site it also sends Meta a `Lead` event with the hashed email and name, deduplicated with the browser's pixel `Lead`. Bots are filtered with a hidden field and a minimum fill time.
+
+Vercel environment variables:
+
+- `RESEND_API_KEY` (required): Resend API key with sending access for attriform.com. The domain's DNS records are at GoDaddy.
+- `CONTACT_TO` (optional): where submissions go instead of `ritwik@attriform.com`.
+
+Meta tracking and the server `Lead` only run on attriform.com, so preview deployments don't send events to Meta. Shared Meta code is in `lib/meta.js`.
+
 ## Colours
 
 - Ink: `#12151A`

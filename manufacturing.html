@@ -37,6 +37,8 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
     document.cookie = "af_vid=" + vid + "; path=/; max-age=31536000; SameSite=Lax; Secure";
   }
   fbq("init", "1082089381523575", {external_id: vid});
+  /* For the contact form, which sends its own server Lead. */
+  window.metaUser = function(){ return {fbp: cookie("_fbp"), fbc: cookie("_fbc"), external_id: vid}; };
   /* Meta's Parameter Builder sets _fbp and _fbc in Meta's recommended format, including the click ID that Facebook and Instagram's in-app browsers can provide when the link has no fbclid. Server events wait for it (at most 2.5 seconds). */
   var paramsReady = new Promise(function(done){
     var s = document.createElement("script");
@@ -426,6 +428,7 @@ header nav .btn+.btn{margin-left:-12px}
 .msg .x:hover{background:var(--line)}
 .msg .done{align-items:flex-start}
 .msg [hidden]{display:none}
+.msg .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .msg .err:empty{display:none}
 .msg .done .tick{width:48px;height:48px;border-radius:50%;background:var(--gold-grad);box-shadow:var(--gold-glow);display:grid;place-items:center}
 .msg .done .tick svg{width:24px;height:24px;stroke:var(--brand);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
@@ -712,6 +715,7 @@ footer a{color:var(--ink)}
 <label>Work email<input name="email" type="email" autocomplete="email" required></label>
 <label>Company name<input name="company" autocomplete="organization" required></label>
 <label>Company website<input name="website" inputmode="url" autocomplete="url" placeholder="yourcompany.com" required></label>
+<label class="hp" aria-hidden="true">Leave this empty<input name="nickname" tabindex="-1" autocomplete="off"></label>
 <p class="err" id="msg-err" role="alert"></p>
 <button type="submit" class="btn">Send</button>
 <p class="fine">Or email <a href="mailto:ritwik@attriform.com">ritwik@attriform.com</a></p>
@@ -752,11 +756,25 @@ footer a{color:var(--ink)}
     metaTrack("Schedule", invitee ? {calendly_invitee: invitee} : {});
   });
 
+  /* Visitor journey for the contact form: how they first came, how they came this visit, visit count and pages read. Kept in this browser only and sent with the form. */
+  var journey = (function(){
+    var j = {}, now = Date.now(), q = new URLSearchParams(location.search), src = {referrer: document.referrer};
+    try { j = JSON.parse(localStorage.getItem("af_journey")) || {}; } catch(e){}
+    ["utm_source", "utm_medium", "utm_campaign", "utm_term", "gclid", "fbclid"].forEach(function(k){ if(q.get(k)) src[k] = q.get(k).slice(0, 100); });
+    if(!j.first_seen){ j.first_seen = new Date(now).toISOString(); j.first_source = src; j.visits = 0; }
+    if(!j.last_seen || now - j.last_seen > 30 * 60 * 1000){ j.visits = (j.visits || 0) + 1; j.last_source = src; }
+    j.last_seen = now;
+    var path = location.pathname.replace(/\.html$/, "").replace(/\/(index)?$/, "") || "/";
+    j.pages = (j.pages || []).concat({path: path, title: path === "/" ? "Home" : path.slice(1).charAt(0).toUpperCase() + path.slice(2)}).slice(-30);
+    try { localStorage.setItem("af_journey", JSON.stringify(j)); } catch(e){}
+    return j;
+  })();
+
   /* "Contact us" form: every button opens the same dialog. All fields are required; the website can be typed without https://. */
-  var dlg = document.getElementById("msg"), form = document.getElementById("msg-form"), done = document.getElementById("msg-done"), err = document.getElementById("msg-err");
+  var opened = 0, dlg = document.getElementById("msg"), form = document.getElementById("msg-form"), done = document.getElementById("msg-done"), err = document.getElementById("msg-err");
   if(dlg && dlg.showModal){
     document.querySelectorAll("[data-msg]").forEach(function(b){
-      b.addEventListener("click", function(){ form.hidden = false; done.hidden = true; err.textContent = ""; dlg.showModal(); form.elements.name.focus(); });
+      b.addEventListener("click", function(){ form.hidden = false; done.hidden = true; err.textContent = ""; dlg.showModal(); opened = Date.now(); form.elements.name.focus(); });
     });
     dlg.querySelectorAll("[data-close]").forEach(function(b){ b.addEventListener("click", function(){ dlg.close(); }); });
     dlg.addEventListener("click", function(e){ if(e.target === dlg) dlg.close(); });
@@ -770,8 +788,21 @@ footer a{color:var(--ink)}
       else if(!/^(https?:\/\/)?[^\s.\/]+(\.[^\s.\/]+)+(\/\S*)?$/i.test(f.website.value)){ msg = "Please enter your company website, like yourcompany.com."; f.website.classList.add("bad"); }
       err.textContent = msg;
       if(msg){ form.querySelector(".bad").focus(); return; }
-      /* Preview only: sending is wired up once the design is approved. */
-      form.hidden = true; done.hidden = false;
+      var id = "lead." + Date.now() + "." + Math.random().toString(36).slice(2, 10), btn = form.querySelector("button[type=submit]");
+      var data = {name: f.name.value, email: f.email.value, company: f.company.value, website: f.website.value, nickname: f.nickname.value,
+        elapsed_ms: Date.now() - opened, journey: journey, event_id: id, event_source_url: location.href, referrer_url: document.referrer};
+      var ids = window.metaUser ? metaUser() : {};
+      for(var k in ids) data[k] = ids[k];
+      btn.disabled = true; btn.textContent = "Sending…";
+      fetch("/api/contact", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(data)})
+        .then(function(r){ if(!r.ok) throw new Error(r.status); })
+        .then(function(){
+          /* Browser copy of the Lead the server sent, same event ID so Meta counts it once (live site only). */
+          if(window.fbq && window.metaUser) fbq("track", "Lead", {}, {eventID: id});
+          form.reset(); form.hidden = true; done.hidden = false;
+        })
+        .catch(function(){ err.textContent = "Something went wrong. Please try again, or email ritwik@attriform.com."; })
+        .then(function(){ btn.disabled = false; btn.textContent = "Send"; });
     });
   } else {
     document.querySelectorAll("[data-msg]").forEach(function(b){ b.addEventListener("click", function(){ location.href = "mailto:ritwik@attriform.com"; }); });

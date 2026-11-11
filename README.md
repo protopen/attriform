@@ -29,8 +29,8 @@ Both pages load the Meta Pixel (dataset `1082089381523575`) in the `<head>`. `me
 Events sent:
 
 - `PageView`: every page load
-- `Contact`: a "Book a call" button is clicked
-- `Schedule`: a call is booked in the Calendly popup or badge
+- `Contact`: a "Book a call" or "Contact us" button is clicked
+- `Schedule`: a call is booked in the Calendly popup or badge (`content_name: "Calendly booking"`), or the contact form is sent (`content_name: "Contact form"`)
 
 Every event carries `external_id`, an anonymous visitor ID kept in the `af_vid` cookie for a year, plus the visitor's country, region, city and postcode from Vercel's IP geolocation (all hashed before they go to Meta). Meta's [Parameter Builder](https://github.com/meta/capi-param-builder/tree/main/client_js) (loaded from jsDelivr, pinned to 1.3.3) sets `_fbp` and `_fbc` in Meta's recommended format, including the click ID that Facebook and Instagram's in-app browsers provide when the link has no `fbclid`; server events wait up to 2.5 seconds for it. If both it and the pixel are blocked, the page sets `_fbp` itself so server events still carry one. Events also include `referrer_url`. On `Schedule`, the server looks up the booker in Calendly's API and adds their email, name and phone, normalised and SHA-256 hashed. Phone comes from Calendly's SMS reminder number or from any booking question that mentions phone, so add a phone question to the Calendly event type to get it. The details always come from Calendly, never from the browser, and only bookings made in the last hour count.
 
@@ -42,14 +42,14 @@ Vercel environment variables:
 
 ## Contact form
 
-Every "Book a call" button has a "Contact us" button next to it, which opens a small form (name, work email, company name, company website, all required). `api/contact.js` emails each submission through Resend to `ritwik@attriform.com`, with where the visitor first came from, how they came this visit, their visit count and the pages they read (recorded in the visitor's browser under `af_journey`). On the live site it also sends Meta a `Lead` event with the hashed email and name, deduplicated with the browser's pixel `Lead`. Bots are filtered with a hidden field and a minimum fill time.
+Every "Book a call" button has a "Contact us" button next to it, which opens a small form (name, work email, company name, company website, all required). `api/contact.js` emails each submission through Resend to `ritwik@attriform.com`, with where the visitor first came from, how they came this visit, their visit count and the pages they read (recorded in the visitor's browser under `af_journey`). On the live site it also sends Meta a `Schedule` event (`content_name: "Contact form"`) with the hashed email and name, deduplicated with the browser's pixel `Schedule`. Bots are filtered with a hidden field and a minimum fill time.
 
 Vercel environment variables:
 
 - `RESEND_API_KEY` (required): Resend API key with sending access for attriform.com. The domain's DNS records are at GoDaddy.
 - `CONTACT_TO` (optional): where submissions go instead of `ritwik@attriform.com`.
 
-Meta tracking and the server `Lead` only run on attriform.com, so preview deployments don't send events to Meta. Shared Meta code is in `lib/meta.js`.
+Meta tracking and the form's server `Schedule` only run on attriform.com, so preview deployments don't send events to Meta. Shared Meta code is in `lib/meta.js`.
 
 ## Colours
 

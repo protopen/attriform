@@ -73,6 +73,7 @@ module.exports = async (req, res) => {
     Object.assign(userData, await lookUpInvitee(body.calendly_invitee, String(req.headers["x-vercel-ip-country"] || "").toLowerCase()));
   }
 
-  const ok = await sendEvent({ name: body.event_name, id: body.event_id, sourceUrl, referrerUrl: body.referrer_url, userData });
+  const customData = body.event_name === "Schedule" ? { content_name: "Calendly booking" } : undefined;
+  const ok = await sendEvent({ name: body.event_name, id: body.event_id, sourceUrl, referrerUrl: body.referrer_url, userData, customData });
   return ok ? res.status(204).end() : res.status(502).json({ error: "meta rejected the event" });
 };

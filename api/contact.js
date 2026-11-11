@@ -1,6 +1,7 @@
 // "Contact us" form. Emails each submission through Resend, with where the visitor came from, the pages they read
-// and how many times they visited, then sends Meta a "Lead" event with the hashed email and name. The browser
-// fires the matching pixel Lead with the same event_id, so Meta counts it once.
+// and how many times they visited, then sends Meta a "Schedule" event (labelled "Contact form") with the hashed
+// email and name, like a Calendly booking. The browser fires the matching pixel Schedule with the same event_id,
+// so Meta counts it once.
 //
 // Environment variables (Vercel → Settings → Environment Variables), besides the Meta ones in lib/meta.js:
 //   RESEND_API_KEY   required. Resend API key with sending access for attriform.com.
@@ -91,12 +92,12 @@ module.exports = async (req, res) => {
   const sent = await sendEmail({ name, email, company, website, journey: describeJourney(body.journey, req.headers), page });
   if (!sent) return res.status(502).json({ error: "Couldn't send your message." });
 
-  // Meta "Lead", only from the live site so preview deployments don't add test data.
+  // Meta "Schedule", only from the live site so preview deployments don't add test data.
   if (process.env.META_CAPI_TOKEN && typeof body.event_id === "string" && /(^|\.)attriform\.com$/.test(hostOf(page))) {
     const parts = name.split(/\s+/);
     const userData = { ...baseUserData(req, body), em: hash(email), fn: hash(parts[0]) };
     if (parts.length > 1) userData.ln = hash(parts[parts.length - 1]);
-    await sendEvent({ name: "Lead", id: body.event_id, sourceUrl: page, referrerUrl: body.referrer_url, userData });
+    await sendEvent({ name: "Schedule", id: body.event_id, sourceUrl: page, referrerUrl: body.referrer_url, userData, customData: { content_name: "Contact form" } });
   }
   return res.status(200).json({ ok: true });
 };

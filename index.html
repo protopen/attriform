@@ -37,7 +37,7 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
     document.cookie = "af_vid=" + vid + "; path=/; max-age=31536000; SameSite=Lax; Secure";
   }
   fbq("init", "1082089381523575", {external_id: vid});
-  /* For the contact form, which sends its own server Lead. */
+  /* For the contact form, which sends its own server Schedule. */
   window.metaUser = function(){ return {fbp: cookie("_fbp"), fbc: cookie("_fbc"), external_id: vid}; };
   /* Meta's Parameter Builder sets _fbp and _fbc in Meta's recommended format, including the click ID that Facebook and Instagram's in-app browsers can provide when the link has no fbclid. Server events wait for it (at most 2.5 seconds). */
   var paramsReady = new Promise(function(done){
@@ -51,9 +51,9 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
     document.head.appendChild(s);
     setTimeout(done, 2500);
   });
-  window.metaTrack = function(name, extra){
+  window.metaTrack = function(name, extra, custom){
     var id = name.toLowerCase() + "." + Date.now() + "." + Math.random().toString(36).slice(2, 10);
-    fbq("track", name, {}, {eventID: id});
+    fbq("track", name, custom || {}, {eventID: id});
     paramsReady.then(function(){
       var fbp = cookie("_fbp");
       /* Pixel and Parameter Builder both blocked (ad blocker): set the browser ID ourselves in Meta's format, so server events still carry one. */
@@ -717,11 +717,11 @@ footer a{color:var(--ink)}
     a.addEventListener("click", function(){ if(window.metaTrack) metaTrack("Contact"); });
   });
 
-  /* Meta: "Schedule" once a call is actually booked in the Calendly popup or badge. The invitee link lets the server look up the booker's email and name from Calendly. */
+  /* Meta: "Schedule" once a call is actually booked in the Calendly popup or badge (the contact form sends its own "Schedule"). The invitee link lets the server look up the booker's email and name from Calendly. */
   window.addEventListener("message", function(e){
     if(e.origin !== "https://calendly.com" || !e.data || e.data.event !== "calendly.event_scheduled" || !window.metaTrack) return;
     var invitee = e.data.payload && e.data.payload.invitee && e.data.payload.invitee.uri;
-    metaTrack("Schedule", invitee ? {calendly_invitee: invitee} : {});
+    metaTrack("Schedule", invitee ? {calendly_invitee: invitee} : {}, {content_name: "Calendly booking"});
   });
 
   /* Visitor journey for the contact form: how they first came, how they came this visit, visit count and pages read. Kept in this browser only and sent with the form. */
@@ -742,7 +742,7 @@ footer a{color:var(--ink)}
   var opened = 0, dlg = document.getElementById("msg"), form = document.getElementById("msg-form"), done = document.getElementById("msg-done"), err = document.getElementById("msg-err");
   if(dlg && dlg.showModal){
     document.querySelectorAll("[data-msg]").forEach(function(b){
-      b.addEventListener("click", function(){ form.hidden = false; done.hidden = true; err.textContent = ""; dlg.showModal(); opened = Date.now(); form.elements.name.focus(); });
+      b.addEventListener("click", function(){ form.hidden = false; done.hidden = true; err.textContent = ""; dlg.showModal(); opened = Date.now(); form.elements.name.focus(); if(window.metaTrack) metaTrack("Contact"); });
     });
     dlg.querySelectorAll("[data-close]").forEach(function(b){ b.addEventListener("click", function(){ dlg.close(); }); });
     dlg.addEventListener("click", function(e){ if(e.target === dlg) dlg.close(); });
@@ -756,7 +756,7 @@ footer a{color:var(--ink)}
       else if(!/^(https?:\/\/)?[^\s.\/]+(\.[^\s.\/]+)+(\/\S*)?$/i.test(f.website.value)){ msg = "Please enter your company website, like yourcompany.com."; f.website.classList.add("bad"); }
       err.textContent = msg;
       if(msg){ form.querySelector(".bad").focus(); return; }
-      var id = "lead." + Date.now() + "." + Math.random().toString(36).slice(2, 10), btn = form.querySelector("button[type=submit]");
+      var id = "schedule." + Date.now() + "." + Math.random().toString(36).slice(2, 10), btn = form.querySelector("button[type=submit]");
       var data = {name: f.name.value, email: f.email.value, company: f.company.value, website: f.website.value, nickname: f.nickname.value,
         elapsed_ms: Date.now() - opened, journey: journey, event_id: id, event_source_url: location.href, referrer_url: document.referrer};
       var ids = window.metaUser ? metaUser() : {};
@@ -765,8 +765,8 @@ footer a{color:var(--ink)}
       fetch("/api/contact", {method: "POST", headers: {"Content-Type": "application/json"}, body: JSON.stringify(data)})
         .then(function(r){ if(!r.ok) throw new Error(r.status); })
         .then(function(){
-          /* Browser copy of the Lead the server sent, same event ID so Meta counts it once (live site only). */
-          if(window.fbq && window.metaUser) fbq("track", "Lead", {}, {eventID: id});
+          /* Browser copy of the Schedule the server sent, same event ID so Meta counts it once (live site only). */
+          if(window.fbq && window.metaUser) fbq("track", "Schedule", {content_name: "Contact form"}, {eventID: id});
           form.reset(); form.hidden = true; done.hidden = false;
         })
         .catch(function(){ err.textContent = "Something went wrong. Please try again, or email ritwik@attriform.com."; })

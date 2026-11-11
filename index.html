@@ -381,8 +381,7 @@ details p{margin:0 0 20px;color:var(--text)}
 @media (max-width:760px){.signup{grid-template-columns:1fr}}
 
 /* sticky mobile bar */
-/* "Send us your details": a text link under each booking button, and the small form it opens */
-/* "Send your details": an outlined button next to each booking button */
+/* "Contact us": a filled button next to each booking button, and the small form it opens */
 .cta-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%}
 .cta-row .btn{padding:0 14px;font-size:clamp(16px,1.45vw,19px);white-space:nowrap}
 .band .cta-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -447,7 +446,7 @@ footer a{color:var(--ink)}
 <a href="#pricing" class="lnk">Pricing</a>
 <a href="#how" class="lnk">How it works</a>
 <a href="#faq" class="lnk">FAQs</a>
-<button type="button" class="btn sm alt" data-msg>Send your details</button>
+<button type="button" class="btn sm alt" data-msg>Contact us</button>
 <a href="#start" class="btn sm" data-book>Book a 15-min call</a>
 </nav>
 </div>
@@ -465,7 +464,7 @@ footer a{color:var(--ink)}
 <div class="cta">
 <div class="cta-row">
 <a href="#start" class="btn xl" data-book><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Book a 15-minute call</a>
-<button type="button" class="btn alt xl" data-msg>Send your details</button>
+<button type="button" class="btn alt xl" data-msg>Contact us</button>
 </div>
 <p class="terms"><span>Set up for you in two days</span><span>Nothing changes on your website</span></p>
 </div>
@@ -585,7 +584,7 @@ footer a{color:var(--ink)}
 </div>
 <div class="cta-pair">
 <a href="#start" class="btn" data-book>Book a call</a>
-<button type="button" class="btn alt" data-msg>Send your details</button>
+<button type="button" class="btn alt" data-msg>Contact us</button>
 </div>
 </div>
 </div>
@@ -608,7 +607,7 @@ footer a{color:var(--ink)}
 <div class="big">$199<small>one time</small></div>
 <p>No monthly fee. If you later want extra forms, a second website, or lead reporting back into Google Ads if you run them, those are optional add-ons.</p>
 <a href="#start" class="btn" data-book>Book a 15-minute call</a>
-<button type="button" class="btn alt" data-msg>Send your details</button>
+<button type="button" class="btn alt" data-msg>Contact us</button>
 <p class="micro">You don’t pay until after the call.</p>
 </div>
 </div>
@@ -619,7 +618,7 @@ footer a{color:var(--ink)}
 <div class="wrap">
 <h2 id="h-how">How it works</h2>
 <div class="steps">
-<div class="step"><h3>Book a 15-minute call</h3><p>We look at your website together and confirm it works with your form and CRM.</p><span class="t">Today</span><a href="#start" class="btn sm" data-book>Pick a time</a><button type="button" class="btn alt" data-msg>Send your details</button></div>
+<div class="step"><h3>Book a 15-minute call</h3><p>We look at your website together and confirm it works with your form and CRM.</p><span class="t">Today</span><a href="#start" class="btn sm" data-book>Pick a time</a><button type="button" class="btn alt" data-msg>Contact us</button></div>
 <div class="step"><h3>We set it up</h3><p>You give us access, we do the work, and send you a test lead so you can see it working.</p><span class="t">1–2 days</span></div>
 <div class="step"><h3>Every lead arrives with its story</h3><p>Where they came from, what they read, how many times they visited. Nothing for you to manage.</p><span class="t">From then on</span></div>
 </div>
@@ -660,7 +659,7 @@ footer a{color:var(--ink)}
 <div class="avail"><i></i>Times available this week</div>
 <a href="https://calendly.com/dharritwik886/15min" class="btn" id="book-main" target="_blank" rel="noopener" data-book><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Pick a time</a>
 <p class="fine">Opens the calendar right here. Takes 30 seconds.</p>
-<button type="button" class="btn alt" data-msg>Not ready for a call? Send your details</button>
+<button type="button" class="btn alt" data-msg>Not ready for a call? Contact us</button>
 </div>
 </div>
 </div>
@@ -675,7 +674,7 @@ footer a{color:var(--ink)}
 <dialog class="msg" id="msg" aria-labelledby="msg-h">
 <button type="button" class="x" data-close aria-label="Close">&times;</button>
 <form id="msg-form" novalidate>
-<h2 id="msg-h">Send us your details</h2>
+<h2 id="msg-h">Contact us</h2>
 <p>We’ll look at your website and email you within one business day.</p>
 <label>Name<input name="name" autocomplete="name" required></label>
 <label>Work email<input name="email" type="email" autocomplete="email" required></label>
@@ -721,7 +720,7 @@ footer a{color:var(--ink)}
     metaTrack("Schedule", invitee ? {calendly_invitee: invitee} : {});
   });
 
-  /* "Send us your details" form: every link opens the same dialog. All fields are required; the website can be typed without https://. */
+  /* "Contact us" form: every button opens the same dialog. All fields are required; the website can be typed without https://. */
   var dlg = document.getElementById("msg"), form = document.getElementById("msg-form"), done = document.getElementById("msg-done"), err = document.getElementById("msg-err");
   if(dlg && dlg.showModal){
     document.querySelectorAll("[data-msg]").forEach(function(b){

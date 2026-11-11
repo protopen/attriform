@@ -20,6 +20,8 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 (function(){
+  /* Only track on the live site, so preview deployments don't send events to Meta. */
+  if(!/(^|\.)attriform\.com$/.test(location.hostname)){ window.metaTrack = function(){}; return; }
   function cookie(k){ var m = document.cookie.match(new RegExp("(?:^|; )" + k + "=([^;]*)")); return m ? decodeURIComponent(m[1]) : undefined; }
   function send(body){
     var data = JSON.stringify(body);
@@ -376,9 +378,33 @@ details p{margin:0 0 20px;color:var(--text)}
 .book .avail i{width:10px;height:10px;border-radius:50%;background:var(--gold-grad);display:inline-block;box-shadow:0 0 0 3px rgba(255,201,46,.3),var(--gold-glow)}
 .book .btn{min-height:66px;font-size:20px}
 .book .fine{font-size:15px;color:var(--muted);margin:0;text-align:center}
+.book .fine .alt-link{display:inline;margin:0}
 @media (max-width:760px){.signup{grid-template-columns:1fr}}
 
 /* sticky mobile bar */
+/* "Send us your details": a text link under each booking button, and the small form it opens */
+.alt-link{background:none;border:0;padding:0;font:inherit;font-size:15px;font-weight:600;color:var(--accent);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.alt-link:hover{color:var(--accent-dark)}
+.band .alt-link,.pricebox .alt-link{color:#FFFFFF}
+.band .cta-pair{display:flex;flex-direction:column;align-items:center;gap:12px}
+.pricebox .alt-link,.step .alt-link,.book .alt-link{display:block;margin:12px auto 0}
+.msg{width:min(440px,calc(100% - 32px));max-height:calc(100% - 32px);overflow:auto;border:0;border-radius:18px;padding:0;background:var(--card);color:var(--ink);box-shadow:0 24px 60px rgba(28,21,24,.28)}
+.msg::backdrop{background:rgba(28,21,24,.55)}
+.msg form,.msg .done{padding:28px;display:flex;flex-direction:column;gap:14px}
+.msg h2{font-size:24px;line-height:1.2;margin:0;padding-right:32px}
+.msg p{margin:0;font-size:16px;color:var(--text)}
+.msg label{display:flex;flex-direction:column;gap:6px;font-size:14px;font-weight:700;color:var(--ink)}
+.msg input{font:inherit;font-size:16px;font-weight:400;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;min-height:48px}
+.msg input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(94,26,38,.15)}
+.msg input.bad{border-color:var(--red)}
+.msg .err{font-size:13px;font-weight:600;color:var(--red);min-height:0}
+.msg .btn{width:100%;margin-top:4px}
+.msg .fine{font-size:13px;color:var(--muted);text-align:center}
+.msg .x{position:absolute;top:14px;right:14px;width:36px;height:36px;border:0;border-radius:50%;background:var(--panel);color:var(--ink);font-size:22px;line-height:1;cursor:pointer}
+.msg .x:hover{background:var(--line)}
+.msg .done{align-items:flex-start}
+.msg .done .tick{width:48px;height:48px;border-radius:50%;background:var(--gold-grad);box-shadow:var(--gold-glow);display:grid;place-items:center}
+.msg .done .tick svg{width:24px;height:24px;stroke:var(--brand);fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .bar{display:none}
 @media (max-width:760px){
   .bar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:25;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--line);gap:12px;align-items:center;justify-content:space-between;transform:translateY(110%);transition:transform .25s ease}
@@ -423,6 +449,7 @@ footer a{color:var(--ink)}
 </div>
 <div class="cta">
 <a href="#start" class="btn xl" data-book><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Book a 15-minute call</a>
+<button type="button" class="alt-link" data-msg>Or send us your details</button>
 <p class="terms"><span>Set up for you in two days</span><span>Nothing changes on your website</span></p>
 </div>
 </div>
@@ -539,7 +566,10 @@ footer a{color:var(--ink)}
 <h2>Want to see it on your own site?</h2>
 <p>15 minutes. We’ll check your form and CRM and tell you exactly what you’d get.</p>
 </div>
+<div class="cta-pair">
 <a href="#start" class="btn" data-book>Book a call</a>
+<button type="button" class="alt-link" data-msg>Or send us your details</button>
+</div>
 </div>
 </div>
 
@@ -562,6 +592,7 @@ footer a{color:var(--ink)}
 <p>No monthly fee. If you later want extra forms, a second website, or lead reporting back into Google Ads if you run them, those are optional add-ons.</p>
 <a href="#start" class="btn" data-book>Book a 15-minute call</a>
 <p class="micro">You don’t pay until after the call.</p>
+<button type="button" class="alt-link" data-msg>Or send us your details</button>
 </div>
 </div>
 </div>
@@ -571,7 +602,7 @@ footer a{color:var(--ink)}
 <div class="wrap">
 <h2 id="h-how">How it works</h2>
 <div class="steps">
-<div class="step"><h3>Book a 15-minute call</h3><p>We look at your website together and confirm it works with your form and CRM.</p><span class="t">Today</span><a href="#start" class="btn sm" data-book>Pick a time</a></div>
+<div class="step"><h3>Book a 15-minute call</h3><p>We look at your website together and confirm it works with your form and CRM.</p><span class="t">Today</span><a href="#start" class="btn sm" data-book>Pick a time</a><button type="button" class="alt-link" data-msg>Or send us your details</button></div>
 <div class="step"><h3>We set it up</h3><p>You give us access, we do the work, and send you a test lead so you can see it working.</p><span class="t">1–2 days</span></div>
 <div class="step"><h3>Every lead arrives with its story</h3><p>Where they came from, what they read, how many times they visited. Nothing for you to manage.</p><span class="t">From then on</span></div>
 </div>
@@ -612,7 +643,7 @@ footer a{color:var(--ink)}
 <div class="avail"><i></i>Times available this week</div>
 <a href="https://calendly.com/dharritwik886/15min" class="btn" id="book-main" target="_blank" rel="noopener" data-book><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Pick a time</a>
 <p class="fine">Opens the calendar right here. Takes 30 seconds.</p>
-<p class="fine">Prefer email? <a href="mailto:ritwik@attriform.com">ritwik@attriform.com</a></p>
+<p class="fine">Not ready for a call? <button type="button" class="alt-link" data-msg>Send us your details</button></p>
 </div>
 </div>
 </div>
@@ -623,6 +654,27 @@ footer a{color:var(--ink)}
 <span><b>Free 15-minute call</b></span>
 <a href="#start" class="btn" data-book>Book a call</a>
 </div>
+
+<dialog class="msg" id="msg" aria-labelledby="msg-h">
+<button type="button" class="x" data-close aria-label="Close">&times;</button>
+<form id="msg-form" novalidate>
+<h2 id="msg-h">Send us your details</h2>
+<p>We’ll look at your website and email you within one business day.</p>
+<label>Name<input name="name" autocomplete="name" required></label>
+<label>Work email<input name="email" type="email" autocomplete="email" required></label>
+<label>Company name<input name="company" autocomplete="organization" required></label>
+<label>Company website<input name="website" inputmode="url" autocomplete="url" placeholder="yourcompany.com" required></label>
+<p class="err" id="msg-err" role="alert"></p>
+<button type="submit" class="btn">Send</button>
+<p class="fine">Or email <a href="mailto:ritwik@attriform.com">ritwik@attriform.com</a></p>
+</form>
+<div class="done" id="msg-done" hidden>
+<div class="tick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></div>
+<h2>Thanks, we’ve got it.</h2>
+<p>We’ll email you within one business day. Want to talk sooner?</p>
+<a href="#start" class="btn" data-book data-close>Book a 15-minute call</a>
+</div>
+</dialog>
 
 <footer>
 <div class="wrap">
@@ -651,6 +703,31 @@ footer a{color:var(--ink)}
     var invitee = e.data.payload && e.data.payload.invitee && e.data.payload.invitee.uri;
     metaTrack("Schedule", invitee ? {calendly_invitee: invitee} : {});
   });
+
+  /* "Send us your details" form: every link opens the same dialog. All fields are required; the website can be typed without https://. */
+  var dlg = document.getElementById("msg"), form = document.getElementById("msg-form"), done = document.getElementById("msg-done"), err = document.getElementById("msg-err");
+  if(dlg && dlg.showModal){
+    document.querySelectorAll("[data-msg]").forEach(function(b){
+      b.addEventListener("click", function(){ form.hidden = false; done.hidden = true; err.textContent = ""; dlg.showModal(); form.elements.name.focus(); });
+    });
+    dlg.querySelectorAll("[data-close]").forEach(function(b){ b.addEventListener("click", function(){ dlg.close(); }); });
+    dlg.addEventListener("click", function(e){ if(e.target === dlg) dlg.close(); });
+    form.addEventListener("submit", function(e){
+      e.preventDefault();
+      var f = form.elements, msg = "";
+      [f.name, f.email, f.company, f.website].forEach(function(i){ i.value = i.value.trim(); i.classList.remove("bad"); });
+      if(!f.name.value){ msg = "Please enter your name."; f.name.classList.add("bad"); }
+      else if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email.value)){ msg = "Please enter a valid email."; f.email.classList.add("bad"); }
+      else if(!f.company.value){ msg = "Please enter your company name."; f.company.classList.add("bad"); }
+      else if(!/^(https?:\/\/)?[^\s.\/]+(\.[^\s.\/]+)+(\/\S*)?$/i.test(f.website.value)){ msg = "Please enter your company website, like yourcompany.com."; f.website.classList.add("bad"); }
+      err.textContent = msg;
+      if(msg){ form.querySelector(".bad").focus(); return; }
+      /* Preview only: sending is wired up once the design is approved. */
+      form.hidden = true; done.hidden = false;
+    });
+  } else {
+    document.querySelectorAll("[data-msg]").forEach(function(b){ b.addEventListener("click", function(){ location.href = "mailto:ritwik@attriform.com"; }); });
+  }
 
   /* Load Calendly once the page is idle (or on the first scroll/tap), then show the floating badge (bottom-right). */
   var calRequested = false;

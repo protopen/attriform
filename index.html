@@ -385,13 +385,17 @@ details p{margin:0 0 20px;color:var(--text)}
 /* "Send your details": an outlined button next to each booking button */
 .cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .band .cta-pair{display:flex;flex-wrap:wrap;gap:12px}
-.band .btn.ghost,.pricebox .btn.ghost{background:transparent;color:#FFFFFF;border:1.5px solid rgba(255,255,255,.75);box-shadow:none}
-.band .btn.ghost:hover,.pricebox .btn.ghost:hover{background:rgba(255,255,255,.1);color:#FFFFFF;filter:none;box-shadow:none}
-.pricebox .btn.ghost,.step .btn.ghost{margin-top:12px}
-.step .btn.ghost{width:100%;min-height:44px;font-size:16px;border-radius:8px}
-.book .btn.ghost{min-height:56px;font-size:17px}
-.hero .cta .btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink);box-shadow:none;padding:0 24px}
-.hero .cta .btn.ghost:hover{background:var(--panel);color:var(--ink);filter:none;box-shadow:none}
+.btn.alt{background:var(--brand);color:#FFFFFF;box-shadow:none;border:0}
+.btn.alt:hover{background:var(--accent-dark);color:#FFFFFF;filter:none;box-shadow:none}
+.hero .cta .btn.alt{background:var(--brand);color:#FFFFFF;box-shadow:none;padding:0 24px}
+.hero .cta .btn.alt:hover{background:var(--accent-dark);color:#FFFFFF;filter:none;box-shadow:none}
+.band .btn.alt,.pricebox .btn.alt{background:#FFFFFF;color:var(--brand);box-shadow:none}
+.band .btn.alt:hover,.pricebox .btn.alt:hover{background:var(--panel);color:var(--brand);filter:none;box-shadow:none}
+.pricebox .btn.alt,.step .btn.alt{margin-top:12px}
+.step .btn.alt{width:100%;min-height:44px;font-size:16px;border-radius:8px}
+.book .btn.alt{min-height:56px;font-size:17px}
+header nav .btn+.btn{margin-left:-12px}
+@media (max-width:1000px){header nav .btn.alt{display:none}}
 @media (max-width:760px){.hero .cta,.cta-row,.band .cta-pair{width:100%}.cta-row .btn,.band .cta-pair .btn{flex:1 1 100%}}
 .msg{width:min(440px,calc(100% - 32px));max-height:calc(100% - 32px);overflow:auto;border:0;border-radius:18px;padding:0;background:var(--card);color:var(--ink);box-shadow:0 24px 60px rgba(28,21,24,.28)}
 .msg::backdrop{background:rgba(28,21,24,.55)}
@@ -440,6 +444,7 @@ footer a{color:var(--ink)}
 <a href="#pricing" class="lnk">Pricing</a>
 <a href="#how" class="lnk">How it works</a>
 <a href="#faq" class="lnk">FAQs</a>
+<button type="button" class="btn sm alt" data-msg>Send your details</button>
 <a href="#start" class="btn sm" data-book>Book a 15-min call</a>
 </nav>
 </div>
@@ -457,7 +462,7 @@ footer a{color:var(--ink)}
 <div class="cta">
 <div class="cta-row">
 <a href="#start" class="btn xl" data-book><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Book a 15-minute call</a>
-<button type="button" class="btn ghost xl" data-msg>Send your details</button>
+<button type="button" class="btn alt xl" data-msg>Send your details</button>
 </div>
 <p class="terms"><span>Set up for you in two days</span><span>Nothing changes on your website</span></p>
 </div>
@@ -577,7 +582,7 @@ footer a{color:var(--ink)}
 </div>
 <div class="cta-pair">
 <a href="#start" class="btn" data-book>Book a call</a>
-<button type="button" class="btn ghost" data-msg>Send your details</button>
+<button type="button" class="btn alt" data-msg>Send your details</button>
 </div>
 </div>
 </div>
@@ -600,7 +605,7 @@ footer a{color:var(--ink)}
 <div class="big">$199<small>one time</small></div>
 <p>No monthly fee. If you later want extra forms, a second website, or lead reporting back into Google Ads if you run them, those are optional add-ons.</p>
 <a href="#start" class="btn" data-book>Book a 15-minute call</a>
-<button type="button" class="btn ghost" data-msg>Send your details</button>
+<button type="button" class="btn alt" data-msg>Send your details</button>
 <p class="micro">You don’t pay until after the call.</p>
 </div>
 </div>
@@ -611,7 +616,7 @@ footer a{color:var(--ink)}
 <div class="wrap">
 <h2 id="h-how">How it works</h2>
 <div class="steps">
-<div class="step"><h3>Book a 15-minute call</h3><p>We look at your website together and confirm it works with your form and CRM.</p><span class="t">Today</span><a href="#start" class="btn sm" data-book>Pick a time</a><button type="button" class="btn ghost" data-msg>Send your details</button></div>
+<div class="step"><h3>Book a 15-minute call</h3><p>We look at your website together and confirm it works with your form and CRM.</p><span class="t">Today</span><a href="#start" class="btn sm" data-book>Pick a time</a><button type="button" class="btn alt" data-msg>Send your details</button></div>
 <div class="step"><h3>We set it up</h3><p>You give us access, we do the work, and send you a test lead so you can see it working.</p><span class="t">1–2 days</span></div>
 <div class="step"><h3>Every lead arrives with its story</h3><p>Where they came from, what they read, how many times they visited. Nothing for you to manage.</p><span class="t">From then on</span></div>
 </div>
@@ -652,7 +657,7 @@ footer a{color:var(--ink)}
 <div class="avail"><i></i>Times available this week</div>
 <a href="https://calendly.com/dharritwik886/15min" class="btn" id="book-main" target="_blank" rel="noopener" data-book><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Pick a time</a>
 <p class="fine">Opens the calendar right here. Takes 30 seconds.</p>
-<button type="button" class="btn ghost" data-msg>Not ready for a call? Send your details</button>
+<button type="button" class="btn alt" data-msg>Not ready for a call? Send your details</button>
 </div>
 </div>
 </div>

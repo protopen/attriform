@@ -539,16 +539,6 @@ html.reveal [data-reveal].in{opacity:1;transform:none}
 .cmp-hint{margin:0;font-family:var(--mono);font-size:12px;color:var(--muted)}
 .cmp.touched ~ .cmp-hint{opacity:0}
 @media (max-width:980px){.cmp .cells{grid-template-columns:1fr 1fr}}
-@media (max-width:760px){
-  .cmp{display:flex;flex-direction:column;gap:26px;box-shadow:none;cursor:auto}
-  .cmp.beam::after,.cmp .handle,.cmp .tagx,.cmp-hint{display:none}
-  .cmp .lay{position:relative;border:1px solid var(--line);box-shadow:var(--shadow);padding-top:26px}
-  .cmp .before{order:-1;clip-path:none}
-  .cmp .lay::before{position:absolute;top:-13px;left:16px;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700}
-  .cmp .before::before{content:"What you get today";background:var(--card);color:var(--muted);border:1px solid var(--line)}
-  .cmp .after::before{content:"With Attriform";background:var(--primary);color:#FFFFFF}
-  .cmp .before .cells .cell.n{display:none}
-}
 @media (max-width:760px){.hero{padding-top:40px}.cmp-wrap::before,.cmp .tagx.r,.cmp .handle::after{animation:none}.hero-grid{min-height:0}.cmp .lay{padding:22px 16px 18px}}
 @media (min-width:761px) and (max-height:820px){
   .hero-grid{gap:22px;padding:18px 0 10px}
@@ -666,6 +656,81 @@ html.reveal .checks li.in svg path{stroke-dashoffset:0}
 .pain-panel .pains li:nth-child(3){--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13 2L3 14h9l-1 8 10-12h-9l1-8z'/%3E%3C/svg%3E")}
 .pain-panel .pains li:nth-child(4){--ic:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18'/%3E%3C/svg%3E")}
 @media (max-width:760px){.pain-panel{margin-top:40px;border-radius:20px}.pain-panel .pains li{flex-direction:row;align-items:center;padding:16px;font-size:16px}.pain-panel .pains li::after{top:auto;left:26px}}
+/* ===== Phones: shorter hero, before/after switch, swipeable card rows ===== */
+.cmp-toggle{display:none}
+@media (max-width:760px){
+  section{padding:52px 0}
+  .band-wrap{padding-bottom:52px}
+  h2{font-size:27px}
+  .sub{font-size:15.5px;margin-top:10px}
+  .story,.vs,.steps,.segs,.inc,.faq{margin-top:28px}
+  .marquee{margin-top:28px}
+  /* hero */
+  .hero{padding-top:24px;padding-bottom:28px}
+  .hero-grid{gap:22px;padding:0;min-height:0}
+  .hero-copy{gap:14px}
+  .hero-copy h1{font-size:33px;line-height:1.08;letter-spacing:-.04em}
+  .hero-copy h1 .eyebrow{margin-bottom:14px;font-size:12px;padding:4px 10px 4px 9px}
+  .hero-text{gap:8px}
+  .hero-text p{font-size:15px;line-height:1.55}
+  .hero .cta{gap:10px;margin-top:2px}
+  .hero .cta-row{grid-template-columns:1fr 1fr;gap:8px}
+  .hero .cta-row .btn{min-height:46px;padding:0 8px;font-size:14.5px}
+  .hero .cta-row .btn svg{display:none}
+  .hero .cta .terms{font-size:12.5px;gap:4px 12px}
+  .hero .cta .terms span::before{width:12px;height:12px}
+  /* before/after: one card with a switch */
+  .cmp-wrap{gap:10px}
+  .cmp-toggle{display:grid;grid-template-columns:1fr 1fr;width:100%;padding:4px;border-radius:12px;background:var(--panel);border:1px solid var(--line)}
+  .cmp-toggle button{border:0;border-radius:9px;background:none;padding:9px 6px;font:600 13px var(--font);color:var(--muted);cursor:pointer;transition:background .25s ease,color .25s ease,box-shadow .25s ease}
+  .cmp-toggle button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:var(--shadow)}
+  .cmp-toggle button[data-v="after"][aria-pressed="true"]{background:var(--primary);color:#FFFFFF}
+  .cmp{box-shadow:var(--shadow);cursor:auto}
+  .cmp .handle,.cmp .tagx,.cmp-hint,.cmp.beam::after{display:none}
+  .cmp .lay{padding:14px 14px 14px;gap:10px;border:1px solid var(--line);transition:opacity .35s ease}
+  .cmp .before{clip-path:none}
+  .cmp:not([data-m="before"]) .before{opacity:0;pointer-events:none}
+  .cmp[data-m="before"] .after{opacity:0}
+  .cmp .lay .top{font-size:13px}
+  .cmp .cells{grid-template-columns:1fr 1fr;gap:10px 12px}
+  .cmp .cell{gap:4px}
+  .cmp .cell small{font-size:10px}
+  .cmp .cell > span{font-size:13.5px}
+  .cmp .after .cell.n > span{font-size:13px;padding:2px 7px}
+  .cmp .after .chips em{font-size:11.5px;padding:2px 6px}
+  .cmp .before .cell.n > span{width:38px;height:22px}
+  .cmp .after .fixline,.cmp .before .fixline{font-size:13px;padding:8px 10px}
+  .cmp .after .fixline::before{flex-basis:18px;height:18px;font-size:10px}
+  /* swipeable rows */
+  .pain-panel .pains,.story,.vs,.steps,.segs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:20px;gap:12px;margin-left:-20px;margin-right:-20px;padding:4px 20px 14px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .pain-panel .pains{margin-left:-24px;margin-right:-24px;padding-left:24px;padding-right:24px;scroll-padding-left:24px}
+  .pain-panel .pains::-webkit-scrollbar,.story::-webkit-scrollbar,.vs::-webkit-scrollbar,.steps::-webkit-scrollbar,.segs::-webkit-scrollbar{display:none}
+  .pain-panel .pains li,.stop,.vs-card,.step,.seg{flex:0 0 80%;scroll-snap-align:start}
+  .vs-card,.step{flex-basis:84%}
+  .pain-panel{padding:26px 24px 16px;margin-top:28px}
+  .pain-panel .strip-label{font-size:27px;margin-bottom:18px}
+  .pain-panel .pains li{flex-direction:column;align-items:flex-start;padding:18px;font-size:15.5px}
+  .pain-panel .pains li::after{top:28px;left:28px}
+  .stop{padding:18px}
+  .story-sum{margin-top:18px;font-size:15px;padding:14px 16px}
+  .vs-card{padding:20px}
+  .viz{height:92px;margin-bottom:14px}
+  .vs-card ul{gap:9px;font-size:14px}
+  .vs-note{font-size:13px;margin-top:12px}
+  .step{padding:20px}
+  .step .ill{height:96px;margin-bottom:14px}
+  .seg{padding:18px}
+  .seg-note{font-size:14.5px;padding:14px 16px;margin-top:16px}
+  .quote{padding:18px}
+  .band h2{font-size:24px}
+  .checks li{padding:11px 0;font-size:15px}
+  .pricebox{padding:24px}
+  .pricebox .big{font-size:48px}
+  details{padding:0 16px}
+  summary{padding:14px 0;font-size:15px}
+  .signup{padding:24px 20px;gap:20px}
+  .signup ul{margin-top:16px;font-size:15px}
+}
 </style>
 </head>
 <body>
@@ -705,6 +770,7 @@ html.reveal .checks li.in svg path{stroke-dashoffset:0}
 </div>
 </div>
 <div class="cmp-wrap">
+<div class="cmp-toggle" role="group" aria-label="Compare"><button type="button" data-v="before" aria-pressed="false">What you get today</button><button type="button" data-v="after" aria-pressed="true">With Attriform</button></div>
 <div class="cmp beam" data-cmp role="img" aria-label="Example RFQ, shown as you get it today (name and email only) and with Attriform (where they came from, pages read, visits and location)">
 <span class="tagx l">What you get today</span><span class="tagx r">With Attriform</span>
 <div class="lay after"><div class="top">New RFQ from your website <span>Just now</span></div><div class="cells"><div class="cell"><small>Name</small><span>Dana Kowalski</span></div><div class="cell"><small>RFQ</small><span>500 pcs, 316 SS</span></div><div class="cell n"><small>Came from</small><span>Thomasnet supplier profile</span></div><div class="cell n"><small>Pages read</small><span class="chips"><em>Swiss Turning</em><em>Medical</em><em>Quality</em><em>Medical</em><em>RFQ</em></span></div><div class="cell n"><small>Visits</small><span>4th in 3 weeks</span></div><div class="cell n"><small>From</small><span>Desktop, Minneapolis MN</span></div></div><div class="fixline"><span><b>Quote Dana first.</b> Found you on Thomasnet, came back four times, read your medical page twice.</span></div></div>
@@ -1082,6 +1148,16 @@ html.reveal .checks li.in svg path{stroke-dashoffset:0}
     cmp.addEventListener("pointerup", function(){ dragging = false; });
     cmp.addEventListener("pointercancel", function(){ dragging = false; });
     if(still) cmp.style.setProperty("--p", "42%");
+    /* Phones: one card with a switch, flipping by itself until tapped. */
+    var tg = document.querySelector(".cmp-toggle");
+    if(tg && window.matchMedia && matchMedia("(max-width:760px)").matches){
+      var btns = tg.querySelectorAll("button"), auto = true;
+      var show = function(v){ cmp.setAttribute("data-m", v); btns.forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-v") === v ? "true" : "false"); }); };
+      btns.forEach(function(b){ b.addEventListener("click", function(){ auto = false; show(b.getAttribute("data-v")); }); });
+      show("before");
+      if(!(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches)) setInterval(function(){ if(auto) show(cmp.getAttribute("data-m") === "before" ? "after" : "before"); }, 3000);
+      else show("after");
+    }
     else { var s0 = performance.now(); (function sweep(now){ if(touched) return; cmp.style.setProperty("--p", (50 + 40 * Math.sin((now - s0) / 1000 * .85)) + "%"); requestAnimationFrame(sweep); })(s0); }
   }
 

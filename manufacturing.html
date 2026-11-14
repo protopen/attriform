@@ -731,6 +731,18 @@ html.reveal .checks li.in svg path{stroke-dashoffset:0}
   .signup{padding:24px 20px;gap:20px}
   .signup ul{margin-top:16px;font-size:15px}
 }
+/* Phones: give the two states of the before/after card clearly different looks */
+@media (max-width:760px){
+  .cmp-toggle button[data-v="before"][aria-pressed="true"]{background:#52525B;color:#FFFFFF}
+  .cmp .lay{overflow:hidden}
+  .cmp .lay .top{margin:-14px -14px 2px;padding:10px 14px}
+  .cmp .before{background:var(--panel);border:1.5px dashed var(--line-strong);filter:grayscale(1)}
+  .cmp .before .top{background:color-mix(in srgb,var(--muted) 18%,var(--panel));color:var(--muted)}
+  .cmp .before .cell > span{color:var(--muted)}
+  .cmp .after{border:1.5px solid color-mix(in srgb,var(--accent) 55%,transparent);background:linear-gradient(160deg,color-mix(in srgb,var(--gold) 10%,var(--card)),color-mix(in srgb,var(--accent) 9%,var(--card)));box-shadow:0 16px 36px -16px rgba(94,26,38,.45)}
+  .cmp .after .top{background:var(--primary);color:#FFFFFF}
+  .cmp .after .top span{color:rgba(255,255,255,.75)}
+}
 </style>
 </head>
 <body>
@@ -756,7 +768,7 @@ html.reveal .checks li.in svg path{stroke-dashoffset:0}
 <div class="blob b1" aria-hidden="true"></div><div class="blob b2" aria-hidden="true"></div><div class="blob b3" aria-hidden="true"></div>
 <div class="hero-grid">
 <div class="hero-copy">
-<h1 id="h1"><span class="eyebrow">RFQ source tracking for manufacturers</span>Every RFQ, with the story of <span class="grad">how the buyer found you.</span></h1>
+<h1 id="h1">Every RFQ, with the story of <span class="grad">how the buyer found you.</span></h1>
 <div class="hero-text">
 <p class="pain">Your RFQ form tells you the part, the quantity and the material. It doesn’t tell you whether Thomasnet, IQS, Google Ads or a referral sent the buyer.</p>
 <p class="offer"><b>We fix that.</b> Every RFQ now arrives with where the buyer came from, the pages they read, and how many times they came back, before anyone spends an hour quoting it.</p>

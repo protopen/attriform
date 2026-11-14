@@ -217,7 +217,7 @@ section > .wrap > h2,section > .wrap > .sub{text-align:center;margin-left:auto;m
 .btn.alt:hover{background:var(--card);color:var(--ink);border-color:var(--line-strong);box-shadow:var(--shadow)}
 .btn.sm{min-height:38px;padding:0 14px;font-size:14px;border-radius:8px}
 .btn.xl{min-height:52px;padding:0 24px;font-size:16px}
-.btn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn svg{flex:0 0 auto;width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 /* header */
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line)}
@@ -473,6 +473,104 @@ footer a:hover{color:var(--ink)}
   .s-card .fix{padding:14px 16px 18px}
   .row .k{flex-basis:92px}
 }
+/* ===== Colour and motion layer (desktop motion only; phones keep the static colours) ===== */
+:root{--c1:#5E1A26;--c1s:#F7EEF0;--c2:#B45309;--c2s:#FEF3C7;--c3:#0F766E;--c3s:#CCFBF1;--c4:#4338CA;--c4s:#E0E7FF;--c5:#BE185D;--c5s:#FCE7F3;--grad:linear-gradient(90deg,#5E1A26 0%,#B8325A 35%,#E8890C 70%,#5E1A26 100%)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--c1:#F0A8B5;--c1s:rgba(240,168,181,.12);--c2:#FBBF24;--c2s:rgba(251,191,36,.12);--c3:#2DD4BF;--c3s:rgba(45,212,191,.12);--c4:#A5B4FC;--c4s:rgba(165,180,252,.12);--c5:#F472B6;--c5s:rgba(244,114,182,.12);--grad:linear-gradient(90deg,#F0A8B5 0%,#F472B6 35%,#FBBF24 70%,#F0A8B5 100%)}}
+:root[data-theme="dark"]{--c1:#F0A8B5;--c1s:rgba(240,168,181,.12);--c2:#FBBF24;--c2s:rgba(251,191,36,.12);--c3:#2DD4BF;--c3s:rgba(45,212,191,.12);--c4:#A5B4FC;--c4s:rgba(165,180,252,.12);--c5:#F472B6;--c5s:rgba(244,114,182,.12);--grad:linear-gradient(90deg,#F0A8B5 0%,#F472B6 35%,#FBBF24 70%,#F0A8B5 100%)}
+@property --ang{syntax:'<angle>';initial-value:0deg;inherits:false}
+@keyframes spin{to{--ang:360deg}}
+@keyframes gradShift{to{background-position:200% 0}}
+@keyframes drift1{50%{transform:translate(60px,40px) scale(1.1)}}
+@keyframes drift2{50%{transform:translate(-50px,-30px) scale(1.15)}}
+
+/* headline gradient */
+.grad{background:var(--grad);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradShift 8s linear infinite}
+
+/* hero: copy left, product right, one screen tall on desktop */
+.hero .blob{position:absolute;z-index:-1;border-radius:50%;filter:blur(70px);pointer-events:none;opacity:.55}
+.hero .blob.b1{width:420px;height:420px;left:-80px;top:80px;background:radial-gradient(closest-side,rgba(184,50,90,.35),transparent)}
+.hero .blob.b2{width:460px;height:460px;right:-60px;top:240px;background:radial-gradient(closest-side,rgba(245,184,0,.35),transparent)}
+.hero .blob.b3{width:360px;height:360px;left:40%;top:-120px;background:radial-gradient(closest-side,rgba(67,56,202,.18),transparent)}
+@media (min-width:1024px){
+  .hero{padding-top:0;padding-bottom:56px;text-align:left}
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,1fr);align-items:center;gap:56px;min-height:calc(100svh - 63px);padding:40px 0}
+  .hero-copy{align-items:flex-start;max-width:600px;gap:22px}
+  .hero-copy h1{font-size:clamp(40px,3.9vw,56px)}
+  .hero-copy h1 .eyebrow{margin:0 0 22px}
+  .hero-text{gap:10px}
+  .hero-text p{font-size:17px}
+  .hero .cta{align-items:flex-start;margin-top:6px}
+  .hero .cta .terms{justify-content:flex-start}
+  .cta-row{width:min(100%,440px)}
+  .hero::before{-webkit-mask-image:radial-gradient(ellipse 70% 70% at 50% 40%,#000 25%,transparent 100%);mask-image:radial-gradient(ellipse 70% 70% at 50% 40%,#000 25%,transparent 100%)}
+  .s-card{width:100%}
+  .s-card .mail{font-size:14px}
+  .s-card .row{padding:7px 6px}
+  .s-card .row .k{flex-basis:96px}
+  .strip-label{margin-top:24px}
+  .hero .blob.b1{animation:drift1 16s ease-in-out infinite}
+  .hero .blob.b2{animation:drift2 18s ease-in-out infinite}
+  .hero .blob.b3{animation:drift1 22s ease-in-out infinite reverse}
+}
+@media (min-width:1024px) and (max-height:820px){
+  .hero-copy h1{font-size:clamp(38px,3.9vw,52px)}
+  .hero-copy h1 .eyebrow{margin-bottom:16px}
+  .hero-text p{font-size:16px}
+  .s-card .s-head{padding-top:14px}
+  .s-card .row{padding:5px 6px}
+  .s-card .fix{padding:12px 24px 16px;font-size:14px}
+  .chrome{height:36px}
+}
+
+/* moving light beam around the product window and the highlighted comparison card */
+.beam::after{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1.5px;pointer-events:none;background:conic-gradient(from var(--ang),transparent 0 70%,#F5B800 82%,#B8325A 92%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 6s linear infinite}
+.vs-card.on{position:relative}
+
+/* colourful icons */
+.stop:nth-child(1) .dot{background:var(--c1s)}.stop:nth-child(1) .dot::after{background:var(--c1)}
+.stop:nth-child(2) .dot{background:var(--c2s)}.stop:nth-child(2) .dot::after{background:var(--c2)}
+.stop:nth-child(3) .dot{background:var(--c3s)}.stop:nth-child(3) .dot::after{background:var(--c3)}
+.stop:nth-child(4) .dot{background:var(--c4s)}.stop:nth-child(4) .dot::after{background:var(--c4)}
+.stop:nth-child(5) .dot{background:var(--c5s)}.stop:nth-child(5) .dot::after{background:var(--c5)}
+.stop{border-top:3px solid var(--c1)}
+.stop:nth-child(2){border-top-color:var(--c2)}.stop:nth-child(3){border-top-color:var(--c3)}.stop:nth-child(4){border-top-color:var(--c4)}.stop:nth-child(5){border-top-color:var(--c5)}
+.step:nth-child(1)::before{background:var(--c1s);color:var(--c1)}
+.step:nth-child(2)::before{background:var(--c2s);color:var(--c2)}
+.step:nth-child(3)::before{background:var(--c3s);color:var(--c3)}
+.seg:nth-child(5n+1) h3::before,.seg:nth-child(5n+2) h3::before,.seg:nth-child(5n+3) h3::before,.seg:nth-child(5n+4) h3::before,.seg:nth-child(5n) h3::before{content:"";display:block;width:28px;height:4px;border-radius:4px;margin-bottom:12px;background:var(--c1)}
+.seg:nth-child(5n+2) h3::before{background:var(--c2)}.seg:nth-child(5n+3) h3::before{background:var(--c3)}.seg:nth-child(5n+4) h3::before{background:var(--c4)}.seg:nth-child(5n) h3::before{background:var(--c5)}
+
+/* soft colour washes behind the alternate sections */
+section.alt{background-color:var(--surface);background-image:radial-gradient(700px 320px at 8% 0%,rgba(184,50,90,.07),transparent 70%),radial-gradient(700px 320px at 92% 100%,rgba(245,184,0,.09),transparent 70%)}
+#vs-analytics,#how{background-image:radial-gradient(600px 300px at 50% 0%,rgba(67,56,202,.05),transparent 70%)}
+
+/* pricing card: animated gradient top edge */
+.pricebox::before{background:var(--grad);background-size:200% 100%;height:4px;animation:gradShift 6s linear infinite}
+
+/* band: drifting glow */
+.band::after{animation:drift2 14s ease-in-out infinite}
+
+/* buttons: shine sweep on the booking buttons */
+.btn:not(.alt){position:relative;overflow:hidden}
+.btn:not(.alt)::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent);transform:skewX(-20deg);transition:left .6s ease;pointer-events:none}
+.btn:not(.alt):hover::after{left:120%}
+
+/* cards lift on hover */
+.stop,.step,.seg,.vs-card,.pains li,.quote,details{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+@media (hover:hover) and (min-width:761px){
+  .stop:hover,.step:hover,.seg:hover,.vs-card:hover,.pains li:hover,.quote:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+}
+
+/* scroll reveal (only when the script turns it on, desktop only) */
+html.reveal [data-reveal]{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+html.reveal [data-reveal].in{opacity:1;transform:none}
+
+/* phones: keep colours, drop the motion */
+@media (max-width:760px){
+  .grad,.beam::after,.pricebox::before,.band::after{animation:none}
+  .beam::after{display:none}
+  .hero .blob{display:none}
+}
 </style>
 </head>
 <body>
@@ -495,9 +593,10 @@ footer a:hover{color:var(--ink)}
 
 <main>
 <section id="top" class="wrap hero" aria-labelledby="h1">
+<div class="blob b1" aria-hidden="true"></div><div class="blob b2" aria-hidden="true"></div><div class="blob b3" aria-hidden="true"></div>
 <div class="hero-grid">
 <div class="hero-copy">
-<h1 id="h1"><span class="eyebrow">RFQ source tracking for manufacturers</span>Every RFQ, with the story of how the buyer found you.</h1>
+<h1 id="h1"><span class="eyebrow">RFQ source tracking for manufacturers</span>Every RFQ, with the story of <span class="grad">how the buyer found you.</span></h1>
 <div class="hero-text">
 <p class="pain">Your RFQ form tells you the part, the quantity and the material. It doesn’t tell you whether Thomasnet, IQS, Google Ads or a referral sent the buyer.</p>
 <p class="offer"><b>We fix that.</b> Every RFQ now arrives with where the buyer came from, the pages they read, and how many times they came back, before anyone spends an hour quoting it.</p>
@@ -510,7 +609,7 @@ footer a:hover{color:var(--ink)}
 <p class="terms"><span>Set up for you in two days</span><span>Nothing changes on your website</span></p>
 </div>
 </div>
-<div class="s-card" id="after">
+<div class="s-card beam" id="after">
 <div class="chrome" aria-hidden="true"><i></i><i></i><i></i></div>
 <div class="s-head"><span class="tag">After we set it up</span><span class="live"><i></i>Live</span></div>
 <div class="mail" role="img" aria-label="Example RFQ notification showing the buyer, the part, where the buyer came from, pages read, and number of visits">
@@ -563,7 +662,7 @@ footer a:hover{color:var(--ink)}
 <li>Hard to say which directory sent the jobs you won</li>
 </ul>
 </div>
-<div class="vs-card on">
+<div class="vs-card on beam">
 <h3>Attriform</h3>
 <ul>
 <li>“Dana came from Thomasnet, visited 4 times, read your medical page twice”</li>
@@ -850,6 +949,22 @@ footer a:hover{color:var(--ink)}
   }
   ["scroll", "pointerdown", "keydown", "touchstart"].forEach(function(t){ window.addEventListener(t, loadCalendly, {once: true, passive: true}); });
   window.addEventListener("load", function(){ (window.requestIdleCallback || function(f){ setTimeout(f, 1500); })(loadCalendly); });
+
+  /* Desktop polish: sections and cards fade and slide in as they scroll into view (skipped on phones and for reduced motion). */
+  if("IntersectionObserver" in window && matchMedia("(min-width:761px)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches){
+    var sel = ".strip-label, .pains li, section > .wrap > h2, section > .wrap > .sub, .stop, .story-sum, .vs-card, .vs-note, .marquee, .band, .checks li, .tools, .pricebox, .step, details, .seg, .seg-note, .signup";
+    var els = document.querySelectorAll(sel);
+    document.documentElement.classList.add("reveal");
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, {threshold: 0.12, rootMargin: "0px 0px -40px 0px"});
+    els.forEach(function(el){
+      var sibs = Array.prototype.filter.call(el.parentNode.children, function(c){ return c.matches(sel); });
+      el.setAttribute("data-reveal", "");
+      el.style.transitionDelay = Math.min(sibs.indexOf(el), 5) * 80 + "ms";
+      io.observe(el);
+    });
+  }
 
   /* Testimonials: duplicate the cards once so the scroll loops seamlessly (skipped for reduced motion, where the row scrolls by hand). */
   var track = document.querySelector(".marquee .track");

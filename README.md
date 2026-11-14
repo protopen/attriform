@@ -2,7 +2,7 @@
 
 `index.html` is the home page, written for small businesses in general. `manufacturing.html` is the version for US manufacturers that quote from a web RFQ form (machine shops, fabricators, molders, contract manufacturers, machinery makers), live at `/manufacturing`. The old `/v1` and `/main` URLs redirect to the home page.
 
-`index.html` is the complete page in one file: HTML with inline styles and scripts, no build step. Fonts load from Google Fonts (Bricolage Grotesque, IBM Plex Sans, IBM Plex Mono) with system fallbacks.
+`index.html` is the complete page in one file: HTML with inline styles and scripts, no build step. The font is Inter, self-hosted from `fonts/inter-latin.woff2`, with system fallbacks.
 
 ## Replace these placeholders
 
@@ -53,12 +53,13 @@ Meta tracking and the form's server `Schedule` only run on attriform.com, so pre
 
 ## Colours
 
-- Ink: `#12151A`
-- Background: `#F5F6F3`
-- Accent (buttons, labels): `#2B3FCC`
-- Highlight (marker effect, badges): `#F2DC4B`
+The design is a clean light SaaS style. Colours are CSS variables at the top of each page's `<style>`, with a dark-mode set below them:
 
-To change the accent or highlight, find and replace the hex value throughout the file.
+- Ink (headings): `#09090B`, body text `#52525B`, muted `#71717A`
+- Lines: `#E4E4E7`; soft surfaces: `#FAFAFA`, `#F4F4F5`
+- Brand burgundy (booking buttons, accents): `#5E1A26`, hover `#45111B`
+- Gold (glows, highlights): `#F5B800`
+- "Contact us" buttons use the light fill `#F4F4F5`
 
 ## Hosting
 

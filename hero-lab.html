@@ -407,555 +407,353 @@ html.reveal [data-reveal].in{opacity:1;transform:none}
 }
 </style>
 <style>
-/* ===== Hero lab: six candidate hero visuals. Test page only. ===== */
+/* ===== Hero lab, round 2: five different hero concepts. Test page only. ===== */
 .lab-nav{display:flex;gap:4px;flex-wrap:wrap}
 .lab-nav a{font-size:13px;font-weight:600;color:var(--text);text-decoration:none;padding:6px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card)}
 .lab-nav a:hover{color:var(--ink);border-color:var(--line-strong)}
-section.hero + section.hero{border-top:1px solid var(--line)}
-.opt-label{position:absolute;top:18px;left:0;z-index:2;display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:var(--ink);color:var(--bg);font-size:13px;font-weight:600}
-.opt-label b{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--gold);color:#09090B;font-size:12px}
-.vis{position:relative;width:100%}
-.win{position:relative;width:100%;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-lg);text-align:left}
-.win::before{content:"";position:absolute;inset:-40px -60px;z-index:-1;pointer-events:none;background:radial-gradient(45% 55% at 30% 40%,rgba(94,26,38,.16),transparent 70%),radial-gradient(40% 50% at 75% 60%,rgba(245,184,0,.16),transparent 70%);filter:blur(30px)}
-.chrome .ttl{margin-left:10px;font-family:var(--mono);font-size:12px;color:var(--muted)}
-.win-body{padding:20px 22px 22px}
-.win .mail{font-size:14px}
-.win .row{padding:7px 6px}
-.win .row .k{flex-basis:100px}
-.hl .v{color:var(--accent);font-weight:600}
-@media (max-width:1023px){.opt-label{position:static;margin:0 auto 24px;width:fit-content}}
+.sec{position:relative;isolation:isolate;overflow:hidden;min-height:calc(100svh - 63px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:40px;padding:72px 24px 56px;border-top:1px solid var(--line)}
+.opt{position:absolute;top:18px;left:24px;z-index:5;display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;background:var(--ink);color:var(--bg);font-size:13px;font-weight:600}
+.opt b{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--gold);color:#09090B;font-size:12px}
+.cc{position:relative;z-index:2;max-width:780px;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+.eb{display:flex;align-items:center;gap:8px;padding:5px 12px 5px 10px;border:1px solid var(--line);border-radius:999px;background:var(--card);box-shadow:var(--shadow-sm);font-size:13px;font-weight:500;color:var(--text)}
+.eb::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.cc h1{font-size:clamp(36px,4.6vw,60px);font-weight:700;line-height:1.04;letter-spacing:-.045em}
+.cc p{margin:0;font-size:17px;line-height:1.6;color:var(--text);max-width:36em}
+.cc p b{color:var(--ink);font-weight:600}
+.cc .cta-row{margin-top:6px}
+.tm{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 20px;font-size:14px;color:var(--muted)}
+.tm span::before{content:"✓ ";color:var(--green);font-weight:700}
+@media (max-width:760px){.sec{padding:64px 20px 48px;min-height:0}.opt{left:20px}.cc .cta-row{width:100%;grid-template-columns:1fr}}
 
-/* 1 · before → after */
-.toggle{position:relative;display:grid;grid-template-columns:1fr 1fr;padding:4px;margin:0 0 16px;border-radius:10px;background:var(--panel);border:1px solid var(--line)}
-.toggle button{position:relative;z-index:1;border:0;background:none;padding:8px 10px;font:600 13px var(--font);color:var(--muted);cursor:pointer;transition:color .3s ease}
-.toggle .knob{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:7px;background:var(--card);box-shadow:var(--shadow);transition:transform .45s cubic-bezier(.3,.7,.2,1)}
-.ba[data-state="before"] .toggle button[data-s="before"],.ba[data-state="after"] .toggle button[data-s="after"]{color:var(--ink)}
-.ba[data-state="after"] .toggle .knob{transform:translateX(100%)}
-.ba[data-state="after"] .toggle button[data-s="after"]{color:var(--accent)}
-.ba .unknown{margin-top:8px;padding:12px;border:1.5px dashed var(--line-strong);border-radius:10px;text-align:center;font-size:14px;color:var(--muted);max-height:80px;transition:opacity .35s ease,max-height .45s ease,margin .45s ease,padding .45s ease}
-.ba[data-state="after"] .unknown{opacity:0;max-height:0;margin:0;padding:0 12px;border-width:0}
-.ba .add .row{opacity:0;max-height:0;overflow:hidden;padding-top:0;padding-bottom:0;border-top:0 solid transparent;transform:translateX(-8px);transition:opacity .45s ease,transform .45s ease,max-height .5s ease,padding .5s ease,background .6s ease}
-.ba[data-state="after"] .add .row{opacity:1;max-height:90px;padding-top:7px;padding-bottom:7px;border-top:1px solid var(--line);transform:none;background:var(--gold-soft)}
-.ba[data-state="after"].settled .add .row{background:transparent}
-.ba[data-state="after"] .add .row:nth-child(1){transition-delay:.35s}
-.ba[data-state="after"] .add .row:nth-child(2){transition-delay:.65s}
-.ba[data-state="after"] .add .row:nth-child(3){transition-delay:.95s}
-.ba[data-state="after"] .add .row:nth-child(4){transition-delay:1.25s}
-.ba .fix{margin-top:14px;opacity:0;transform:translateY(6px);transition:opacity .4s ease,transform .4s ease}
-.ba[data-state="after"] .fix{opacity:1;transform:none;transition-delay:1.7s}
-.ba .win-body{min-height:500px}
-.ba .scan{position:absolute;left:0;right:0;top:0;height:70px;border-radius:16px;pointer-events:none;opacity:0;background:linear-gradient(180deg,transparent,rgba(245,184,0,.18) 70%,rgba(245,184,0,.9) 98%,transparent)}
-.ba.scanning .scan{animation:scan 1.1s cubic-bezier(.4,0,.2,1)}
-@keyframes scan{0%{opacity:1;transform:translateY(0)}90%{opacity:1}100%{opacity:0;transform:translateY(var(--scan-h,420px))}}
-.ba[data-state="before"] .mail{filter:grayscale(1)}
+/* ---------- A · spotlight ---------- */
+.spot{background:#09090B;border-top-color:#27272A}
+.spot .wall{position:absolute;inset:-20px;z-index:0;display:flex;flex-wrap:wrap;align-content:space-around;justify-content:space-around;gap:22px 30px;padding:20px;font-family:var(--mono);font-size:14px;pointer-events:none;user-select:none}
+.spot .wall span{white-space:nowrap;padding:4px 10px;border-radius:999px;border:1px solid currentColor}
+.spot .wall.dim{opacity:.10;color:#FFFFFF}
+.spot .wall.dim span{border-color:rgba(255,255,255,.4)}
+.spot .wall.lit{-webkit-mask-image:radial-gradient(circle 230px at var(--x,50%) var(--y,40%),#000 0%,rgba(0,0,0,.55) 45%,transparent 100%);mask-image:radial-gradient(circle 230px at var(--x,50%) var(--y,40%),#000 0%,rgba(0,0,0,.55) 45%,transparent 100%)}
+.spot .wall.lit .s{color:#FBBF24;background:rgba(251,191,36,.10)}
+.spot .wall.lit .p{color:#F0A8B5;background:rgba(240,168,181,.10)}
+.spot .wall.lit .v{color:#2DD4BF;background:rgba(45,212,191,.10)}
+.spot .wall.lit .d{color:#A5B4FC;background:rgba(165,180,252,.10)}
+.spot .glow{position:absolute;z-index:0;width:460px;height:460px;left:var(--x,50%);top:var(--y,40%);transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(245,184,0,.10),transparent);pointer-events:none}
+.spot .cc::before{content:"";position:absolute;inset:-60px -120px;z-index:-1;background:radial-gradient(closest-side,rgba(9,9,11,.92) 55%,rgba(9,9,11,0));pointer-events:none}
+.spot .cc h1{color:#FFFFFF}
+.spot .cc h1 .grad{background:linear-gradient(90deg,#F0A8B5,#FBBF24,#F0A8B5);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradShift 6s linear infinite}
+.spot .cc p{color:rgba(255,255,255,.68)}
+.spot .cc p b{color:#FFFFFF}
+.spot .eb{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:rgba(255,255,255,.8)}
+.spot .eb::before{background:#FBBF24;box-shadow:0 0 0 3px rgba(251,191,36,.2)}
+.spot .btn:not(.alt){background:#FFFFFF;color:#5E1A26}
+.spot .btn.alt{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#FFFFFF}
+.spot .tm{color:rgba(255,255,255,.55)}
+.spot .hint{position:absolute;bottom:10px;padding:3px 10px;border-radius:999px;background:#09090B;left:50%;transform:translateX(-50%);z-index:2;font-size:12px;color:rgba(255,255,255,.4);font-family:var(--mono)}
+.spot .opt{background:#FFFFFF;color:#09090B}
 
-/* 2 · journey */
-.track{position:relative;display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin:6px 0 22px}
-.track .line{position:absolute;left:8.33%;right:8.33%;top:19px;height:3px;border-radius:3px;background:var(--line)}
-.track .line span{position:absolute;inset:0 auto 0 0;width:0;border-radius:3px;background:var(--grad);background-size:200% 100%;transition:width .7s ease}
-.node{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
-.node .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:var(--card);border:1px solid var(--line);font-size:13px;font-weight:700;color:var(--muted);transition:all .35s ease}
-.node b{font-size:12px;font-weight:600;color:var(--muted);line-height:1.2;transition:color .35s ease}
-.node small{font-size:10.5px;color:var(--muted);line-height:1.2}
-.node.on .ic{background:var(--accent);border-color:var(--accent);color:#FFFFFF;box-shadow:0 0 0 5px var(--accent-soft)}
-.node.on b{color:var(--ink)}
-.node.cur .ic{transform:scale(1.12)}
-.jr .lead .row{transition:opacity .4s ease}
-.jr .lead .row.wait{opacity:.35}
-.jr .lead .row.wait .v{color:var(--muted);font-weight:400}
-.jr .chips{display:flex;flex-wrap:wrap;gap:6px 0;align-items:center;min-height:24px}
-.jr .chips span{background:var(--accent-soft);color:var(--accent);border-radius:6px;padding:2px 8px;font-size:12.5px;font-weight:600;animation:pop .35s ease}
-.jr .chips i{display:inline-block;width:12px;height:1.5px;background:var(--line-strong);margin:0 2px}
-@keyframes pop{from{opacity:0;transform:scale(.7)}}
-.jr .sent{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;background:var(--green-soft);color:var(--green);font-size:12px;font-weight:600;opacity:0;transition:opacity .3s ease}
-.jr.done .sent{opacity:1}
-.jr .fix{margin-top:14px;opacity:0;transition:opacity .4s ease}
-.jr.done .fix{opacity:1}
+/* ---------- B · receipts ---------- */
+.rcpt{background:var(--surface);gap:36px;padding-top:64px;padding-bottom:40px}
+.belt{position:relative;z-index:1;width:100vw;display:flex;flex-direction:column;gap:18px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.belt .row2{display:flex;gap:18px;width:max-content;animation:belt 60s linear infinite}
+.belt .row2.rev{animation-direction:reverse;animation-duration:70s}
+.belt:hover .row2{animation-play-state:paused}
+@keyframes belt{to{transform:translateX(-50%)}}
+.ticket{flex:0 0 236px;padding:14px 16px 20px;background:#FFFDF6;color:#1C1917;font-family:var(--mono);font-size:12px;line-height:1.55;box-shadow:0 1px 2px rgba(0,0,0,.06),0 10px 24px -12px rgba(0,0,0,.25);-webkit-mask:radial-gradient(6px at 50% 100%,#0000 98%,#000) 50% 100%/12px 100% repeat-x;mask:radial-gradient(6px at 50% 100%,#0000 98%,#000) 50% 100%/12px 100% repeat-x;padding-bottom:22px}
+.ticket:nth-child(odd){transform:rotate(-1.2deg)}.ticket:nth-child(even){transform:rotate(1deg)}
+.ticket .th{display:flex;justify-content:space-between;font-weight:700;letter-spacing:.06em;padding-bottom:8px;margin-bottom:8px;border-bottom:1.5px dashed #D6D3D1}
+.ticket .th span{font-weight:400;color:#78716C;letter-spacing:0}
+.ticket .nm{font-family:var(--font);font-size:15px;font-weight:700;margin-bottom:6px;letter-spacing:-.01em}
+.ticket .ln{display:flex;gap:8px}
+.ticket .ln i{font-style:normal;flex:0 0 58px;color:#78716C}
+.ticket .ln b{font-weight:600}
+.ticket .hot{margin-top:10px;padding-top:8px;border-top:1.5px dashed #D6D3D1;font-weight:700;color:#5E1A26}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ticket{background:#1C1917;color:#F5F5F4}}
 
-/* 3 · live feed */
-.fd{display:grid;grid-template-columns:1.35fr 1fr;gap:16px}
-.fd h4{margin:0 0 10px;font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.feed{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;min-height:292px}
-.feed li{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--card);box-shadow:var(--shadow-sm);animation:slideIn .55s cubic-bezier(.2,.7,.2,1)}
-.feed li.out{animation:fadeOut .35s ease forwards}
-@keyframes slideIn{from{opacity:0;transform:translateY(-14px) scale(.97)}}
-@keyframes fadeOut{to{opacity:0;transform:scale(.96)}}
-.feed .av{flex:0 0 32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;color:#FFFFFF}
-.feed .who{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
-.feed .who b{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.feed .who span{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.badge{flex:0 0 auto;padding:3px 8px;border-radius:999px;font-size:11.5px;font-weight:600;white-space:nowrap}
-.bars{display:flex;flex-direction:column;gap:10px}
-.bar{display:grid;grid-template-columns:1fr auto;gap:4px 8px;font-size:12.5px;color:var(--text)}
-.bar b{font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
-.bar .t{grid-column:1/-1;height:8px;border-radius:8px;background:var(--panel);overflow:hidden}
-.bar .t span{display:block;height:100%;border-radius:8px;transition:width .6s cubic-bezier(.2,.7,.2,1)}
-.bar.bump b{animation:bump .5s ease}
-@keyframes bump{40%{transform:scale(1.35);color:var(--accent)}}
+/* ---------- C · drag to compare ---------- */
+.cmp{position:relative;z-index:1;width:min(1080px,100%);display:grid;user-select:none;touch-action:pan-y;border-radius:18px;box-shadow:var(--shadow-lg);cursor:ew-resize}
+.cmp .lay{grid-area:1/1;display:flex;flex-direction:column;gap:14px;padding:22px 26px 24px;border-radius:18px;border:1px solid var(--line);background:var(--card)}
+.cmp .lay .top{display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600}
+.cmp .lay .top span{font-weight:400;color:var(--muted)}
+.cmp .cells{display:grid;grid-template-columns:1fr 1.25fr 1.4fr 1.9fr 1fr 1fr;gap:16px}
+.cmp .cell{display:flex;flex-direction:column;gap:4px;min-width:0}
+.cmp .cell small{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.cmp .cell span{font-size:14.5px;font-weight:500;overflow-wrap:anywhere}
+.cmp .after .cell.n span{color:var(--accent);font-weight:600}
+.cmp .after .chips{display:flex;flex-wrap:wrap;gap:4px}
+.cmp .after .chips em{font-style:normal;background:var(--accent-soft);color:var(--accent);border-radius:6px;padding:1px 7px;font-size:12.5px;font-weight:600}
+.cmp .after .fixline{font-size:14.5px;color:var(--text)}
+.cmp .after .fixline b{color:var(--ink)}
+.cmp .before{z-index:1;clip-path:inset(0 calc(100% - var(--p,50%)) 0 0);background:var(--panel)}
+.cmp .before .cell.n span{color:var(--muted);font-weight:400}
+.cmp .before .fixline{font-size:14.5px;color:var(--muted);font-style:italic}
+.cmp .tagx{position:absolute;top:-14px;z-index:3;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700;box-shadow:var(--shadow)}
+.cmp .tagx.l{left:20px;background:var(--panel);color:var(--muted);border:1px solid var(--line)}
+.cmp .tagx.r{right:20px;background:var(--primary);color:#FFFFFF}
+.cmp .handle{position:absolute;z-index:2;top:-10px;bottom:-10px;left:var(--p,50%);width:2px;margin-left:-1px;background:var(--accent)}
+.cmp .handle::after{content:"⟷";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--card);border:2px solid var(--accent);color:var(--accent);font-size:18px;font-weight:700;box-shadow:var(--shadow)}
+.cmp-hint{margin:-22px 0 0;font-size:13px;color:var(--muted);font-family:var(--mono)}
+@media (max-width:900px){.cmp .cells{grid-template-columns:1fr 1fr}}
 
-/* 4 · CRM */
-.crm-head{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--line)}
-.crm-head .av{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--c4s);color:var(--c4);font-weight:700}
-.crm-head .nm{display:flex;flex-direction:column;line-height:1.3;flex:1}
-.crm-head .nm b{font-size:16px}
-.crm-head .nm span{font-size:13px;color:var(--muted)}
-.pill{padding:3px 10px;border-radius:999px;background:var(--c3s);color:var(--c3);font-size:12px;font-weight:600}
-.props{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}
-.prop{padding:10px 12px;border:1px solid var(--line);border-radius:10px;display:flex;flex-direction:column;gap:2px}
-.prop small{font-size:11.5px;color:var(--muted);font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em}
-.prop span{font-size:14px;font-weight:500}
-.prop.src{grid-column:1/-1;transition:background .5s ease,border-color .5s ease}
-.prop.src span{min-height:21px}
-.prop.src.unknown span{color:var(--muted);font-style:italic}
-.prop.src.typing span::after{content:"";display:inline-block;width:2px;height:16px;margin-left:2px;vertical-align:-3px;background:var(--accent);animation:blink .8s steps(1) infinite}
-@keyframes blink{50%{opacity:0}}
-.prop.src.found{background:var(--gold-soft);border-color:color-mix(in srgb,var(--gold) 50%,var(--line))}
-.prop.src.found span{color:var(--accent);font-weight:600}
-.prop.src .ok{display:none;margin-left:6px;color:var(--green)}
-.prop.src.found .ok{display:inline}
-.tl h4{margin:0 0 8px;font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.tl ul{list-style:none;margin:0;padding:0 0 0 14px;border-left:2px solid var(--line);display:flex;flex-direction:column;gap:6px;min-height:168px}
-.tl li{position:relative;font-size:13.5px;color:var(--text);animation:slideIn .4s ease}
-.tl li::before{content:"";position:absolute;left:-20px;top:7px;width:10px;height:10px;border-radius:50%;background:var(--card);border:2px solid var(--accent)}
-.tl li em{font-style:normal;color:var(--muted);font-size:12px;margin-left:6px}
-.tl li.last{color:var(--ink);font-weight:600}
-.tl li.last::before{background:var(--green);border-color:var(--green)}
+/* ---------- D · tilted dashboard ---------- */
+.tilt{justify-content:flex-start;padding-top:88px;gap:48px}
+.stage{position:relative;z-index:1;width:min(1120px,100%);perspective:1400px}
+.stage::before{content:"";position:absolute;left:10%;right:10%;top:10%;height:70%;z-index:-1;background:radial-gradient(50% 60% at 50% 40%,rgba(184,50,90,.35),transparent 70%),radial-gradient(40% 50% at 70% 60%,rgba(245,184,0,.3),transparent 70%);filter:blur(50px)}
+.dash{transform-origin:50% 0;transform:rotateX(calc(24deg * (1 - var(--t,0)))) scale(calc(.94 + .06 * var(--t,0)));display:grid;grid-template-columns:180px 1fr;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-lg);overflow:hidden;text-align:left;font-size:13.5px}
+.dash .side{padding:18px 14px;border-right:1px solid var(--line);background:var(--surface);display:flex;flex-direction:column;gap:4px}
+.dash .side .logo{display:flex;align-items:center;gap:8px;font-weight:700;margin-bottom:14px}
+.dash .side .logo i{width:20px;height:20px;border-radius:6px;background:var(--primary)}
+.dash .side a{padding:7px 10px;border-radius:7px;color:var(--text);text-decoration:none;font-weight:500}
+.dash .side a.on{background:var(--card);color:var(--ink);box-shadow:var(--shadow-sm);border:1px solid var(--line)}
+.dash .main{padding:18px 22px}
+.dash .main h3{font-size:16px;margin-bottom:14px}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.kpi{padding:12px 14px;border:1px solid var(--line);border-radius:10px}
+.kpi small{display:block;font-size:11.5px;color:var(--muted);font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em}
+.kpi b{font-size:20px;letter-spacing:-.02em}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--line)}
+.tbl td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle;white-space:nowrap}
+.tbl tr{animation:slideIn .5s ease both}
+.tbl .who b{display:block;font-weight:600}
+.tbl .who span{color:var(--muted);font-size:12px}
+.tbl .pg em{font-style:normal;background:var(--panel);border-radius:5px;padding:1px 6px;font-size:12px;margin-right:3px}
+.meter{width:90px;height:7px;border-radius:7px;background:var(--panel);overflow:hidden}
+.meter span{display:block;height:100%;border-radius:7px;background:var(--grad)}
+@keyframes slideIn{from{opacity:0;transform:translateY(-10px)}}
+.tilt .stage{max-height:min(380px,calc(100svh - 640px));min-height:240px;overflow:hidden;padding:0 20px;-webkit-mask-image:linear-gradient(#000 60%,transparent);mask-image:linear-gradient(#000 60%,transparent)}
+.tilt{padding-bottom:0}
+@media (max-width:900px){.dash{grid-template-columns:1fr;transform:none}.dash .side{display:none}.tbl .pg,.tbl th:nth-child(3){display:none}.kpis{grid-template-columns:1fr 1fr}}
 
-/* 5 · sources flowing into the form */
-.flow{position:relative;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:16px;min-height:340px}
-.srcs{display:flex;flex-direction:column;gap:10px;z-index:1}
-.srcs span{padding:6px 10px;border-radius:8px;font-size:12.5px;font-weight:600;border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow-sm);white-space:nowrap}
-.form-mini{justify-self:center;width:150px;padding:14px;border:1px solid var(--line);border-radius:12px;background:var(--card);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:8px;z-index:1;transition:box-shadow .25s ease,transform .25s ease}
-.form-mini i{display:block;height:9px;border-radius:5px;background:var(--panel)}
-.form-mini i:nth-child(2){width:80%}.form-mini i:nth-child(3){width:60%}
-.form-mini u{text-decoration:none;margin-top:4px;padding:6px;border-radius:7px;background:var(--primary);color:#FFFFFF;font-size:11px;font-weight:600;text-align:center}
-.form-mini small{font-family:var(--mono);font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-.form-mini.hit{box-shadow:0 0 0 6px var(--accent-soft),var(--shadow);transform:scale(1.04)}
-.leads{display:flex;flex-direction:column;gap:8px;width:168px;min-height:220px;z-index:1}
-.leads div{padding:9px 11px;border:1px solid var(--line);border-left:3px solid var(--c);border-radius:9px;background:var(--card);box-shadow:var(--shadow-sm);font-size:12.5px;line-height:1.35;animation:slideIn .45s ease}
-.leads div b{display:block;font-size:13px}
-.leads div span{color:var(--c);font-weight:600}
-.leads div.out{animation:fadeOut .3s ease forwards}
-.dot{position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;z-index:2;pointer-events:none}
-.flow svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.flow svg path{fill:none;stroke:var(--line-strong);stroke-width:1.2;stroke-dasharray:3 5}
+/* ---------- E · phone notifications ---------- */
+.phn{justify-content:flex-start;padding-bottom:0;gap:32px;background:radial-gradient(60% 50% at 50% 100%,rgba(184,50,90,.12),transparent 70%),radial-gradient(40% 40% at 80% 90%,rgba(245,184,0,.14),transparent 70%)}
+.phone{position:relative;z-index:1;width:330px;height:min(340px,calc(100svh - 600px));min-height:260px;margin-top:auto;border-radius:52px 52px 0 0;padding:14px 14px 0;background:#0B0B0D;box-shadow:0 -10px 60px -20px rgba(94,26,38,.45),inset 0 0 0 2px #2A2A2E}
+.phone .scr{position:relative;height:100%;border-radius:40px 40px 0 0;overflow:hidden;background:linear-gradient(160deg,#3D0F19,#5E1A26 45%,#B45309)}
+.phone .island{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:96px;height:28px;border-radius:20px;background:#000}
+.phone .clock{padding-top:46px;text-align:center;color:rgba(255,255,255,.92);font-size:58px;font-weight:600;letter-spacing:-.03em;line-height:1}
+.phone .date{text-align:center;color:rgba(255,255,255,.7);font-size:14px;font-weight:500;margin-top:4px}
+.notes{position:absolute;left:10px;right:10px;top:136px;display:flex;flex-direction:column;gap:8px}
+.note{display:flex;gap:10px;padding:11px 12px;border-radius:18px;background:rgba(255,255,255,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#0B0B0D;text-align:left;animation:drop .6s cubic-bezier(.2,.8,.2,1)}
+.note.out{animation:fadeOut .4s ease forwards}
+@keyframes drop{from{opacity:0;transform:translateY(-30px) scale(.94)}}
+@keyframes fadeOut{to{opacity:0;transform:scale(.95)}}
+.note .ap{flex:0 0 36px;height:36px;border-radius:9px;background:#5E1A26;display:grid;place-items:center}
+.note .ap svg{width:22px;height:22px}
+.note .tx{flex:1;min-width:0;font-size:12.5px;line-height:1.35}
+.note .tx b{display:flex;justify-content:space-between;font-size:13px}
+.note .tx b span{font-weight:400;color:#6B6B70;font-size:11.5px}
+.note .tx .src{font-weight:600}
+.flt{position:absolute;z-index:2;padding:8px 12px;border-radius:12px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);font-size:13px;font-weight:600;animation:bob 5s ease-in-out infinite}
+.flt small{display:block;font-size:11px;font-weight:500;color:var(--muted)}
+.flt.l1{left:calc(50% - 360px);bottom:190px}.flt.l2{left:calc(50% - 330px);bottom:60px;animation-delay:-1.6s}
+.flt.r1{right:calc(50% - 370px);bottom:220px;animation-delay:-3s}.flt.r2{right:calc(50% - 340px);bottom:80px;animation-delay:-.8s}
+@keyframes bob{50%{transform:translateY(-10px)}}
+@media (max-width:900px){.flt{display:none}}
 
-/* 6 · combined */
-.combo{padding:86px 40px 30px 0}
-.combo .ghost{position:absolute;right:0;width:62%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);box-shadow:var(--shadow);display:flex;align-items:center;gap:10px;font-size:13px;transition:opacity .5s ease,transform .5s ease}
-.combo .ghost.g1{top:0;transform:rotate(3deg);z-index:0}
-.combo .ghost.g2{top:40px;right:26px;transform:rotate(-2deg);z-index:0;opacity:.9}
-.combo .ghost.swap{opacity:0;transform:translateY(-12px) rotate(3deg)}
-.combo .ghost .av{flex:0 0 28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;color:#FFFFFF}
-.combo .ghost .w{flex:1;min-width:0;line-height:1.3}
-.combo .ghost .w b{display:block;font-size:13px}
-.combo .ghost .w span{color:var(--muted);font-size:12px}
-.combo .win{z-index:1}
-.chip-float{position:absolute;z-index:2;padding:6px 10px;border-radius:999px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow);font-size:12px;font-weight:600;animation:bob 4s ease-in-out infinite}
-.chip-float.f1{left:0;top:40px;color:var(--c2)}
-.chip-float.f2{right:8px;bottom:-4px;color:var(--c4);animation-delay:-1.3s}
-.chip-float.f3{left:24%;bottom:-14px;color:var(--c3);animation-delay:-2.6s}
-@keyframes bob{50%{transform:translateY(-8px)}}
-@media (max-width:760px){.chip-float{animation:none}}
-
-@media (max-width:1023px){.combo{padding:56px 0 30px}.chip-float.f1{left:0}.fd{grid-template-columns:1fr}.flow{grid-template-columns:1fr;justify-items:center}.flow svg{display:none}.leads{width:100%}}
+@media (min-width:761px) and (max-height:820px){.sec{padding-top:52px;padding-bottom:32px;gap:26px}.cc{gap:12px}.cc h1{font-size:clamp(34px,3.8vw,50px)}.cc p{font-size:15.5px}.cc .btn.xl{min-height:46px}.tilt{padding-top:60px}.rcpt{gap:26px}.ticket{font-size:11.5px;padding-top:10px}.ticket .nm{font-size:14px;margin-bottom:3px}.cmp .lay{padding:16px 22px 18px;gap:10px}}
+@media (max-width:760px){.belt .row2{animation-duration:90s}.flt,.note{animation:none}}
+@media (prefers-reduced-motion: reduce){.belt .row2{animation:none}}
 </style>
 </head>
 <body>
 <header>
 <div class="wrap">
 <a href="/" class="brand"><svg viewBox="0 0 64 64" aria-hidden="true"><rect class="m-body" x="29" y="44" width="6" height="14" rx="1.5"/><path class="m-body" d="M22 18 H52 a4 4 0 0 1 4 4 V46 H8 V32 a14 14 0 0 1 14 -14 Z"/></svg>Hero options</a>
-<nav class="lab-nav"><a href="#o1">1</a><a href="#o2">2</a><a href="#o3">3</a><a href="#o4">4</a><a href="#o5">5</a><a href="#o6">6</a></nav>
+<nav class="lab-nav"><a href="#a">A</a><a href="#b">B</a><a href="#c">C</a><a href="#d">D</a><a href="#e">E</a></nav>
 </div>
 </header>
 <main>
 
-<!-- ============ OPTION 1 ============ -->
-<section id="o1" class="wrap hero">
-<div class="blob b1"></div><div class="blob b2"></div>
-<div class="opt-label"><b>1</b>Before → after</div>
-<div class="hero-grid">
-<div class="hero-copy">
-<h1><span class="eyebrow">Lead source tracking for contact forms</span>Every contact form, with the story of <span class="grad">how they found you.</span></h1>
-<div class="hero-text">
-<p class="pain">A lead fills out your contact form and all you get is a name and an email. Was it the LinkedIn post? A referral? A Google search? No idea.</p>
-<p class="offer"><b>We fix that.</b> Every submission now arrives with where they came from, the pages they read, and how many times they visited.</p>
+<section id="a" class="sec spot">
+<div class="opt"><b>A</b>Spotlight: the story is already there</div>
+<div class="wall dim" aria-hidden="true"></div>
+<div class="glow" aria-hidden="true"></div>
+<div class="wall lit" aria-hidden="true"></div>
+<div class="cc">
+<span class="eb">Lead source tracking for contact forms</span>
+<h1>Every contact form, with the story of <span class="grad">how they found you.</span></h1>
+<p>A lead fills out your contact form and all you get is a name and an email. Was it the LinkedIn post? A referral? A Google search? No idea.</p>
+<p><b>We fix that.</b> Every submission now arrives with where they came from, the pages they read, and how many times they visited.</p>
+<div class="cta-row"><a href="#" class="btn xl"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Book a 15-minute call</a><a href="#" class="btn alt xl">Contact us</a></div>
+<div class="tm"><span>Set up for you in two days</span><span>Nothing changes on your website</span></div>
 </div>
-<div class="cta">
-<div class="cta-row">
-<a href="#" class="btn xl"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Book a 15-minute call</a>
-<a href="#" class="btn alt xl">Contact us</a>
+<div class="hint">move your mouse</div>
+</section>
+
+<section id="b" class="sec rcpt">
+<div class="opt"><b>B</b>Every lead prints its receipt</div>
+<div class="cc">
+<span class="eb">Lead source tracking for contact forms</span>
+<h1>Every contact form, with the story of <span class="grad">how they found you.</span></h1>
+<p>A lead fills out your contact form and all you get is a name and an email. Was it the LinkedIn post? A referral? A Google search? No idea.</p>
+<p><b>We fix that.</b> Every submission now arrives with where they came from, the pages they read, and how many times they visited.</p>
+<div class="cta-row"><a href="#" class="btn xl"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Book a 15-minute call</a><a href="#" class="btn alt xl">Contact us</a></div>
+<div class="tm"><span>Set up for you in two days</span><span>Nothing changes on your website</span></div>
 </div>
-<p class="terms"><span>Set up for you in two days</span><span>Nothing changes on your website</span></p>
+<div class="belt" aria-hidden="true"><div class="row2"></div></div>
+</section>
+
+<section id="c" class="sec">
+<div class="opt"><b>C</b>Drag to compare</div>
+<div class="hero" style="position:absolute;inset:0;padding:0"></div>
+<div class="cc">
+<span class="eb">Lead source tracking for contact forms</span>
+<h1>Every contact form, with the story of <span class="grad">how they found you.</span></h1>
+<p>A lead fills out your contact form and all you get is a name and an email. Was it the LinkedIn post? A referral? A Google search? No idea.</p>
+<p><b>We fix that.</b> Every submission now arrives with where they came from, the pages they read, and how many times they visited.</p>
+<div class="cta-row"><a href="#" class="btn xl"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Book a 15-minute call</a><a href="#" class="btn alt xl">Contact us</a></div>
+<div class="tm"><span>Set up for you in two days</span><span>Nothing changes on your website</span></div>
 </div>
+<div class="cmp" data-cmp>
+<span class="tagx l">What you get today</span><span class="tagx r">With Attriform</span>
+<div class="lay after">
+<div class="top">New lead from your website <span>Just now</span></div>
+<div class="cells">
+<div class="cell"><small>Name</small><span>Mike Reyes</span></div>
+<div class="cell"><small>Email</small><span>mike@reyesplumbing.com</span></div>
+<div class="cell n"><small>Came from</small><span>Google Ads, “fleet gps tracking”</span></div>
+<div class="cell n"><small>Pages read</small><span class="chips"><em>Home</em><em>Pricing</em><em>Reviews</em><em>Pricing</em><em>Contact</em></span></div>
+<div class="cell n"><small>Visits</small><span>3rd in 8 days</span></div>
+<div class="cell n"><small>From</small><span>iPhone, Dallas TX</span></div>
 </div>
-<div class="vis">
-<div class="win beam ba" data-ba data-state="before">
-<div class="chrome"><i></i><i></i><i></i><span class="ttl">inbox</span></div>
-<div class="win-body">
-<div class="toggle"><span class="knob"></span><button type="button" data-s="before">Without Attriform</button><button type="button" data-s="after">With Attriform</button></div>
-<div class="mail">
-<div class="hd">New lead from your website <span>Just now</span></div>
-<div class="row"><span class="k">Name</span><span class="v">Mike Reyes</span></div>
-<div class="row"><span class="k">Email</span><span class="v">mike@reyesplumbing.com</span></div>
-<div class="row"><span class="k">Message</span><span class="v">Need a quote for 2 trucks.</span></div>
-<div class="unknown">Where did they come from? No idea.</div>
-<div class="add">
-<div class="row hl"><span class="k">Came from</span><span class="v">Google Ads, “fleet gps tracking”</span></div>
-<div class="row hl"><span class="k">Pages read</span><span class="v journey"><span>Home</span><i></i><span>Pricing</span><i></i><span>Reviews</span><i></i><span>Pricing</span><i></i><span>Contact</span></span></div>
-<div class="row hl"><span class="k">Visits</span><span class="v">3rd visit in 8 days</span></div>
-<div class="row hl"><span class="k">From</span><span class="v">iPhone, Dallas TX</span></div>
+<div class="fixline"><b>Call Mike first.</b> He found you on Google, came back three times and read your pricing twice.</div>
 </div>
+<div class="lay before">
+<div class="top">New lead from your website <span>Just now</span></div>
+<div class="cells">
+<div class="cell"><small>Name</small><span>Mike Reyes</span></div>
+<div class="cell"><small>Email</small><span>mike@reyesplumbing.com</span></div>
+<div class="cell n"><small>Came from</small><span>?</span></div>
+<div class="cell n"><small>Pages read</small><span>?</span></div>
+<div class="cell n"><small>Visits</small><span>?</span></div>
+<div class="cell n"><small>From</small><span>?</span></div>
 </div>
-<p class="fix"><b>Call Mike first.</b> He found you on Google, came back three times and read your pricing twice.</p>
+<div class="fixline">No idea where they came from. Every lead gets the same call.</div>
 </div>
-<div class="scan"></div>
+<div class="handle" aria-hidden="true"></div>
+</div>
+<p class="cmp-hint">drag the handle</p>
+</section>
+
+<section id="d" class="sec tilt">
+<div class="opt"><b>D</b>The product, front and centre</div>
+<div class="hero" style="position:absolute;inset:0;padding:0"></div>
+<div class="cc">
+<span class="eb">Lead source tracking for contact forms</span>
+<h1>Every contact form, with the story of <span class="grad">how they found you.</span></h1>
+<p>A lead fills out your contact form and all you get is a name and an email. Was it the LinkedIn post? A referral? A Google search? No idea.</p>
+<p><b>We fix that.</b> Every submission now arrives with where they came from, the pages they read, and how many times they visited.</p>
+<div class="cta-row"><a href="#" class="btn xl"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Book a 15-minute call</a><a href="#" class="btn alt xl">Contact us</a></div>
+<div class="tm"><span>Set up for you in two days</span><span>Nothing changes on your website</span></div>
+</div>
+<div class="stage" data-tilt>
+<div class="dash">
+<div class="side"><div class="logo"><i></i>Attriform</div><a class="on">Leads</a><a>Sources</a><a>Pages</a><a>Reports</a></div>
+<div class="main">
+<h3>Leads this month</h3>
+<div class="kpis"><div class="kpi"><small>New leads</small><b>48</b></div><div class="kpi"><small>Top source</small><b>Google Ads</b></div><div class="kpi"><small>Visits before contact</small><b>2.7</b></div></div>
+<table class="tbl"><thead><tr><th>Lead</th><th>Came from</th><th>Pages read</th><th>Visits</th><th>Interest</th></tr></thead><tbody></tbody></table>
 </div>
 </div>
 </div>
 </section>
 
-<!-- ============ OPTION 2 ============ -->
-<section id="o2" class="wrap hero">
-<div class="blob b1"></div><div class="blob b2"></div>
-<div class="opt-label"><b>2</b>The visitor's journey, drawn live</div>
-<div class="hero-grid">
-<div class="hero-copy">
-<h1><span class="eyebrow">Lead source tracking for contact forms</span>Every contact form, with the story of <span class="grad">how they found you.</span></h1>
-<div class="hero-text">
-<p class="pain">A lead fills out your contact form and all you get is a name and an email. Was it the LinkedIn post? A referral? A Google search? No idea.</p>
-<p class="offer"><b>We fix that.</b> Every submission now arrives with where they came from, the pages they read, and how many times they visited.</p>
+<section id="e" class="sec phn">
+<div class="opt"><b>E</b>The notification you'll actually get</div>
+<div class="cc">
+<span class="eb">Lead source tracking for contact forms</span>
+<h1>Every contact form, with the story of <span class="grad">how they found you.</span></h1>
+<p>A lead fills out your contact form and all you get is a name and an email. Was it the LinkedIn post? A referral? A Google search? No idea.</p>
+<p><b>We fix that.</b> Every submission now arrives with where they came from, the pages they read, and how many times they visited.</p>
+<div class="cta-row"><a href="#" class="btn xl"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Book a 15-minute call</a><a href="#" class="btn alt xl">Contact us</a></div>
+<div class="tm"><span>Set up for you in two days</span><span>Nothing changes on your website</span></div>
 </div>
-<div class="cta">
-<div class="cta-row">
-<a href="#" class="btn xl"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Book a 15-minute call</a>
-<a href="#" class="btn alt xl">Contact us</a>
-</div>
-<p class="terms"><span>Set up for you in two days</span><span>Nothing changes on your website</span></p>
-</div>
-</div>
-<div class="vis">
-<div class="win beam jr" data-jr>
-<div class="chrome"><i></i><i></i><i></i><span class="ttl">visitor journey</span></div>
-<div class="win-body">
-<div class="track"><div class="line"><span></span></div>
-<div class="node"><span class="ic">Ad</span><b>Google Ads</b><small>“fleet gps tracking”</small></div>
-<div class="node"><span class="ic">1</span><b>Home</b></div>
-<div class="node"><span class="ic">2</span><b>Pricing</b></div>
-<div class="node"><span class="ic">3</span><b>Reviews</b></div>
-<div class="node"><span class="ic">4</span><b>Pricing</b></div>
-<div class="node"><span class="ic">✉</span><b>Contact form</b></div>
-</div>
-<div class="mail lead">
-<div class="hd">New lead from your website <span class="sent">✓ Submitted</span></div>
-<div class="row"><span class="k">Name</span><span class="v">Mike Reyes</span></div>
-<div class="row hl wait" data-r="src"><span class="k">Came from</span><span class="v">…</span></div>
-<div class="row hl wait" data-r="pages"><span class="k">Pages read</span><span class="v chips"></span></div>
-<div class="row hl wait" data-r="visits"><span class="k">Visits</span><span class="v">…</span></div>
-</div>
-<p class="fix"><b>Call Mike first.</b> He found you on Google, came back three times and read your pricing twice.</p>
-</div>
-</div>
-</div>
-</div>
-</section>
-
-<!-- ============ OPTION 3 ============ -->
-<section id="o3" class="wrap hero">
-<div class="blob b1"></div><div class="blob b2"></div>
-<div class="opt-label"><b>3</b>Live lead feed</div>
-<div class="hero-grid">
-<div class="hero-copy">
-<h1><span class="eyebrow">Lead source tracking for contact forms</span>Every contact form, with the story of <span class="grad">how they found you.</span></h1>
-<div class="hero-text">
-<p class="pain">A lead fills out your contact form and all you get is a name and an email. Was it the LinkedIn post? A referral? A Google search? No idea.</p>
-<p class="offer"><b>We fix that.</b> Every submission now arrives with where they came from, the pages they read, and how many times they visited.</p>
-</div>
-<div class="cta">
-<div class="cta-row">
-<a href="#" class="btn xl"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Book a 15-minute call</a>
-<a href="#" class="btn alt xl">Contact us</a>
-</div>
-<p class="terms"><span>Set up for you in two days</span><span>Nothing changes on your website</span></p>
-</div>
-</div>
-<div class="vis">
-<div class="win beam">
-<div class="chrome"><i></i><i></i><i></i><span class="ttl">inbox · new leads</span></div>
-<div class="win-body fd" data-fd>
-<div><h4>Incoming</h4><ul class="feed"></ul></div>
-<div><h4>Leads by source</h4><div class="bars"></div></div>
-</div>
-</div>
-</div>
-</div>
-</section>
-
-<!-- ============ OPTION 4 ============ -->
-<section id="o4" class="wrap hero">
-<div class="blob b1"></div><div class="blob b2"></div>
-<div class="opt-label"><b>4</b>CRM field upgrade</div>
-<div class="hero-grid">
-<div class="hero-copy">
-<h1><span class="eyebrow">Lead source tracking for contact forms</span>Every contact form, with the story of <span class="grad">how they found you.</span></h1>
-<div class="hero-text">
-<p class="pain">A lead fills out your contact form and all you get is a name and an email. Was it the LinkedIn post? A referral? A Google search? No idea.</p>
-<p class="offer"><b>We fix that.</b> Every submission now arrives with where they came from, the pages they read, and how many times they visited.</p>
-</div>
-<div class="cta">
-<div class="cta-row">
-<a href="#" class="btn xl"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Book a 15-minute call</a>
-<a href="#" class="btn alt xl">Contact us</a>
-</div>
-<p class="terms"><span>Set up for you in two days</span><span>Nothing changes on your website</span></p>
-</div>
-</div>
-<div class="vis">
-<div class="win beam" data-crm>
-<div class="chrome"><i></i><i></i><i></i><span class="ttl">crm · contacts / Mike Reyes</span></div>
-<div class="win-body">
-<div class="crm-head"><span class="av">MR</span><span class="nm"><b>Mike Reyes</b><span>Reyes Plumbing · mike@reyesplumbing.com</span></span><span class="pill">Lead</span></div>
-<div class="props">
-<div class="prop"><small>Phone</small><span>(214) 555-0148</span></div>
-<div class="prop"><small>Created</small><span>Just now</span></div>
-<div class="prop src unknown"><small>Lead source</small><span>Unknown</span></div>
-</div>
-<div class="tl"><h4>Activity</h4><ul></ul></div>
-</div>
-</div>
-</div>
-</div>
-</section>
-
-<!-- ============ OPTION 5 ============ -->
-<section id="o5" class="wrap hero">
-<div class="blob b1"></div><div class="blob b2"></div>
-<div class="opt-label"><b>5</b>Sources flowing into the form</div>
-<div class="hero-grid">
-<div class="hero-copy">
-<h1><span class="eyebrow">Lead source tracking for contact forms</span>Every contact form, with the story of <span class="grad">how they found you.</span></h1>
-<div class="hero-text">
-<p class="pain">A lead fills out your contact form and all you get is a name and an email. Was it the LinkedIn post? A referral? A Google search? No idea.</p>
-<p class="offer"><b>We fix that.</b> Every submission now arrives with where they came from, the pages they read, and how many times they visited.</p>
-</div>
-<div class="cta">
-<div class="cta-row">
-<a href="#" class="btn xl"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Book a 15-minute call</a>
-<a href="#" class="btn alt xl">Contact us</a>
-</div>
-<p class="terms"><span>Set up for you in two days</span><span>Nothing changes on your website</span></p>
-</div>
-</div>
-<div class="vis">
-<div class="win beam">
-<div class="chrome"><i></i><i></i><i></i><span class="ttl">every lead, tagged with its source</span></div>
-<div class="win-body">
-<div class="flow" data-flow>
-<svg aria-hidden="true"></svg>
-<div class="srcs"></div>
-<div class="form-mini"><small>Contact form</small><i></i><i></i><i></i><u>Send</u></div>
-<div class="leads"></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-
-<!-- ============ OPTION 6 ============ -->
-<section id="o6" class="wrap hero">
-<div class="blob b1"></div><div class="blob b2"></div>
-<div class="opt-label"><b>6</b>Before → after, plus more leads arriving</div>
-<div class="hero-grid">
-<div class="hero-copy">
-<h1><span class="eyebrow">Lead source tracking for contact forms</span>Every contact form, with the story of <span class="grad">how they found you.</span></h1>
-<div class="hero-text">
-<p class="pain">A lead fills out your contact form and all you get is a name and an email. Was it the LinkedIn post? A referral? A Google search? No idea.</p>
-<p class="offer"><b>We fix that.</b> Every submission now arrives with where they came from, the pages they read, and how many times they visited.</p>
-</div>
-<div class="cta">
-<div class="cta-row">
-<a href="#" class="btn xl"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Book a 15-minute call</a>
-<a href="#" class="btn alt xl">Contact us</a>
-</div>
-<p class="terms"><span>Set up for you in two days</span><span>Nothing changes on your website</span></p>
-</div>
-</div>
-<div class="vis combo" data-combo>
-<div class="ghost g1"></div>
-<div class="ghost g2"></div>
-<div class="win beam ba" data-ba data-state="before">
-<div class="chrome"><i></i><i></i><i></i><span class="ttl">inbox</span></div>
-<div class="win-body">
-<div class="toggle"><span class="knob"></span><button type="button" data-s="before">Without Attriform</button><button type="button" data-s="after">With Attriform</button></div>
-<div class="mail">
-<div class="hd">New lead from your website <span>Just now</span></div>
-<div class="row"><span class="k">Name</span><span class="v">Mike Reyes</span></div>
-<div class="row"><span class="k">Email</span><span class="v">mike@reyesplumbing.com</span></div>
-<div class="row"><span class="k">Message</span><span class="v">Need a quote for 2 trucks.</span></div>
-<div class="unknown">Where did they come from? No idea.</div>
-<div class="add">
-<div class="row hl"><span class="k">Came from</span><span class="v">Google Ads, “fleet gps tracking”</span></div>
-<div class="row hl"><span class="k">Pages read</span><span class="v journey"><span>Home</span><i></i><span>Pricing</span><i></i><span>Reviews</span><i></i><span>Pricing</span><i></i><span>Contact</span></span></div>
-<div class="row hl"><span class="k">Visits</span><span class="v">3rd visit in 8 days</span></div>
-<div class="row hl"><span class="k">From</span><span class="v">iPhone, Dallas TX</span></div>
-</div>
-</div>
-<p class="fix"><b>Call Mike first.</b> He found you on Google, came back three times and read your pricing twice.</p>
-</div>
-<div class="scan"></div>
-</div>
-<span class="chip-float f1">● Google Ads</span>
-<span class="chip-float f2">● LinkedIn post</span>
-<span class="chip-float f3">● Referral</span>
-</div>
-</div>
+<div class="flt l1">Google Ads<small>“fleet gps tracking”</small></div>
+<div class="flt l2">Read Pricing twice<small>serious buyer</small></div>
+<div class="flt r1">LinkedIn post<small>your Tuesday update</small></div>
+<div class="flt r2">3rd visit in 8 days<small>came back to compare</small></div>
+<div class="phone" aria-hidden="true"><div class="scr"><div class="island"></div><div class="clock">9:41</div><div class="date">Tuesday, November 17</div><div class="notes"></div></div></div>
 </section>
 
 </main>
 <script>
 (function(){
-  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var COL = {"Google Ads":["#B45309","#FEF3C7"],"LinkedIn post":["#4338CA","#E0E7FF"],"Referral":["#0F766E","#CCFBF1"],"Google search":["#15803D","#DCFCE7"],"Facebook ad":["#1D4ED8","#DBEAFE"],"Directory listing":["#BE185D","#FCE7F3"]};
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches, small = matchMedia("(max-width:760px)").matches;
+  var COL = {"Google Ads":"#B45309","LinkedIn post":"#4338CA","Referral":"#0F766E","Google search":"#15803D","Facebook ad":"#1D4ED8","Directory listing":"#BE185D","Instagram post":"#C026D3","Newsletter":"#0E7490"};
   var LEADS = [
-    ["Mike Reyes","Reyes Plumbing","Google Ads"],["Sarah Kim","Kim Family Dental","LinkedIn post"],["Tom Ellis","Ellis Roofing","Referral"],
-    ["Ana Lopez","Lopez & Hart Law","Google search"],["Dev Patel","Patel HVAC","Facebook ad"],["Jo Burke","Burke Cleaning Co.","Directory listing"],
-    ["Luis Ortiz","Ortiz Landscaping","Google Ads"],["Priya Shah","Shah Bookkeeping","Referral"],["Chris Wu","Wu Fleet Services","Google Ads"]
+    {n:"Mike Reyes",c:"Reyes Plumbing",s:"Google Ads",k:"“fleet gps tracking”",p:"Home › Pricing › Pricing",v:"3rd in 8 days",f:"Dallas TX",i:92,hot:1},
+    {n:"Sarah Kim",c:"Kim Family Dental",s:"LinkedIn post",k:"",p:"Home › Services",v:"1st visit",f:"Austin TX",i:38},
+    {n:"Tom Ellis",c:"Ellis Roofing",s:"Referral",k:"from bni.com",p:"Reviews › Pricing › Contact",v:"2nd today",f:"Denver CO",i:81,hot:1},
+    {n:"Ana Lopez",c:"Lopez & Hart Law",s:"Google search",k:"“estate lawyer near me”",p:"Home › About › Contact",v:"1st visit",f:"Columbus OH",i:55},
+    {n:"Dev Patel",c:"Patel HVAC",s:"Facebook ad",k:"",p:"Pricing › FAQ › Pricing",v:"4th in 2 weeks",f:"Phoenix AZ",i:88,hot:1},
+    {n:"Jo Burke",c:"Burke Cleaning Co.",s:"Directory listing",k:"Yelp",p:"Home",v:"1st visit",f:"Tampa FL",i:24},
+    {n:"Luis Ortiz",c:"Ortiz Landscaping",s:"Instagram post",k:"",p:"Gallery › Pricing",v:"2nd in 5 days",f:"Boise ID",i:61},
+    {n:"Priya Shah",c:"Shah Bookkeeping",s:"Newsletter",k:"October issue",p:"Case study › Pricing",v:"3rd in 3 weeks",f:"Raleigh NC",i:74}
   ];
-  function initials(n){ return n.split(" ").map(function(p){ return p[0]; }).join(""); }
-  function badge(src){ var c = COL[src]; return '<span class="badge" style="color:'+c[0]+';background:'+c[1]+'">'+src+'</span>'; }
   function wait(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
 
-  /* 1 and 6: before/after card, flips by itself; a click takes over for 12 seconds */
-  document.querySelectorAll("[data-ba]").forEach(function(card){
-    var hold = 0;
-    function set(s){
-      if(card.dataset.state === s) return;
-      card.dataset.state = s; card.classList.remove("settled");
-      if(s === "after"){
-        card.style.setProperty("--scan-h", card.offsetHeight + "px");
-        card.classList.remove("scanning"); void card.offsetWidth; card.classList.add("scanning");
-        setTimeout(function(){ card.classList.add("settled"); }, 2600);
-      }
-    }
-    card.querySelectorAll(".toggle button").forEach(function(b){ b.addEventListener("click", function(){ hold = Date.now() + 12000; set(b.dataset.s); }); });
-    if(reduce){ set("after"); return; }
-    var t = 0;
-    setInterval(function(){ if(Date.now() < hold) return; t++; set(card.dataset.state === "before" ? "after" : "before"); }, 3600);
-    setTimeout(function(){ set("after"); }, 1200);
-  });
-
-  /* 2: journey */
-  var jr = document.querySelector("[data-jr]");
-  if(jr) (async function loop(){
-    var nodes = jr.querySelectorAll(".node"), fill = jr.querySelector(".line span"), chips = jr.querySelector(".chips");
-    var r = function(k){ return jr.querySelector('[data-r="'+k+'"]'); };
-    while(true){
-      jr.classList.remove("done"); nodes.forEach(function(n){ n.classList.remove("on","cur"); }); fill.style.width = "0";
-      chips.innerHTML = ""; ["src","pages","visits"].forEach(function(k){ r(k).classList.add("wait"); });
-      r("src").querySelector(".v").textContent = "…"; r("visits").querySelector(".v").textContent = "…";
-      await wait(900);
-      var pages = ["Home","Pricing","Reviews","Pricing"];
-      for(var i = 0; i < nodes.length; i++){
-        nodes.forEach(function(n){ n.classList.remove("cur"); });
-        nodes[i].classList.add("on","cur");
-        fill.style.width = (i / (nodes.length - 1) * 100) + "%";
-        if(i === 0){ r("src").classList.remove("wait"); r("src").querySelector(".v").textContent = "Google Ads, “fleet gps tracking”"; }
-        if(i >= 1 && i <= 4){ r("pages").classList.remove("wait"); if(i > 1) chips.insertAdjacentHTML("beforeend","<i></i>"); chips.insertAdjacentHTML("beforeend","<span>"+pages[i-1]+"</span>"); }
-        if(i === 5){ r("visits").classList.remove("wait"); r("visits").querySelector(".v").textContent = "3rd visit in 8 days"; jr.classList.add("done"); }
-        await wait(reduce ? 0 : 950);
-      }
-      if(reduce) return;
-      await wait(4200);
-    }
-  })();
-
-  /* 3: live feed */
-  var fd = document.querySelector("[data-fd]");
-  if(fd){
-    var feed = fd.querySelector(".feed"), bars = fd.querySelector(".bars"), counts = {"Google Ads":9,"Referral":6,"Google search":5,"LinkedIn post":4,"Facebook ad":3,"Directory listing":1};
-    var srcs = Object.keys(counts);
-    bars.innerHTML = srcs.map(function(s){ return '<div class="bar" data-s="'+s+'"><span>'+s+'</span><b>'+counts[s]+'</b><div class="t"><span style="background:'+COL[s][0]+'"></span></div></div>'; }).join("");
-    function draw(){ var max = Math.max.apply(null, srcs.map(function(s){ return counts[s]; })); srcs.forEach(function(s){ var b = bars.querySelector('[data-s="'+s+'"]'); b.querySelector("b").textContent = counts[s]; b.querySelector(".t span").style.width = (counts[s] / max * 100) + "%"; }); }
-    var k = 0;
-    function add(){
-      var L = LEADS[k++ % LEADS.length];
-      var li = document.createElement("li");
-      li.innerHTML = '<span class="av" style="background:'+COL[L[2]][0]+'">'+initials(L[0])+'</span><span class="who"><b>'+L[0]+'</b><span>'+L[1]+' · just now</span></span>'+badge(L[2]);
-      feed.prepend(li);
-      var items = feed.querySelectorAll("li:not(.out)");
-      if(items.length > 5){ var last = items[items.length - 1]; last.classList.add("out"); setTimeout(function(){ last.remove(); }, 350); }
-      counts[L[2]]++; draw();
-      var b = bars.querySelector('[data-s="'+L[2]+'"]'); b.classList.remove("bump"); void b.offsetWidth; b.classList.add("bump");
-    }
-    draw(); add(); add(); add();
-    if(!reduce) setInterval(add, 2200);
+  /* A: wall of hidden story details, lit by a spotlight that follows the mouse (and wanders on its own) */
+  var spot = document.getElementById("a");
+  if(spot){
+    var bits = [["s","Google Ads · “fleet gps tracking”"],["p","Read Pricing twice"],["v","3rd visit in 8 days"],["d","iPhone · Dallas TX"],["s","LinkedIn post"],["p","Home → Pricing → Contact"],["s","Referral · bni.com"],["v","Came back after 3 weeks"],["s","Google search · “commercial plumber”"],["p","Read the case study"],["d","Desktop · Minneapolis MN"],["s","Facebook ad"],["v","2nd visit today"],["s","Newsletter · October issue"],["p","Read Reviews"],["s","Google Maps"],["d","Android · Tampa FL"],["s","Instagram post"],["p","Read About us"],["v","4th visit in 2 weeks"],["s","Yelp listing"],["p","Pricing → FAQ → Pricing"],["s","Thomasnet profile"],["d","Desktop · Columbus OH"]];
+    var html = ""; for(var i = 0; i < 84; i++){ var b = bits[(i * 7) % bits.length]; html += '<span class="'+b[0]+'">'+b[1]+'</span>'; }
+    spot.querySelectorAll(".wall").forEach(function(w){ w.innerHTML = html; });
+    var last = 0, t0 = performance.now();
+    spot.addEventListener("pointermove", function(e){ var r = spot.getBoundingClientRect(); spot.style.setProperty("--x", (e.clientX - r.left) + "px"); spot.style.setProperty("--y", (e.clientY - r.top) + "px"); last = performance.now(); });
+    if(!reduce && !small) (function wander(now){
+      if(now - last > 2500){ var t = (now - t0) / 1000, r = spot.getBoundingClientRect(); spot.style.setProperty("--x", (r.width * (.5 + .38 * Math.sin(t * .45))) + "px"); spot.style.setProperty("--y", (r.height * (.48 + .32 * Math.sin(t * .7 + 1))) + "px"); }
+      requestAnimationFrame(wander);
+    })(performance.now());
   }
 
-  /* 4: CRM */
-  var crm = document.querySelector("[data-crm]");
-  if(crm) (async function loop(){
-    var src = crm.querySelector(".prop.src"), val = src.querySelector("span"), ul = crm.querySelector(".tl ul");
-    var text = "Google Ads · “fleet gps tracking”";
-    var acts = [["Clicked a Google ad","8 days ago"],["Viewed Home",""],["Viewed Pricing",""],["Viewed Reviews","3 days ago"],["Viewed Pricing","today"],["Submitted the contact form","just now"]];
-    while(true){
-      src.className = "prop src unknown"; val.textContent = "Unknown"; ul.innerHTML = "";
-      await wait(reduce ? 0 : 1600);
-      src.className = "prop src typing"; val.textContent = "";
-      for(var i = 0; i < text.length; i++){ val.textContent = text.slice(0, i + 1); await wait(reduce ? 0 : 38); }
-      src.className = "prop src found"; val.insertAdjacentHTML("beforeend",'<span class="ok">✓</span>');
-      for(var j = 0; j < acts.length; j++){
-        await wait(reduce ? 0 : 420);
-        ul.insertAdjacentHTML("beforeend", '<li class="'+(j === acts.length - 1 ? "last" : "")+'">'+acts[j][0]+(acts[j][1] ? "<em>"+acts[j][1]+"</em>" : "")+"</li>");
-      }
-      if(reduce) return;
-      await wait(4000);
-    }
-  })();
-
-  /* 5: particles from sources into the form, out as tagged leads */
-  var flow = document.querySelector("[data-flow]");
-  if(flow){
-    var srcBox = flow.querySelector(".srcs"), form = flow.querySelector(".form-mini"), out = flow.querySelector(".leads"), svg = flow.querySelector("svg");
-    var names = ["Google Ads","LinkedIn post","Referral","Google search","Facebook ad"];
-    srcBox.innerHTML = names.map(function(n){ return '<span style="color:'+COL[n][0]+'">● '+n+'</span>'; }).join("");
-    function pos(el, side){ var a = flow.getBoundingClientRect(), b = el.getBoundingClientRect(); return {x: (side === "r" ? b.right : side === "l" ? b.left : b.left + b.width / 2) - a.left, y: b.top + b.height / 2 - a.top}; }
-    function lines(){
-      if(getComputedStyle(svg).display === "none") return;
-      var f = pos(form, "l");
-      svg.innerHTML = Array.prototype.map.call(srcBox.children, function(s){ var p = pos(s, "r"); var mx = (p.x + f.x) / 2; return '<path d="M'+p.x+' '+p.y+' C '+mx+' '+p.y+', '+mx+' '+f.y+', '+f.x+' '+f.y+'"/>'; }).join("");
-    }
-    lines(); addEventListener("resize", lines);
-    var n = 0;
-    function shoot(){
-      var i = Math.floor(Math.random() * names.length), name = names[i], s = srcBox.children[i];
-      var p = pos(s, "r"), f = pos(form, "l");
-      var d = document.createElement("span"); d.className = "dot"; d.style.background = COL[name][0]; d.style.boxShadow = "0 0 12px " + COL[name][0];
-      d.style.left = p.x + "px"; d.style.top = p.y + "px"; flow.appendChild(d);
-      var mx = (f.x - p.x) / 2;
-      var anim = d.animate([{transform:"translate(0,0)"},{transform:"translate("+mx+"px,"+((f.y - p.y) * .15)+"px)",offset:.45},{transform:"translate("+(f.x - p.x + 20)+"px,"+(f.y - p.y)+"px)"}], {duration: 1200, easing: "cubic-bezier(.45,0,.3,1)"});
-      anim.onfinish = function(){
-        d.remove(); form.classList.add("hit"); setTimeout(function(){ form.classList.remove("hit"); }, 260);
-        var pool = LEADS.filter(function(l){ return l[2] === name; }); var L = [pool.length ? pool[n % pool.length][0] : "", ""]; L[0] = LEADS[n % LEADS.length][0];
-        var c = document.createElement("div"); c.style.setProperty("--c", COL[name][0]);
-        c.innerHTML = "<b>"+L[0]+"</b><span>"+name+"</span>";
-        out.prepend(c); n++;
-        var items = out.querySelectorAll("div:not(.out)"); if(items.length > 4){ var last = items[items.length - 1]; last.classList.add("out"); setTimeout(function(){ last.remove(); }, 300); }
-      };
-    }
-    if(!reduce) setInterval(shoot, 1300); else shoot();
+  /* B: receipts on a conveyor */
+  var belt = document.querySelector(".belt");
+  if(belt){
+    function ticket(L){ return '<div class="ticket"><div class="th">NEW LEAD <span>just now</span></div><div class="nm">'+L.n+'</div>'+
+      '<div class="ln"><i>SOURCE</i><b style="color:'+COL[L.s]+'">'+L.s+(L.k ? " "+L.k : "")+'</b></div>'+
+      '<div class="ln"><i>READ</i><span>'+L.p+'</span></div><div class="ln"><i>VISITS</i><span>'+L.v+'</span></div><div class="ln"><i>FROM</i><span>'+L.f+'</span></div>'+
+      (L.hot ? '<div class="hot">★ CALL FIRST</div>' : '')+'</div>'; }
+    var rows = belt.querySelectorAll(".row2");
+    var a = LEADS.map(ticket).join(""), b2 = LEADS.slice(4).concat(LEADS.slice(0, 4)).map(ticket).join("");
+    rows[0].innerHTML = a + a;
   }
 
-  /* 6: notifications arriving behind the main card */
-  var combo = document.querySelector("[data-combo]");
-  if(combo){
-    var gs = combo.querySelectorAll(".ghost"), m = 1;
-    function fill(g, L){ g.innerHTML = '<span class="av" style="background:'+COL[L[2]][0]+'">'+initials(L[0])+'</span><span class="w"><b>New lead · '+L[0]+'</b><span>'+L[1]+'</span></span>'+badge(L[2]); }
-    fill(gs[0], LEADS[1]); fill(gs[1], LEADS[2]);
-    if(!reduce) setInterval(function(){
-      var g = gs[m % 2]; g.classList.add("swap");
-      setTimeout(function(){ fill(g, LEADS[(m + 2) % LEADS.length]); g.classList.remove("swap"); }, 500); m++;
-    }, 2600);
+  /* C: drag to compare, sweeps by itself until touched */
+  var cmp = document.querySelector("[data-cmp]");
+  if(cmp){
+    var touched = false, dragging = false;
+    function setP(x){ var r = cmp.getBoundingClientRect(); var p = Math.max(4, Math.min(96, (x - r.left) / r.width * 100)); cmp.style.setProperty("--p", p + "%"); }
+    cmp.addEventListener("pointerdown", function(e){ touched = dragging = true; cmp.setPointerCapture(e.pointerId); setP(e.clientX); });
+    cmp.addEventListener("pointermove", function(e){ if(dragging) setP(e.clientX); });
+    cmp.addEventListener("pointerup", function(){ dragging = false; });
+    if(!reduce && !small){ var s0 = performance.now(); (function sweep(now){ if(touched) return; var t = (now - s0) / 1000; cmp.style.setProperty("--p", (50 + 38 * Math.sin(t * .9)) + "%"); requestAnimationFrame(sweep); })(s0); }
+    else cmp.style.setProperty("--p", "45%");
+  }
+
+  /* D: tilted dashboard that flattens as you scroll; rows keep arriving */
+  var stage = document.querySelector("[data-tilt]");
+  if(stage){
+    var tb = stage.querySelector("tbody");
+    function row(L){ var pg = L.p.split(" › ").map(function(x){ return "<em>"+x+"</em>"; }).join(""); return '<tr><td class="who"><b>'+L.n+'</b><span>'+L.c+'</span></td><td><span class="badge" style="color:'+COL[L.s]+';background:color-mix(in srgb,'+COL[L.s]+' 12%,transparent)">'+L.s+'</span></td><td class="pg">'+pg+'</td><td>'+L.v+'</td><td><div class="meter"><span style="width:'+L.i+'%"></span></div></td></tr>'; }
+    tb.innerHTML = LEADS.slice(0, 6).map(row).join("");
+    var k = 6;
+    if(!reduce && !small) setInterval(function(){ tb.insertAdjacentHTML("afterbegin", row(LEADS[k++ % LEADS.length])); if(tb.children.length > 6) tb.lastElementChild.remove(); }, 2600);
+    function onScroll(){ var r = stage.getBoundingClientRect(); var t = Math.max(0, Math.min(1, 1 - (r.top - innerHeight * .15) / (innerHeight * .55))); stage.style.setProperty("--t", t.toFixed(3)); }
+    if(!reduce){ addEventListener("scroll", onScroll, {passive:true}); onScroll(); } else stage.style.setProperty("--t", 1);
+  }
+
+  /* E: lock-screen notifications dropping in */
+  var notes = document.querySelector(".notes");
+  if(notes){
+    var logo = '<svg viewBox="0 0 64 64"><rect x="29" y="44" width="6" height="14" rx="1.5" fill="#fff"/><path d="M22 18 H52 a4 4 0 0 1 4 4 V46 H8 V32 a14 14 0 0 1 14 -14 Z" fill="#fff"/></svg>';
+    var m = 0;
+    function push(){
+      var L = LEADS[m++ % LEADS.length];
+      var el = document.createElement("div"); el.className = "note";
+      el.innerHTML = '<span class="ap">'+logo+'</span><span class="tx"><b>New lead · '+L.n+'<span>now</span></b>Came from <span class="src" style="color:'+COL[L.s]+'">'+L.s+'</span> · read '+L.p.split(" › ").pop()+' · '+L.v+'</span>';
+      notes.prepend(el);
+      var all = notes.querySelectorAll(".note:not(.out)"); if(all.length > 3){ var o = all[all.length - 1]; o.classList.add("out"); setTimeout(function(){ o.remove(); }, 400); }
+    }
+    push(); push(); push();
+    if(!reduce) setInterval(push, 2600);
   }
 })();
 </script>

@@ -254,46 +254,6 @@ header nav .btn + .btn{margin-left:4px}
 .hero .cta .terms span{display:inline-flex;align-items:center;gap:6px}
 .hero .cta .terms span::before{content:"";width:14px;height:14px;flex:0 0 auto;background:var(--green);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E") center/contain no-repeat}
 
-/* product preview: the example lead, shown in an app window */
-.s-card{position:relative;width:min(100%,860px);text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-lg);animation:cardIn .7s ease both}
-.s-card::before{content:"";position:absolute;inset:-40px -60px;z-index:-1;pointer-events:none;background:radial-gradient(45% 55% at 30% 40%,rgba(94,26,38,.16),transparent 70%),radial-gradient(40% 50% at 75% 60%,rgba(245,184,0,.16),transparent 70%);filter:blur(30px)}
-@keyframes cardIn{from{opacity:0;transform:translateY(18px)}}
-.chrome{display:flex;align-items:center;gap:7px;height:42px;padding:0 16px;border-bottom:1px solid var(--line);background:var(--surface);border-radius:16px 16px 0 0}
-.chrome i{width:11px;height:11px;border-radius:50%;background:var(--line-strong)}
-.chrome i:nth-child(1){background:#FF5F57}.chrome i:nth-child(2){background:#FEBC2E}.chrome i:nth-child(3){background:#28C840}
-.s-head{display:flex;justify-content:space-between;align-items:center;padding:20px 24px 0}
-.tag{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
-.live{display:flex;align-items:center;gap:7px;padding:3px 10px;border-radius:999px;background:var(--green-soft);font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--green)}
-.live i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(22,163,74,.6);animation:pulse 1.6s ease-out infinite}
-@keyframes pulse{to{box-shadow:0 0 0 8px rgba(22,163,74,0)}}
-.s-card .mail{margin:14px 24px 0}
-.s-card .fix{margin:0;padding:18px 24px 22px;font-size:15px}
-.row.new{opacity:0;transform:translateX(-10px)}
-.s-card.play .row.new{animation:rowIn .55s ease forwards}
-.s-card.play .row.new[data-i="1"]{animation-delay:.5s}
-.s-card.play .row.new[data-i="2"]{animation-delay:1.1s}
-.s-card.play .row.new[data-i="3"]{animation-delay:1.7s}
-.s-card.play .row.new[data-i="4"]{animation-delay:2.3s}
-@keyframes rowIn{0%{opacity:0;transform:translateX(-10px);background:transparent}45%{opacity:1;transform:none;background:var(--gold-soft)}100%{opacity:1;transform:none;background:transparent}}
-.s-card .fix{opacity:0}
-.s-card.play .fix{animation:fadeIn .5s ease 3s forwards}
-@keyframes fadeIn{to{opacity:1}}
-.s-card .fix b{color:var(--ink);font-weight:600}
-@media (prefers-reduced-motion: reduce){.row.new,.s-card .fix{opacity:1;transform:none}}
-.fix{margin:0;font-size:15px;line-height:1.55;color:var(--text)}
-.mail{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 18px;font-size:15px}
-.mail .hd{display:flex;justify-content:space-between;gap:10px;font-weight:600;margin-bottom:8px;font-size:14px;color:var(--ink)}
-.mail .hd span{color:var(--muted);font-weight:400}
-.row{display:flex;gap:12px;padding:8px 6px;margin:0 -6px;border-top:1px solid var(--line);border-radius:6px}
-.row:first-of-type{border-top:0}
-.row .k{flex:0 0 120px;color:var(--muted)}
-.row .v{overflow-wrap:anywhere;color:var(--ink)}
-.row.new .v{color:var(--accent);font-weight:600}
-.journey{display:flex;flex-wrap:wrap;align-items:center;gap:6px 0}
-.journey span{background:var(--accent-soft);color:var(--accent);border-radius:6px;padding:2px 8px;font-size:13px;font-weight:600;line-height:1.5;white-space:nowrap}
-.journey i{display:inline-block;width:14px;height:1.5px;background:var(--line-strong);position:relative;flex:0 0 auto}
-.journey i::after{content:"";position:absolute;right:-1px;top:-3px;border:3.5px solid transparent;border-left:4.5px solid var(--line-strong)}
-
 /* "Sound familiar?" */
 .strip-label{margin:88px 0 20px;font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .pains{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr));gap:12px;text-align:left}
@@ -468,10 +428,6 @@ footer a:hover{color:var(--ink)}
   .hero .cta,.band .cta-pair{width:100%}
   .cta-row,.band .cta-pair{grid-template-columns:1fr;width:100%}
   .strip-label{margin-top:64px}
-  .s-head{padding:16px 16px 0}
-  .s-card .mail{margin:12px 16px 0;padding:12px 14px;font-size:14px}
-  .s-card .fix{padding:14px 16px 18px}
-  .row .k{flex-basis:92px}
 }
 /* ===== Colour and motion layer (desktop motion only; phones keep the static colours) ===== */
 :root{--c1:#5E1A26;--c1s:#F7EEF0;--c2:#B45309;--c2s:#FEF3C7;--c3:#0F766E;--c3s:#CCFBF1;--c4:#4338CA;--c4s:#E0E7FF;--c5:#BE185D;--c5s:#FCE7F3;--grad:linear-gradient(90deg,#5E1A26 0%,#B8325A 35%,#E8890C 70%,#5E1A26 100%)}
@@ -491,36 +447,6 @@ footer a:hover{color:var(--ink)}
 .hero .blob.b1{width:420px;height:420px;left:-80px;top:80px;background:radial-gradient(closest-side,rgba(184,50,90,.35),transparent)}
 .hero .blob.b2{width:460px;height:460px;right:-60px;top:240px;background:radial-gradient(closest-side,rgba(245,184,0,.35),transparent)}
 .hero .blob.b3{width:360px;height:360px;left:40%;top:-120px;background:radial-gradient(closest-side,rgba(67,56,202,.18),transparent)}
-@media (min-width:1024px){
-  .hero{padding-top:0;padding-bottom:56px;text-align:left}
-  .hero-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,1fr);align-items:center;gap:56px;min-height:calc(100svh - 63px);padding:40px 0}
-  .hero-copy{align-items:flex-start;max-width:600px;gap:22px}
-  .hero-copy h1{font-size:clamp(40px,3.9vw,56px)}
-  .hero-copy h1 .eyebrow{margin:0 0 22px}
-  .hero-text{gap:10px}
-  .hero-text p{font-size:17px}
-  .hero .cta{align-items:flex-start;margin-top:6px}
-  .hero .cta .terms{justify-content:flex-start}
-  .cta-row{width:min(100%,440px)}
-  .hero::before{-webkit-mask-image:radial-gradient(ellipse 70% 70% at 50% 40%,#000 25%,transparent 100%);mask-image:radial-gradient(ellipse 70% 70% at 50% 40%,#000 25%,transparent 100%)}
-  .s-card{width:100%}
-  .s-card .mail{font-size:14px}
-  .s-card .row{padding:7px 6px}
-  .s-card .row .k{flex-basis:96px}
-  .strip-label{margin-top:24px}
-  .hero .blob.b1{animation:drift1 16s ease-in-out infinite}
-  .hero .blob.b2{animation:drift2 18s ease-in-out infinite}
-  .hero .blob.b3{animation:drift1 22s ease-in-out infinite reverse}
-}
-@media (min-width:1024px) and (max-height:820px){
-  .hero-copy h1{font-size:clamp(38px,3.9vw,52px)}
-  .hero-copy h1 .eyebrow{margin-bottom:16px}
-  .hero-text p{font-size:16px}
-  .s-card .s-head{padding-top:14px}
-  .s-card .row{padding:5px 6px}
-  .s-card .fix{padding:12px 24px 16px;font-size:14px}
-  .chrome{height:36px}
-}
 
 /* moving light beam around the product window and the highlighted comparison card */
 .beam::after{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1.5px;pointer-events:none;background:conic-gradient(from var(--ang),transparent 0 70%,#F5B800 82%,#B8325A 92%,transparent 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:spin 6s linear infinite}
@@ -571,6 +497,159 @@ html.reveal [data-reveal].in{opacity:1;transform:none}
   .beam::after{display:none}
   .hero .blob{display:none}
 }
+/* ===== Hero: centred copy above a "drag to compare" lead ===== */
+.hero{padding-top:0;padding-bottom:56px}
+.hero-grid{gap:36px;min-height:calc(100svh - 63px);justify-content:center;padding:28px 0 20px}
+.hero-copy{gap:20px}
+.hero-copy h1{font-size:clamp(36px,4.7vw,60px)}
+.hero-copy h1 .eyebrow{margin-bottom:22px}
+.hero-text{max-width:38em}
+.strip-label{margin-top:40px}
+.cmp-wrap{position:relative;width:min(1100px,100%);display:flex;flex-direction:column;align-items:center;gap:14px}
+.cmp-wrap::before{content:"";position:absolute;inset:-50px -80px -30px;z-index:-1;pointer-events:none;background:radial-gradient(40% 70% at 25% 50%,rgba(184,50,90,.22),transparent 70%),radial-gradient(40% 70% at 78% 50%,rgba(245,184,0,.26),transparent 70%);filter:blur(40px);animation:glowPulse 6s ease-in-out infinite}
+@keyframes glowPulse{50%{opacity:.6;transform:scale(1.04)}}
+.cmp{position:relative;width:100%;display:grid;user-select:none;touch-action:pan-y;border-radius:18px;box-shadow:var(--shadow-lg),0 0 0 1px var(--line);cursor:ew-resize;text-align:left}
+.cmp .lay{grid-area:1/1;display:flex;flex-direction:column;gap:14px;padding:22px 26px 22px;border-radius:18px;background:var(--card)}
+.cmp .lay .top{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;font-weight:600;color:var(--ink)}
+.cmp .lay .top span{font-weight:400;color:var(--muted)}
+.cmp .cells{display:grid;grid-template-columns:.9fr 1.55fr 1.45fr 1.95fr .95fr 1.05fr;gap:14px}
+.cmp .cell{display:flex;flex-direction:column;gap:6px;min-width:0}
+.cmp .cell small{font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.cmp .cell > span{font-size:14.5px;font-weight:500;color:var(--ink);overflow-wrap:anywhere}
+.cmp .after{background:linear-gradient(115deg,var(--card) 0%,var(--card) 35%,var(--gold-soft) 100%)}
+.cmp .after .cell.n > span{display:inline-block;width:fit-content;padding:3px 9px;border-radius:7px;background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:14px}
+.cmp .after .cell.n:nth-child(3) > span{background:var(--c2s);color:var(--c2)}
+.cmp .after .cell.n:nth-child(5) > span{background:var(--c3s);color:var(--c3)}
+.cmp .after .cell.n:nth-child(6) > span{background:var(--c4s);color:var(--c4)}
+.cmp .after .cell.n > span.chips{display:flex;background:none;padding:0}
+.cmp .after .chips{display:flex;flex-wrap:wrap;gap:4px}
+.cmp .after .chips em{font-style:normal;background:var(--accent-soft);color:var(--accent);border-radius:6px;padding:3px 7px;font-size:12.5px;font-weight:600}
+.cmp .after .fixline{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;background:var(--green-soft);font-size:14.5px;color:var(--ink)}
+.cmp .after .fixline::before{content:"✓";display:grid;place-items:center;flex:0 0 22px;height:22px;border-radius:50%;background:var(--green);color:#FFFFFF;font-size:12px;font-weight:700}
+.cmp .after .fixline b{font-weight:700}
+.cmp .before{z-index:1;clip-path:inset(0 calc(100% - var(--p,50%)) 0 0);background:var(--panel)}
+.cmp .before .cell.n > span{display:inline-grid;place-items:center;width:44px;height:26px;border:1.5px dashed var(--line-strong);border-radius:7px;color:var(--muted);font-weight:600}
+.cmp .before .fixline{padding:10px 14px;border-radius:10px;border:1.5px dashed var(--line-strong);font-size:14.5px;color:var(--muted);font-style:italic}
+.cmp .tagx{position:absolute;top:-15px;z-index:3;padding:6px 14px;border-radius:999px;font-size:12.5px;font-weight:700;box-shadow:var(--shadow);transition:opacity .3s ease}
+.cmp .tagx.l{left:22px;background:var(--card);color:var(--muted);border:1px solid var(--line)}
+.cmp .tagx.r{right:22px;color:#FFFFFF;background:linear-gradient(90deg,#5E1A26,#B8325A,#E8890C,#5E1A26);background-size:200% 100%;animation:gradShift 4s linear infinite}
+.cmp .handle{position:absolute;z-index:2;top:-12px;bottom:-12px;left:var(--p,50%);width:3px;margin-left:-1.5px;border-radius:3px;background:linear-gradient(180deg,#F5B800,#B8325A,#5E1A26);box-shadow:0 0 14px rgba(245,184,0,.6)}
+.cmp .handle::after{content:"";position:absolute;top:50%;left:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235E1A26' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l-6 6 6 6M15 6l6 6-6 6'/%3E%3C/svg%3E") center/22px no-repeat;border:2px solid var(--accent);box-shadow:0 0 0 0 rgba(184,50,90,.5),var(--shadow);animation:knob 1.8s ease-out infinite}
+@keyframes knob{to{box-shadow:0 0 0 14px rgba(184,50,90,0),var(--shadow)}}
+.cmp-hint{margin:0;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.cmp.touched ~ .cmp-hint{opacity:0}
+@media (max-width:980px){.cmp .cells{grid-template-columns:1fr 1fr}}
+@media (max-width:760px){
+  .cmp{display:flex;flex-direction:column;gap:26px;box-shadow:none;cursor:auto}
+  .cmp.beam::after,.cmp .handle,.cmp .tagx,.cmp-hint{display:none}
+  .cmp .lay{position:relative;border:1px solid var(--line);box-shadow:var(--shadow);padding-top:26px}
+  .cmp .before{order:-1;clip-path:none}
+  .cmp .lay::before{position:absolute;top:-13px;left:16px;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700}
+  .cmp .before::before{content:"What you get today";background:var(--card);color:var(--muted);border:1px solid var(--line)}
+  .cmp .after::before{content:"With Attriform";background:var(--primary);color:#FFFFFF}
+  .cmp .before .cells .cell.n{display:none}
+}
+@media (max-width:760px){.hero{padding-top:40px}.cmp-wrap::before,.cmp .tagx.r,.cmp .handle::after{animation:none}.hero-grid{min-height:0}.cmp .lay{padding:22px 16px 18px}}
+@media (min-width:761px) and (max-height:820px){
+  .hero-grid{gap:22px;padding:18px 0 10px}
+  .hero-copy{gap:14px}
+  .hero-copy h1{font-size:clamp(34px,3.8vw,50px)}
+  .hero-copy h1 .eyebrow{margin-bottom:14px}
+  .hero-text{gap:8px}.hero-text p{font-size:15.5px}
+  .hero .btn.xl{min-height:46px}
+  .cmp .lay{padding:16px 22px;gap:10px}
+}
+
+/* ===== Story: a progress track that lights up each step ===== */
+.story{padding-top:34px}
+.story .track{position:absolute;top:10px;left:10%;right:10%;height:3px;border-radius:3px;background:var(--line)}
+.story .track span{position:absolute;inset:0 auto 0 0;width:0;border-radius:3px;background:var(--grad);background-size:200% 100%;transition:width 2.2s cubic-bezier(.4,0,.2,1);animation:gradShift 6s linear infinite}
+.story.go .track span{width:100%}
+.stop::before{content:"";position:absolute;top:-30px;left:50%;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--card);border:3px solid var(--line-strong);transition:background .3s ease,border-color .3s ease,box-shadow .3s ease}
+.stop:nth-child(2)::before{border-color:var(--line-strong)}
+.story.go .stop::before{box-shadow:0 0 0 5px var(--accent-soft)}
+.story.go .stop:nth-child(2)::before{background:var(--c1);border-color:var(--c1);transition-delay:.1s}
+.story.go .stop:nth-child(3)::before{background:var(--c2);border-color:var(--c2);transition-delay:.55s}
+.story.go .stop:nth-child(4)::before{background:var(--c3);border-color:var(--c3);transition-delay:1s}
+.story.go .stop:nth-child(5)::before{background:var(--c4);border-color:var(--c4);transition-delay:1.45s}
+.story.go .stop:nth-child(6)::before{background:var(--c5);border-color:var(--c5);transition-delay:1.9s}
+.stop:nth-child(2) .dot{background:var(--c1s)}.stop:nth-child(2) .dot::after{background:var(--c1)}
+.stop:nth-child(3) .dot{background:var(--c2s)}.stop:nth-child(3) .dot::after{background:var(--c2)}
+.stop:nth-child(4) .dot{background:var(--c3s)}.stop:nth-child(4) .dot::after{background:var(--c3)}
+.stop:nth-child(5) .dot{background:var(--c4s)}.stop:nth-child(5) .dot::after{background:var(--c4)}
+.stop:nth-child(6) .dot{background:var(--c5s)}.stop:nth-child(6) .dot::after{background:var(--c5)}
+.stop:nth-child(2){border-top-color:var(--c1)}.stop:nth-child(3){border-top-color:var(--c2)}.stop:nth-child(4){border-top-color:var(--c3)}.stop:nth-child(5){border-top-color:var(--c4)}.stop:nth-child(6){border-top-color:var(--c5)}
+@media (max-width:980px){.story{padding-top:0}.story .track,.stop::before{display:none}}
+
+/* ===== Comparison: little charts that show the difference ===== */
+.viz{height:118px;margin:-4px 0 20px;border-radius:12px;border:1px solid var(--line);background:var(--surface);position:relative;overflow:hidden}
+.viz.ga{display:flex;align-items:flex-end;gap:8px;padding:14px 16px 0}
+.viz.ga i{flex:1;height:var(--h);border-radius:5px 5px 0 0;background:var(--line-strong);transform-origin:bottom;animation:barPulse 3.2s ease-in-out infinite;animation-delay:calc(var(--d) * -.4s)}
+@keyframes barPulse{50%{transform:scaleY(.72)}}
+.viz.ga b{position:absolute;top:10px;left:14px;font-family:var(--mono);font-size:11px;font-weight:500;color:var(--muted);letter-spacing:.04em}
+.viz.lt{display:flex;flex-direction:column;justify-content:center;gap:7px;padding:10px 14px;background:color-mix(in srgb,var(--card) 70%,transparent)}
+.viz.lt .mini{display:flex;align-items:center;gap:9px;padding:6px 9px;border-radius:9px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow-sm);font-size:12px;animation:miniIn 6s ease infinite;animation-delay:calc(var(--d) * .5s);opacity:0}
+@keyframes miniIn{0%{opacity:0;transform:translateX(-14px)}10%,80%{opacity:1;transform:none}92%,100%{opacity:0}}
+.viz.lt .mini .av{flex:0 0 22px;height:22px;border-radius:50%;display:grid;place-items:center;color:#FFFFFF;font-size:9.5px;font-weight:700}
+.viz.lt .mini .sk{flex:1;display:flex;flex-direction:column;gap:4px}
+.viz.lt .mini .sk i{display:block;height:6px;border-radius:4px;background:var(--panel)}
+.viz.lt .mini .sk i:first-child{width:60%;background:var(--line-strong)}
+.viz.lt .mini .bd{padding:2px 8px;border-radius:999px;font-weight:600;font-size:11px;white-space:nowrap}
+@media (max-width:760px){.viz.ga i,.viz.lt .mini{animation:none;opacity:1}}
+
+/* ===== Testimonials: coloured initials ===== */
+.quote figcaption .av{flex:0 0 36px;height:36px;border-radius:50%;display:grid;place-items:center;color:#FFFFFF;font-size:13px;font-weight:700}
+
+/* ===== CTA band: phone with lead notifications ===== */
+.band{display:grid;grid-template-columns:1.15fr 1fr;align-items:center;gap:28px;padding-bottom:0;min-height:380px}
+.band-copy{align-self:center;padding-bottom:clamp(32px,5vw,56px)}
+.band-copy .cta-pair{margin-top:24px;width:min(100%,360px)}
+.band .phone{position:relative;justify-self:center;align-self:end;width:300px;height:330px;border-radius:46px 46px 0 0;padding:12px 12px 0;background:#0B0B0D;box-shadow:0 -10px 60px -10px rgba(0,0,0,.5),inset 0 0 0 2px #2A2A2E}
+.band .phone .scr{position:relative;height:100%;border-radius:36px 36px 0 0;overflow:hidden;background:linear-gradient(165deg,#2A0A11,#5E1A26 50%,#B45309)}
+.band .phone .island{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:88px;height:26px;border-radius:20px;background:#000}
+.band .phone .clock{padding-top:44px;text-align:center;color:rgba(255,255,255,.92);font-size:50px;font-weight:600;letter-spacing:-.03em;line-height:1}
+.band .phone .date{text-align:center;color:rgba(255,255,255,.7);font-size:13px;font-weight:500;margin-top:4px}
+.notes{position:absolute;left:9px;right:9px;top:124px;display:flex;flex-direction:column;gap:7px}
+.note{display:flex;gap:9px;padding:10px 11px;border-radius:16px;background:rgba(255,255,255,.84);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);color:#0B0B0D;text-align:left;animation:drop .6s cubic-bezier(.2,.8,.2,1)}
+.note.out{animation:noteOut .4s ease forwards}
+@keyframes drop{from{opacity:0;transform:translateY(-30px) scale(.94)}}
+@keyframes noteOut{to{opacity:0;transform:scale(.95)}}
+.note .ap{flex:0 0 32px;height:32px;border-radius:8px;background:#5E1A26;display:grid;place-items:center}
+.note .ap svg{width:20px;height:20px}
+.note .tx{flex:1;min-width:0;font-size:12px;line-height:1.35}
+.note .tx b{display:flex;justify-content:space-between;gap:6px;font-size:12.5px;font-weight:600}
+.note .tx b span{font-weight:400;color:#6B6B70;font-size:11px}
+.note .tx .src{font-weight:700}
+@media (max-width:860px){.band{grid-template-columns:1fr;padding-bottom:clamp(32px,5vw,56px);min-height:0}.band-copy{padding-bottom:0}.band .phone{display:none}}
+
+/* ===== Pricing: ticks draw themselves in ===== */
+html.reveal .checks li svg path{stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .6s ease .25s}
+html.reveal .checks li.in svg path{stroke-dashoffset:0}
+
+/* ===== How it works: a small animated scene on each step ===== */
+.step .ill{order:-1;align-self:stretch;height:120px;margin:-8px -4px 20px;border-radius:12px;border:1px solid var(--line);background:var(--surface);position:relative;overflow:hidden;display:grid;place-items:center}
+.ill-cal{display:grid;grid-template-columns:repeat(5,22px);gap:6px}
+.ill-cal i{height:14px;border-radius:4px;background:var(--line)}
+.ill-cal i.free{background:var(--c3s);border:1px solid color-mix(in srgb,var(--c3) 35%,transparent)}
+.ill-cal i.pick{background:var(--c1);box-shadow:0 0 0 4px var(--c1s);animation:pick 2.4s ease-in-out infinite}
+@keyframes pick{0%,30%{background:var(--c3s);box-shadow:none}45%,100%{background:var(--c1);box-shadow:0 0 0 4px var(--c1s)}}
+.ill-cal b{grid-column:1/-1;display:flex;justify-content:space-between;font-family:var(--mono);font-size:9.5px;font-weight:500;color:var(--muted)}
+.ill-setup{width:78%;display:flex;flex-direction:column;gap:9px}
+.ill-setup .code{display:flex;flex-direction:column;gap:5px;padding:9px 10px;border-radius:8px;background:#0F0F12}
+.ill-setup .code i{height:5px;border-radius:3px;background:#3F3F46}
+.ill-setup .code i:nth-child(1){width:70%;background:#B8325A}.ill-setup .code i:nth-child(2){width:45%}.ill-setup .code i:nth-child(3){width:58%;background:#F5B800}
+.ill-setup .bar{height:7px;border-radius:7px;background:var(--line);overflow:hidden}
+.ill-setup .bar span{display:block;height:100%;width:0;border-radius:7px;background:var(--grad);animation:fillBar 3.2s ease-in-out infinite}
+@keyframes fillBar{0%{width:0}60%,100%{width:100%}}
+.ill-setup .ok{align-self:flex-start;padding:2px 9px;border-radius:999px;background:var(--green-soft);color:var(--green);font-size:11px;font-weight:700;animation:okIn 3.2s ease-in-out infinite}
+@keyframes okIn{0%,60%{opacity:0;transform:translateY(4px)}70%,100%{opacity:1;transform:none}}
+.ill-leads{width:82%;display:flex;flex-direction:column;gap:7px}
+.ill-leads div{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:9px;background:var(--card);border:1px solid var(--line);box-shadow:var(--shadow-sm);font-size:11px;font-weight:600;animation:miniIn 4.5s ease infinite;opacity:0}
+.ill-leads div:nth-child(2){animation-delay:.6s}.ill-leads div:nth-child(3){animation-delay:1.2s}
+.ill-leads div i{flex:0 0 18px;height:18px;border-radius:50%}
+.ill-leads div span{margin-left:auto;padding:1px 7px;border-radius:999px;font-size:10px}
+@media (max-width:760px){.ill-cal i.pick,.ill-setup .bar span,.ill-setup .ok,.ill-leads div{animation:none;opacity:1}.ill-setup .bar span{width:100%}}
+@media (min-width:761px){.hero .blob.b1{animation:drift1 16s ease-in-out infinite}.hero .blob.b2{animation:drift2 18s ease-in-out infinite}.hero .blob.b3{animation:drift1 22s ease-in-out infinite reverse}}
 </style>
 </head>
 <body>
@@ -609,19 +688,14 @@ html.reveal [data-reveal].in{opacity:1;transform:none}
 <p class="terms"><span>Set up for you in two days</span><span>Nothing changes on your website</span></p>
 </div>
 </div>
-<div class="s-card beam" id="after">
-<div class="chrome" aria-hidden="true"><i></i><i></i><i></i></div>
-<div class="s-head"><span class="tag">After we set it up</span><span class="live"><i></i>Live</span></div>
-<div class="mail" role="img" aria-label="Example RFQ notification showing the buyer, the part, where the buyer came from, pages read, and number of visits">
-<div class="hd">New RFQ from your website <span>Just now</span></div>
-<div class="row"><span class="k">Name</span><span class="v">Dana Kowalski, Sourcing Engineer</span></div>
-<div class="row"><span class="k">RFQ</span><span class="v">500 pcs, 316 SS, drawing attached</span></div>
-<div class="row new" data-i="1"><span class="k">Came from</span><span class="v">Thomasnet supplier profile</span></div>
-<div class="row new" data-i="2"><span class="k">Pages read</span><span class="v journey"><span>Swiss Turning</span><i></i><span>Medical</span><i></i><span>Quality</span><i></i><span>Medical</span><i></i><span>RFQ</span></span></div>
-<div class="row new" data-i="3"><span class="k">Visits</span><span class="v">4th visit in 3 weeks</span></div>
-<div class="row new" data-i="4"><span class="k">From</span><span class="v">Desktop, Minneapolis MN</span></div>
+<div class="cmp-wrap">
+<div class="cmp beam" data-cmp role="img" aria-label="Example RFQ, shown as you get it today (name and email only) and with Attriform (where they came from, pages read, visits and location)">
+<span class="tagx l">What you get today</span><span class="tagx r">With Attriform</span>
+<div class="lay after"><div class="top">New RFQ from your website <span>Just now</span></div><div class="cells"><div class="cell"><small>Name</small><span>Dana Kowalski</span></div><div class="cell"><small>RFQ</small><span>500 pcs, 316 SS</span></div><div class="cell n"><small>Came from</small><span>Thomasnet supplier profile</span></div><div class="cell n"><small>Pages read</small><span class="chips"><em>Swiss Turning</em><em>Medical</em><em>Quality</em><em>Medical</em><em>RFQ</em></span></div><div class="cell n"><small>Visits</small><span>4th in 3 weeks</span></div><div class="cell n"><small>From</small><span>Desktop, Minneapolis MN</span></div></div><div class="fixline"><span><b>Quote Dana first.</b> Found you on Thomasnet, came back four times, read your medical page twice.</span></div></div>
+<div class="lay before"><div class="top">New RFQ from your website <span>Just now</span></div><div class="cells"><div class="cell"><small>Name</small><span>Dana Kowalski</span></div><div class="cell"><small>RFQ</small><span>500 pcs, 316 SS</span></div><div class="cell n"><small>Came from</small><span>?</span></div><div class="cell n"><small>Pages read</small><span>?</span></div><div class="cell n"><small>Visits</small><span>?</span></div><div class="cell n"><small>From</small><span>?</span></div></div><div class="fixline">No idea which directory sent them. Every RFQ waits in the same queue.</div></div>
+<div class="handle" aria-hidden="true"></div>
 </div>
-<p class="fix"><b>Quote Dana first.</b> Found you on Thomasnet, came back four times, read your medical page twice. You know this before your estimator opens the drawing.</p>
+<p class="cmp-hint">Drag to compare</p>
 </div>
 </div>
 <p class="strip-label">Sound familiar?</p>
@@ -638,6 +712,7 @@ html.reveal [data-reveal].in{opacity:1;transform:none}
 <h2 id="h-story">What you’ll know about every RFQ</h2>
 <p class="sub">Here’s one RFQ, read like a story. You get this on every submission, in the inbox or CRM where it gets quoted.</p>
 <div class="story">
+<div class="track" aria-hidden="true"><span></span></div>
 <div class="stop"><span class="dot"></span><span class="lbl">Found you</span><span class="val">Google Ads, “swiss machining 316 stainless”</span><span class="why">Thomasnet, IQS, Google search, Google Ads or a referral, plus the keyword for paid ads.</span></div>
 <div class="stop"><span class="dot"></span><span class="lbl">Came back</span><span class="val">4 visits over 3 weeks</span><span class="why">First visit date, how many times they returned, how long they researched.</span></div>
 <div class="stop"><span class="dot"></span><span class="lbl">Read</span><span class="val">Swiss Turning → Medical → Quality → Medical → RFQ</span><span class="why">Every page, in order. Capabilities and quality pages twice means a real program, not a one-off.</span></div>
@@ -654,6 +729,7 @@ html.reveal [data-reveal].in{opacity:1;transform:none}
 <p class="sub">Those tools report traffic in a dashboard. The person quoting the RFQ never sees it. Attriform puts the answer on the RFQ itself.</p>
 <div class="vs">
 <div class="vs-card">
+<div class="viz ga" aria-hidden="true"><b>VISITORS · THIS MONTH</b><i style="--h:42%;--d:0"></i><i style="--h:66%;--d:1"></i><i style="--h:38%;--d:2"></i><i style="--h:80%;--d:3"></i><i style="--h:55%;--d:4"></i><i style="--h:92%;--d:5"></i><i style="--h:61%;--d:6"></i><i style="--h:74%;--d:7"></i></div>
 <h3>Web Traxs and Google Analytics</h3>
 <ul>
 <li>“38 visits from IQS this month”</li>
@@ -663,6 +739,7 @@ html.reveal [data-reveal].in{opacity:1;transform:none}
 </ul>
 </div>
 <div class="vs-card on beam">
+<div class="viz lt" aria-hidden="true"><div class="mini" style="--d:0"><span class="av" style="background:var(--c2)">DK</span><span class="sk"><i></i><i></i></span><span class="bd" style="color:var(--c2);background:var(--c2s)">Thomasnet</span></div><div class="mini" style="--d:1"><span class="av" style="background:var(--c4)">JM</span><span class="sk"><i></i><i></i></span><span class="bd" style="color:var(--c4);background:var(--c4s)">IQS directory</span></div><div class="mini" style="--d:2"><span class="av" style="background:var(--c3)">RP</span><span class="sk"><i></i><i></i></span><span class="bd" style="color:var(--c3);background:var(--c3s)">Google Ads</span></div></div>
 <h3>Attriform</h3>
 <ul>
 <li>“Dana came from Thomasnet, visited 4 times, read your medical page twice”</li>
@@ -736,14 +813,15 @@ html.reveal [data-reveal].in{opacity:1;transform:none}
 
 <div class="wrap band-wrap">
 <div class="band">
-<div>
+<div class="band-copy">
 <h2>Want to see it on your own RFQ form?</h2>
 <p>15 minutes. We’ll look at your quote form, file uploads and CRM and show you exactly what each RFQ would carry.</p>
-</div>
 <div class="cta-pair">
 <a href="#start" class="btn" data-book>Book a call</a>
 <button type="button" class="btn alt" data-msg>Contact us</button>
 </div>
+</div>
+<div class="phone" aria-hidden="true"><div class="scr"><div class="island"></div><div class="clock">9:41</div><div class="date"></div><div class="notes" data-notes></div></div></div>
 </div>
 </div>
 
@@ -777,9 +855,9 @@ html.reveal [data-reveal].in{opacity:1;transform:none}
 <div class="wrap">
 <h2 id="h-how">How it works</h2>
 <div class="steps">
-<div class="step"><h3>Book a 15-minute call</h3><p>We look at your RFQ form together and confirm it works with your uploads, inbox and CRM.</p><span class="t">Today</span><a href="#start" class="btn sm" data-book>Pick a time</a><button type="button" class="btn alt" data-msg>Contact us</button></div>
-<div class="step"><h3>We set it up</h3><p>You give us access, we do the work, and send you a test RFQ so you can see it working.</p><span class="t">1–2 days</span></div>
-<div class="step"><h3>Every RFQ arrives with its story</h3><p>Where the buyer came from, what they read, how many times they came back. Your estimator knows what to quote first.</p><span class="t">From then on</span></div>
+<div class="step"><div class="ill" aria-hidden="true"><div class="ill-cal"><b><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span></b><i class=""></i><i class="free"></i><i class=""></i><i class="free"></i><i class=""></i><i class="free"></i><i class=""></i><i class="pick"></i><i class=""></i><i class="free"></i><i class=""></i><i class="free"></i><i class=""></i><i class=""></i><i class="free"></i></div></div><h3>Book a 15-minute call</h3><p>We look at your RFQ form together and confirm it works with your uploads, inbox and CRM.</p><span class="t">Today</span><a href="#start" class="btn sm" data-book>Pick a time</a><button type="button" class="btn alt" data-msg>Contact us</button></div>
+<div class="step"><div class="ill" aria-hidden="true"><div class="ill-setup"><div class="code"><i></i><i></i><i></i></div><div class="bar"><span></span></div><span class="ok">✓ Test RFQ sent</span></div></div><h3>We set it up</h3><p>You give us access, we do the work, and send you a test RFQ so you can see it working.</p><span class="t">1–2 days</span></div>
+<div class="step"><div class="ill" aria-hidden="true"><div class="ill-leads"><div><i style="background:var(--c2)"></i>New RFQ<span style="color:var(--c2);background:var(--c2s)">Thomasnet</span></div><div><i style="background:var(--c4)"></i>New RFQ<span style="color:var(--c4);background:var(--c4s)">IQS directory</span></div><div><i style="background:var(--c3)"></i>New RFQ<span style="color:var(--c3);background:var(--c3s)">Google Ads</span></div></div></div><h3>Every RFQ arrives with its story</h3><p>Where the buyer came from, what they read, how many times they came back. Your estimator knows what to quote first.</p><span class="t">From then on</span></div>
 </div>
 </div>
 </section>
@@ -974,16 +1052,50 @@ html.reveal [data-reveal].in{opacity:1;transform:none}
     });
   }
 
-  /* Hero "After" card: replay the lead-reveal animation every 8 seconds (static if the visitor prefers reduced motion). */
-  var after = document.getElementById("after");
-  if(after){
-    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if(reduce){ after.classList.add("play"); }
-    else {
-      var play = function(){ after.classList.remove("play"); void after.offsetWidth; after.classList.add("play"); };
-      setTimeout(play, 400);
-      setInterval(play, 8000);
-    }
+  var still = (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) || (window.matchMedia && matchMedia("(max-width:760px)").matches);
+
+  /* Hero: drag the handle to compare; it sweeps by itself (desktop) until someone touches it. */
+  var cmp = document.querySelector("[data-cmp]");
+  if(cmp){
+    var touched = false, dragging = false;
+    var setP = function(x){ var r = cmp.getBoundingClientRect(); cmp.style.setProperty("--p", Math.max(3, Math.min(97, (x - r.left) / r.width * 100)) + "%"); };
+    cmp.addEventListener("pointerdown", function(e){ touched = dragging = true; cmp.classList.add("touched"); try { cmp.setPointerCapture(e.pointerId); } catch(err){} setP(e.clientX); });
+    cmp.addEventListener("pointermove", function(e){ if(dragging) setP(e.clientX); });
+    cmp.addEventListener("pointerup", function(){ dragging = false; });
+    cmp.addEventListener("pointercancel", function(){ dragging = false; });
+    if(still) cmp.style.setProperty("--p", "42%");
+    else { var s0 = performance.now(); (function sweep(now){ if(touched) return; cmp.style.setProperty("--p", (50 + 40 * Math.sin((now - s0) / 1000 * .85)) + "%"); requestAnimationFrame(sweep); })(s0); }
+  }
+
+  /* Story: light up the track once it scrolls into view. */
+  var story = document.querySelector(".story");
+  if(story){
+    if("IntersectionObserver" in window){ var so = new IntersectionObserver(function(e){ if(e[0].isIntersecting){ story.classList.add("go"); so.disconnect(); } }, {threshold: .35}); so.observe(story); }
+    else story.classList.add("go");
+  }
+
+  /* Testimonials: coloured initials next to each name. */
+  var avc = ["#5E1A26","#B45309","#0F766E","#4338CA","#BE185D"];
+  document.querySelectorAll(".quote figcaption").forEach(function(fc, i){
+    var b = fc.querySelector("b"); if(!b || fc.querySelector(".av")) return;
+    fc.insertAdjacentHTML("afterbegin", '<span class="av" aria-hidden="true" style="background:' + avc[i % avc.length] + '">' + b.textContent.split(" ").map(function(w){ return w[0]; }).join("").slice(0, 2) + "</span>");
+  });
+
+  /* CTA band: new RFQ notifications dropping onto a phone lock screen. */
+  var notes = document.querySelector("[data-notes]");
+  if(notes && getComputedStyle(notes.closest(".phone")).display !== "none"){
+    var dt = notes.parentNode.querySelector(".date"); try { dt.textContent = new Date().toLocaleDateString("en-US", {weekday: "long", month: "long", day: "numeric"}); } catch(err){}
+    var COLS = {"Google Ads":"#B45309","LinkedIn post":"#4338CA","Referral":"#0F766E","Facebook ad":"#1D4ED8","Google search":"#15803D","Newsletter":"#0E7490","Thomasnet":"#B45309","IQS directory":"#4338CA"};
+    var DATA = [["Dana Kowalski","Thomasnet","Medical","4th visit in 3 weeks"],["Jon Meyer","IQS directory","Capabilities","2nd visit today"],["Rita Park","Google Ads","Swiss Turning","3rd visit in 2 weeks"],["Sam Ortiz","Referral","Quality","1st visit"],["Lee Chen","Google search","Sheet metal","2nd visit in 5 days"],["Ava Brooks","LinkedIn post","Capabilities","1st visit"]], m = 0;
+    var logo = '<svg viewBox="0 0 64 64"><rect x="29" y="44" width="6" height="14" rx="1.5" fill="#fff"/><path d="M22 18 H52 a4 4 0 0 1 4 4 V46 H8 V32 a14 14 0 0 1 14 -14 Z" fill="#fff"/></svg>';
+    var push = function(){
+      var L = DATA[m++ % DATA.length], el = document.createElement("div"); el.className = "note";
+      el.innerHTML = '<span class="ap">' + logo + '</span><span class="tx"><b>New RFQ · ' + L[0] + '<span>now</span></b>Came from <span class="src" style="color:' + (COLS[L[1]] || "#5E1A26") + '">' + L[1] + "</span> · read " + L[2] + " · " + L[3] + "</span>";
+      notes.prepend(el);
+      var all = notes.querySelectorAll(".note:not(.out)"); if(all.length > 3){ var o = all[all.length - 1]; o.classList.add("out"); setTimeout(function(){ o.remove(); }, 400); }
+    };
+    push(); push(); push();
+    if(!still) setInterval(push, 2800);
   }
 
   /* Sticky mobile bar: show after the hero, hide while the booking section is on screen */

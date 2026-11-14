@@ -68,6 +68,9 @@ module.exports = async (req, res) => {
     return res.status(403).json({ error: "origin not allowed" });
   }
 
+  // Visitors whose browser sends Global Privacy Control are never forwarded to Meta.
+  if (req.headers["sec-gpc"] === "1") return res.status(204).end();
+
   const userData = baseUserData(req, body);
   if (body.event_name === "Schedule") {
     Object.assign(userData, await lookUpInvitee(body.calendly_invitee, String(req.headers["x-vercel-ip-country"] || "").toLowerCase()));

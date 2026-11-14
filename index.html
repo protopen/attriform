@@ -20,8 +20,8 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 (function(){
-  /* Only track on the live site, so preview deployments don't send events to Meta. */
-  if(!/(^|\.)attriform\.com$/.test(location.hostname)){ window.metaTrack = function(){}; return; }
+  /* Only track on the live site, so preview deployments don't send events to Meta, and never for visitors whose browser sends Global Privacy Control. */
+  if(!/(^|\.)attriform\.com$/.test(location.hostname) || navigator.globalPrivacyControl === true){ window.metaTrack = function(){}; return; }
   function cookie(k){ var m = document.cookie.match(new RegExp("(?:^|; )" + k + "=([^;]*)")); return m ? decodeURIComponent(m[1]) : undefined; }
   function send(body){
     var data = JSON.stringify(body);
@@ -411,6 +411,7 @@ footer .wrap{padding-top:32px;padding-bottom:32px;display:flex;flex-wrap:wrap;ju
 footer span{font-weight:600;color:var(--ink);letter-spacing:-.01em}
 footer a{color:var(--text);text-decoration:none}
 footer a:hover{color:var(--ink)}
+footer .links{display:flex;gap:20px;flex-wrap:wrap}
 
 @media (max-width:760px){
   .wrap{padding:0 20px}
@@ -996,7 +997,7 @@ html.reveal .checks li.in svg path{stroke-dashoffset:0}
 <label class="hp" aria-hidden="true">Leave this empty<input name="nickname" tabindex="-1" autocomplete="off"></label>
 <p class="err" id="msg-err" role="alert"></p>
 <button type="submit" class="btn">Send</button>
-<p class="fine">Or email <a href="mailto:ritwik@attriform.com">ritwik@attriform.com</a></p>
+<p class="fine">Or email <a href="mailto:ritwik@attriform.com">ritwik@attriform.com</a> · <a href="/privacy" target="_blank" rel="noopener">Privacy</a></p>
 </form>
 <div class="done" id="msg-done" hidden>
 <div class="tick"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></div>
@@ -1009,7 +1010,7 @@ html.reveal .checks li.in svg path{stroke-dashoffset:0}
 <footer>
 <div class="wrap">
 <span>Attriform</span>
-<a href="mailto:ritwik@attriform.com">ritwik@attriform.com</a>
+<span class="links"><a href="/privacy">Privacy</a><a href="mailto:ritwik@attriform.com">ritwik@attriform.com</a></span>
 </div>
 </footer>
 
@@ -1067,7 +1068,7 @@ html.reveal .checks li.in svg path{stroke-dashoffset:0}
       err.textContent = msg;
       if(msg){ form.querySelector(".bad").focus(); return; }
       var id = "schedule." + Date.now() + "." + Math.random().toString(36).slice(2, 10), btn = form.querySelector("button[type=submit]");
-      var data = {name: f.name.value, email: f.email.value, company: f.company.value, website: f.website.value, nickname: f.nickname.value,
+      var data = {gpc: navigator.globalPrivacyControl === true, name: f.name.value, email: f.email.value, company: f.company.value, website: f.website.value, nickname: f.nickname.value,
         elapsed_ms: Date.now() - opened, journey: journey, event_id: id, event_source_url: location.href, referrer_url: document.referrer};
       var ids = window.metaUser ? metaUser() : {};
       for(var k in ids) data[k] = ids[k];

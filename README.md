@@ -40,6 +40,10 @@ Vercel environment variables:
 - `CALENDLY_TOKEN` (optional): Calendly personal access token (Integrations → API & Webhooks). Without it, `Schedule` is sent without the booker's details.
 - `META_TEST_EVENT_CODE` (optional): code from Events Manager → Test events, so server events show up there while testing. Remove it afterwards.
 
+## Privacy policy
+
+`privacy.html` (live at `/privacy`, linked from the footer and the contact form) describes what the site collects and shares: the contact form, Calendly bookings, the Meta Pixel and Conversions API, Google Tag Manager, Resend and Vercel, plus the `af_vid`, `af_journey`, `_fbp` and `_fbc` storage. Update it whenever tracking or providers change. Visitors whose browser sends Global Privacy Control are never sent to Meta: the page skips the pixel and server events, and both functions check the `Sec-GPC` header.
+
 ## Contact form
 
 Every "Book a call" button has a "Contact us" button next to it, which opens a small form (name, work email, company name, company website, all required). `api/contact.js` emails each submission through Resend to `ritwik@attriform.com`, with where the visitor first came from, how they came this visit, their visit count and the pages they read (recorded in the visitor's browser under `af_journey`). On the live site it also sends Meta a `Schedule` event (`content_name: "Contact form"`) with the hashed email and name, deduplicated with the browser's pixel `Schedule`. Bots are filtered with a hidden field and a minimum fill time.

@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Privacy Policy | Attriform</title>
+<meta name="description" content="How Attriform collects, uses and shares information from visitors to attriform.com, including the contact form, call bookings, cookies and advertising pixels.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://www.attriform.com/privacy">
+<link rel="icon" href="/favicon.svg?v=3" type="image/svg+xml">
+<link rel="icon" href="/favicon.png?v=3" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3">
+<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#09090B" media="(prefers-color-scheme: dark)">
+<style>
+/* Inter (SIL Open Font License), self-hosted variable font, Latin subset, weights 400–800 */
+@font-face{font-family:'Inter';font-style:normal;font-weight:400 800;font-display:swap;src:url(/fonts/inter-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+:root{
+  --bg:#FFFFFF;--surface:#FAFAFA;--panel:#F4F4F5;--card:#FFFFFF;
+  --ink:#09090B;--text:#52525B;--muted:#71717A;--line:#E4E4E7;--line-strong:#D4D4D8;
+  --accent:#5E1A26;--accent-dark:#45111B;--accent-soft:#F7EEF0;
+  --primary:#5E1A26;--primary-hover:#45111B;--on-primary:#FFFFFF;
+  --gold:#F5B800;--gold-soft:#FFF7DB;--green:#16A34A;--green-soft:#DCFCE7;--red:#DC2626;--red-soft:#FEE2E2;
+  --shadow-sm:0 1px 2px rgba(9,9,11,.05);
+  --shadow:0 1px 2px rgba(9,9,11,.04),0 8px 24px -10px rgba(9,9,11,.12);
+  --shadow-lg:0 1px 2px rgba(9,9,11,.04),0 30px 70px -28px rgba(94,26,38,.32);
+  --font:'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){color-scheme:dark;--bg:#09090B;--surface:#0C0C0E;--panel:#18181B;--card:#111113;--ink:#FAFAFA;--text:#A1A1AA;--muted:#8B8B94;--line:#27272A;--line-strong:#3F3F46;--accent:#F0A8B5;--accent-dark:#F7C3CC;--accent-soft:rgba(240,168,181,.10);--primary:#8E2A3D;--primary-hover:#A3334A;--gold-soft:rgba(245,184,0,.12);--green:#4ADE80;--green-soft:rgba(74,222,128,.12);--red:#F87171;--red-soft:rgba(248,113,113,.12);--shadow-lg:0 30px 70px -28px rgba(0,0,0,.8)}
+}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#09090B;--surface:#0C0C0E;--panel:#18181B;--card:#111113;--ink:#FAFAFA;--text:#A1A1AA;--muted:#8B8B94;--line:#27272A;--line-strong:#3F3F46;--accent:#F0A8B5;--accent-dark:#F7C3CC;--accent-soft:rgba(240,168,181,.10);--primary:#8E2A3D;--primary-hover:#A3334A;--gold-soft:rgba(245,184,0,.12);--green:#4ADE80;--green-soft:rgba(74,222,128,.12);--red:#F87171;--red-soft:rgba(248,113,113,.12);--shadow-lg:0 30px 70px -28px rgba(0,0,0,.8)}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px))}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01"}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--bg)}
+a{color:var(--accent)}a:hover{color:var(--accent-dark)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+h1,h2,h3{margin:0;color:var(--ink);text-wrap:balance}
+h2{font-size:clamp(30px,3.8vw,44px);font-weight:700;line-height:1.1;letter-spacing:-.035em}
+h3{font-weight:600;letter-spacing:-.015em;line-height:1.3}
+p{margin:0 0 20px}
+.lead-p{font-size:18px;line-height:1.6;color:var(--text);max-width:34em}
+.sub{color:var(--text);font-size:18px;max-width:38em;margin:16px 0 0}
+section > .wrap > h2,section > .wrap > .sub{text-align:center;margin-left:auto;margin-right:auto}
+.micro{font-size:13px;color:var(--muted);margin:0}
+
+/* buttons: burgundy for booking, a light filled button for "Contact us" */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:10px;border:1px solid transparent;background:var(--primary);color:var(--on-primary);font-family:var(--font);font-size:16px;font-weight:600;letter-spacing:-.01em;line-height:1.2;text-decoration:none;cursor:pointer;box-shadow:0 1px 2px rgba(9,9,11,.14),inset 0 1px 0 rgba(255,255,255,.14);transition:background .15s ease,transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+.btn:hover{background:var(--primary-hover);color:var(--on-primary);transform:translateY(-1px);box-shadow:0 6px 16px -6px rgba(94,26,38,.5)}
+.btn.alt{background:var(--panel);color:var(--ink);border-color:var(--line);box-shadow:var(--shadow-sm)}
+.btn.alt:hover{background:var(--card);color:var(--ink);border-color:var(--line-strong);box-shadow:var(--shadow)}
+.btn.sm{min-height:38px;padding:0 14px;font-size:14px;border-radius:8px}
+.btn.xl{min-height:52px;padding:0 24px;font-size:16px}
+.btn svg{flex:0 0 auto;width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 80%,transparent);backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line)}
+header .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:12px;padding-bottom:12px}
+.brand{font-weight:700;font-size:18px;letter-spacing:-.02em;color:var(--ink);text-decoration:none;display:flex;align-items:center;gap:9px}
+.brand:hover{color:var(--ink)}
+.brand svg{width:28px;height:28px;flex:0 0 auto}
+.brand .m-body{fill:var(--accent)}
+.brand .m-slot{stroke:var(--bg)}
+header nav{display:flex;align-items:center;gap:6px}
+header nav a.lnk{color:var(--text);text-decoration:none;font-size:14px;font-weight:500;padding:8px 12px;border-radius:8px;transition:color .15s ease,background .15s ease}
+header nav a.lnk:hover{color:var(--ink);background:var(--panel)}
+header nav .btn.sm{min-width:164px}
+header nav .lnk + .btn{margin-left:12px}
+header nav .btn + .btn{margin-left:4px}
+@media (max-width:1000px){header nav .btn.alt{display:none}header nav .lnk + .btn{margin-left:12px}}
+@media (max-width:760px){header nav a.lnk{display:none}header nav .btn.sm{min-width:0}}
+
+
+footer{border-top:1px solid var(--line)}
+footer .wrap{padding-top:32px;padding-bottom:32px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;font-size:14px;color:var(--muted)}
+footer span{font-weight:600;color:var(--ink);letter-spacing:-.01em}
+footer a{color:var(--text);text-decoration:none}
+footer a:hover{color:var(--ink)}
+footer .links{display:flex;gap:20px;flex-wrap:wrap}
+/* policy page */
+.doc{max-width:760px;margin:0 auto;padding:72px 32px 96px}
+.doc .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.doc h1{font-size:clamp(34px,5vw,48px);font-weight:700;letter-spacing:-.04em;line-height:1.1;margin:10px 0 12px}
+.doc .updated{color:var(--muted);font-size:15px;margin:0 0 40px}
+.doc h2{font-size:22px;letter-spacing:-.02em;margin:44px 0 12px;text-align:left}
+.doc h3{font-size:17px;margin:24px 0 8px}
+.doc p,.doc li{color:var(--text);font-size:16px;line-height:1.7}
+.doc ul{padding-left:22px;margin:0 0 20px}
+.doc li{margin-bottom:6px}
+.doc b{color:var(--ink);font-weight:600}
+.doc .box{padding:18px 20px;border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:12px;background:var(--surface);margin:0 0 20px}
+.doc .box p:last-child{margin:0}
+.doc table{width:100%;border-collapse:collapse;margin:8px 0 24px;font-size:14.5px}
+.doc th,.doc td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--text)}
+.doc th{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.doc td:first-child{color:var(--ink);font-weight:600;white-space:nowrap}
+@media (max-width:760px){.doc{padding:44px 20px 72px}.doc table,.doc thead,.doc tbody,.doc tr,.doc td{display:block}.doc thead{display:none}.doc tr{padding:10px 0;border-bottom:1px solid var(--line)}.doc td{border:0;padding:2px 0}}
+</style>
+</head>
+<body>
+<header>
+<div class="wrap">
+<a href="/" class="brand" aria-label="Attriform home"><svg viewBox="0 0 64 64" aria-hidden="true"><rect class="m-body" x="29" y="44" width="6" height="14" rx="1.5"/><path class="m-body" d="M22 18 H52 a4 4 0 0 1 4 4 V46 H8 V32 a14 14 0 0 1 14 -14 Z"/><path class="m-slot" d="M16 32 H26" fill="none" stroke-width="3.5" stroke-linecap="round"/><rect x="44" y="4" width="4" height="16" rx="2" fill="#E9A23B"/><path d="M48 4 H58 a2 2 0 0 1 2 2 V10 a2 2 0 0 1 -2 2 H48 Z" fill="#E9A23B"/></svg>Attriform</a>
+<nav aria-label="Site"><a href="/" class="lnk">Home</a><a href="/#start" class="btn sm">Book a 15-min call</a></nav>
+</div>
+</header>
+<main class="doc">
+<p class="kicker">Legal</p>
+<h1>Privacy Policy</h1>
+<p class="updated">Last updated: November 15, 2026</p>
+
+<div class="box"><p>This policy covers <b>attriform.com</b>: what we collect when you visit, book a call or send us your details, why, and who we share it with. If you’re a client, the tracking we set up on <i>your</i> website is covered by your own privacy policy, not this one.</p></div>
+
+<p>Attriform (“we”, “us”) provides lead source tracking setup for business websites. Questions about this policy or your information: <a href="mailto:ritwik@attriform.com">ritwik@attriform.com</a>.</p>
+
+<h2>1. Information we collect</h2>
+<h3>Information you give us</h3>
+<ul>
+<li><b>Contact form:</b> your name, work email, company name and company website.</li>
+<li><b>Call bookings:</b> when you book through our calendar, Calendly collects your first and last name, email, phone number and anything else you enter. We receive these from Calendly.</li>
+<li><b>Email:</b> anything you send us at our email address.</li>
+</ul>
+<h3>Information collected automatically</h3>
+<ul>
+<li><b>Visit details:</b> pages you view, the page or link that referred you, campaign tags in the link (such as <code>utm_source</code>), ad click IDs, how many times you’ve visited, your browser and device type, and your IP address and the approximate location it indicates (country, region, city, postcode).</li>
+<li><b>Cookies and similar storage:</b> see the table in section 4.</li>
+</ul>
+
+<h2>2. How we use it</h2>
+<ul>
+<li>To reply to you, run the call you booked and provide our service.</li>
+<li>To see how you found us and which pages you read, so we can prepare for the conversation. This is the same kind of lead source information our service gives our clients.</li>
+<li>To measure and improve our advertising, including telling advertising platforms when someone books a call or sends the contact form, so they can measure results and show our ads to relevant people.</li>
+<li>To keep the site secure and working, and to prevent spam.</li>
+</ul>
+<p>We don’t sell your personal information for money.</p>
+
+<h2>3. Who we share it with</h2>
+<table>
+<thead><tr><th>Who</th><th>What for</th></tr></thead>
+<tbody>
+<tr><td>Meta (Facebook, Instagram)</td><td>Advertising measurement. The Meta Pixel and Conversions API receive page views, clicks on our booking and contact buttons, and bookings or form submissions. These include your IP address, browser details, Meta cookies, approximate location and an anonymous visitor ID, and for bookings and form submissions your email, name and phone number. Names, emails and phone numbers are converted to a one-way scrambled code (SHA-256 hashing) before they’re sent.</td></tr>
+<tr><td>Google</td><td>Google Tag Manager, which loads site tags such as analytics.</td></tr>
+<tr><td>Calendly</td><td>Scheduling calls. Calendly’s privacy policy applies to what you enter there.</td></tr>
+<tr><td>Resend</td><td>Delivering contact form submissions to our inbox.</td></tr>
+<tr><td>Vercel</td><td>Hosting this website, including standard server logs.</td></tr>
+<tr><td>Others when required</td><td>If required by law, to protect our rights, or as part of a business sale or merger.</td></tr>
+</tbody>
+</table>
+<p>Sharing data with Meta for advertising may count as “sharing” or “targeted advertising” under some US state privacy laws. See section 6 for how to opt out.</p>
+
+<h2>4. Cookies and browser storage</h2>
+<table>
+<thead><tr><th>Name</th><th>Set by</th><th>Purpose</th><th>Kept for</th></tr></thead>
+<tbody>
+<tr><td>af_vid</td><td>Attriform</td><td>An anonymous visitor ID, so visits and actions on our site can be linked together</td><td>1 year</td></tr>
+<tr><td>af_journey</td><td>Attriform</td><td>Stored in your browser (not a cookie): how you first found us, visit count and pages viewed. Sent to us only if you submit the contact form</td><td>Until you clear site data</td></tr>
+<tr><td>_fbp, _fbc</td><td>Meta</td><td>Meta browser ID and ad click ID, used for advertising measurement</td><td>90 days</td></tr>
+<tr><td>Google and Calendly cookies</td><td>Google, Calendly</td><td>Site tags, and the booking calendar when it opens</td><td>Set by those providers</td></tr>
+</tbody>
+</table>
+
+<h2>5. How long we keep it</h2>
+<p>We keep contact form submissions, booking details and emails for as long as we’re in conversation or working together, and then only as long as we need them for records, legal or accounting reasons. Advertising platforms keep data under their own policies.</p>
+
+<h2>6. Your choices and rights</h2>
+<ul>
+<li><b>Ads and cookies:</b> you can block or delete cookies in your browser settings or with a content blocker, and change your ad settings in your Meta and Google account preferences.</li>
+<li><b>Opt out of sharing for advertising:</b> email us and we’ll stop sending your details to advertising platforms. We also honour the Global Privacy Control signal from browsers that send it.</li>
+<li><b>Access, correction and deletion:</b> depending on where you live (including California and other US states with privacy laws), you can ask what we hold about you, ask us to correct or delete it, and opt out of targeted advertising. Email <a href="mailto:ritwik@attriform.com">ritwik@attriform.com</a>. We won’t treat you differently for asking.</li>
+</ul>
+
+<h2>7. Security</h2>
+<p>We use reputable providers and HTTPS for every page and form, and limit who can access your information. No method of storage or transmission is completely secure.</p>
+
+<h2>8. Children</h2>
+<p>This site is for businesses and isn’t intended for children under 16. We don’t knowingly collect their information.</p>
+
+<h2>9. Changes</h2>
+<p>We may update this policy as the site or the law changes. The date at the top shows the latest version.</p>
+
+<h2>10. Contact</h2>
+<p>Attriform · <a href="mailto:ritwik@attriform.com">ritwik@attriform.com</a></p>
+</main>
+<footer>
+<div class="wrap">
+<span>Attriform</span>
+<a href="mailto:ritwik@attriform.com">ritwik@attriform.com</a>
+</div>
+</footer>
+</body>
+</html>

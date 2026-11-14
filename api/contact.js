@@ -92,8 +92,10 @@ module.exports = async (req, res) => {
   const sent = await sendEmail({ name, email, company, website, journey: describeJourney(body.journey, req.headers), page });
   if (!sent) return res.status(502).json({ error: "Couldn't send your message." });
 
-  // Meta "Schedule", only from the live site so preview deployments don't add test data.
-  if (process.env.META_CAPI_TOKEN && typeof body.event_id === "string" && /(^|\.)attriform\.com$/.test(hostOf(page))) {
+  // Meta "Schedule", only from the live site so preview deployments don't add test data, and never when the
+  // visitor's browser sends Global Privacy Control (header or the flag the page passes along).
+  const gpc = body.gpc === true || req.headers["sec-gpc"] === "1";
+  if (!gpc && process.env.META_CAPI_TOKEN && typeof body.event_id === "string" && /(^|\.)attriform\.com$/.test(hostOf(page))) {
     const parts = name.split(/\s+/);
     const userData = { ...baseUserData(req, body), em: hash(email), fn: hash(parts[0]) };
     if (parts.length > 1) userData.ln = hash(parts[parts.length - 1]);

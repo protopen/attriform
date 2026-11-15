@@ -850,6 +850,29 @@ html.reveal .val-vis.in .bars .b i{transform:none}
 .pl em{grid-column:3;grid-row:1/3;font-style:normal;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--panel);color:var(--text)}
 @media (max-width:900px){.val{grid-template-columns:1fr;gap:28px}.val.flip .val-copy{order:0}}
 @media (max-width:760px){.hero-grid{min-height:0}.see-wrap{margin-top:24px}.val-lead{font-size:16px}.uses li{font-size:15px}.vcard{padding:18px}.bars .b{grid-template-columns:84px 1fr 24px;font-size:13px}}
+/* /rfq hero: more breathing room */
+.hero-grid{padding:112px 0 96px}
+.hero .hero-copy{gap:0}
+.hero-copy h1.tn-h1{margin-bottom:24px;line-height:1.08}
+.hero-text{gap:0}
+.hero-text p.simple{margin:0 auto;font-size:19px;line-height:1.65}
+.hero-text ul.gets{margin-top:40px;gap:16px}
+.gets li{padding:18px 20px;border-radius:14px}
+.gets li a{gap:6px!important}
+.gets li b{font-size:15.5px}
+.gets li span{font-size:14px;line-height:1.5}
+.hero .cta{margin-top:44px;gap:18px}
+@media (min-width:761px) and (max-height:820px){.hero-grid{padding:72px 0 64px}.hero-text ul.gets{margin-top:30px}.hero .cta{margin-top:32px}.gets li{padding:14px 16px}}
+@media (max-width:900px){.hero-text ul.gets{gap:12px}}
+@media (max-width:760px){
+  .hero-grid{padding:36px 0 40px}
+  .hero-copy h1.tn-h1{margin-bottom:18px}
+  .hero-text p.simple{font-size:16.5px;line-height:1.6}
+  .hero-text ul.gets{grid-template-columns:1fr;margin-top:28px;gap:10px}
+  .gets li{padding:14px 16px}
+  .gets li a{gap:4px!important}
+  .hero .cta{margin-top:32px}
+}
 </style>
 </head>
 <body>
@@ -938,28 +961,7 @@ html.reveal .val-vis.in .bars .b i{transform:none}
 </div>
 </div>
 </section>
-<section id="math" class="alt" aria-labelledby="h-math">
-<div class="wrap">
-<h2 id="h-math">Then put a price on each source</h2>
-<p class="sub">Divide what you pay for a directory, ad or show by the RFQs and jobs it brings in. Today you can’t fill in the second number. With Attriform you can.</p>
-<div class="calc" data-calc>
-<div class="calc-in">
-<label><span>Source</span><span class="sel"><select data-k="src" aria-label="Marketing source"><option value="15000">Directory listing (Thomasnet, IQS…)</option><option value="24000">Google Ads</option><option value="20000">Trade shows</option><option value="6000">LinkedIn ads</option></select></span></label>
-<label><span>What you pay for it per year</span><span class="money"><i>$</i><input type="number" inputmode="numeric" min="0" step="500" value="15000" data-k="spend" aria-label="Yearly spend in dollars"></span></label>
-<label><span>RFQs it sends you per month</span><span class="rng"><input type="range" min="0" max="20" value="4" data-k="rfqs" aria-label="RFQs per month from this source"><b data-o="rfqs">4</b></span></label>
-<label><span>Share of those you win</span><span class="rng"><input type="range" min="0" max="60" step="5" value="20" data-k="win" aria-label="Win rate percent"><b data-o="win">20%</b></span></label>
-</div>
-<div class="calc-out">
-<div><small>Cost per RFQ</small><b data-o="perRfq">$313</b></div>
-<div><small>Cost per won job</small><b data-o="perJob">$1,563</b></div>
-<p class="calc-q"><span class="qm">?</span><span>Do you know the RFQs-per-month number above for sure? <b>That’s the number Attriform gives you.</b></span></p>
-</div>
-</div>
-<p class="calc-note">Example numbers. Pick a source and put in your own.</p>
-</div>
-</section>
-
-<section id="pages" aria-labelledby="h-pages">
+<section id="pages" class="alt" aria-labelledby="h-pages">
 <div class="wrap">
 <div class="val flip">
 <div class="val-copy">
@@ -977,7 +979,7 @@ html.reveal .val-vis.in .bars .b i{transform:none}
 </div>
 </div>
 </section>
-<section id="visits" class="alt" aria-labelledby="h-visits">
+<section id="visits" aria-labelledby="h-visits">
 <div class="wrap">
 <div class="val">
 <div class="val-copy">
@@ -997,7 +999,7 @@ html.reveal .val-vis.in .bars .b i{transform:none}
 </div>
 </div>
 </section>
-<section id="where" aria-labelledby="h-where">
+<section id="where" class="alt" aria-labelledby="h-where">
 <div class="wrap">
 <div class="val flip">
 <div class="val-copy">

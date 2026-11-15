@@ -793,6 +793,63 @@ footer .tm-note{flex-basis:100%;order:3;font-size:12px;color:var(--muted)}
 @media (max-width:760px){.hero-text ul.gets{gap:8px}.gets li{padding:10px 12px;font-size:13px}.gets li span{font-size:12px}}
 @media (min-width:761px){.hero-grid{gap:30px}.hero .hero-copy{gap:16px}.hero-copy h1.tn-h1{font-size:clamp(36px,4.2vw,56px)}}
 @media (min-width:761px) and (max-height:820px){.gets li{padding:9px 12px}.hero-copy h1.tn-h1{font-size:clamp(32px,3.4vw,44px)}.hero-text p.simple{font-size:16px}.hero-grid{gap:20px}}
+/* ===== /rfq: hero without the comparison, and one section per detail ===== */
+.hero-text ul.gets li a{display:flex;flex-direction:column;gap:2px;color:inherit;text-decoration:none}
+.gets li{transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+.gets li:hover{border-color:var(--line-strong);box-shadow:var(--shadow);transform:translateY(-2px)}
+.gets li:nth-child(1) b::before{background:var(--c2)}.gets li:nth-child(2) b::before{background:var(--c1)}.gets li:nth-child(3) b::before{background:var(--c3)}.gets li:nth-child(4) b::before{background:var(--c4)}
+.hero{padding-bottom:40px}
+.hero-grid{min-height:0;padding:88px 0 56px}
+@media (max-width:760px){.hero-grid{padding:24px 0 12px}}
+.see-wrap{display:flex;justify-content:center;margin-top:48px}
+.val{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.val.flip .val-copy{order:2}
+.val-copy{display:flex;flex-direction:column;align-items:flex-start;text-align:left}
+.val-num{display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:var(--vs);color:var(--vc);font-family:var(--mono);font-weight:700;font-size:18px;margin-bottom:16px}
+.val-kicker{margin:0 0 8px;font-family:var(--mono);font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.val-copy h2{text-align:left;margin:0}
+.val-lead{margin:16px 0 0;font-size:18px;color:var(--text);line-height:1.6}
+.uses{list-style:none;margin:24px 0 0;padding:0;display:flex;flex-direction:column;gap:14px}
+.uses li{position:relative;padding-left:32px;font-size:16px;line-height:1.55;color:var(--text)}
+.uses li::before{content:"✓";position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--green-soft);color:var(--green);font-size:11px;font-weight:800}
+.uses li b{color:var(--ink);font-weight:600}
+.vcard{position:relative;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px 24px;box-shadow:var(--shadow-lg)}
+.vh{display:flex;justify-content:space-between;gap:12px;font-size:14px;font-weight:600;color:var(--ink);padding-bottom:12px;margin-bottom:14px;border-bottom:1px solid var(--line)}
+.vh span{font-weight:400;color:var(--muted)}
+.vnote{margin:16px 0 0;padding:10px 14px;border-radius:10px;background:var(--gold-soft);font-size:14px;line-height:1.5;color:var(--text)}
+.vnote b{color:var(--ink)}
+.bars{display:flex;flex-direction:column;gap:12px}
+.bars .b{display:grid;grid-template-columns:96px 1fr 28px;align-items:center;gap:12px;font-size:14px;font-weight:500}
+.bars .b i{display:block;height:12px;border-radius:12px;background:var(--c);width:var(--w);transform-origin:left;transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+.bars .b b{text-align:right}
+.bars .b.zero span,.bars .b.zero b{color:var(--red)}
+html.reveal .val-vis .bars .b i{transform:scaleX(0)}
+html.reveal .val-vis.in .bars .b i{transform:none}
+.trail{list-style:none;margin:0;padding:0 0 0 18px;border-left:2px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.trail li{position:relative;font-size:15px;font-weight:500;color:var(--text)}
+.trail li::before{content:"";position:absolute;left:-25px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--card);border:2px solid var(--line-strong)}
+.trail li.hot{color:var(--accent);font-weight:600}
+.trail li.hot::before{border-color:var(--accent);background:var(--accent-soft)}
+.trail li em{font-style:normal;margin-left:6px;padding:1px 7px;border-radius:999px;background:var(--accent-soft);font-size:12px}
+.trail li.end{color:var(--ink);font-weight:600}
+.trail li.end::before{background:var(--green);border-color:var(--green)}
+.inbox{display:flex;flex-direction:column;gap:8px}
+.rq{display:grid;grid-template-columns:auto 1fr auto;gap:2px 12px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font-size:14px}
+.rq b{grid-row:1;font-weight:600}
+.rq span{grid-column:1/3;grid-row:2;color:var(--muted);font-size:13px}
+.rq em{grid-column:3;grid-row:1/3;font-style:normal;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.rq .v4{background:var(--c3s);color:var(--c3)}.rq .v2{background:var(--c4s);color:var(--c4)}.rq .v1{background:var(--panel);color:var(--muted)}
+.rq u{grid-column:2;grid-row:1;justify-self:start;text-decoration:none;font-size:11px;font-weight:700;color:#FFFFFF;background:var(--green);padding:2px 8px;border-radius:999px}
+.rq.top{border-color:color-mix(in srgb,var(--c3) 45%,var(--line));box-shadow:0 10px 24px -14px rgba(15,118,110,.6)}
+.rq.dim{opacity:.6}
+.places{display:flex;flex-direction:column;gap:8px}
+.pl{display:grid;grid-template-columns:auto 1fr auto;gap:2px 12px;align-items:center;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font-size:14px}
+.pl .pin{grid-column:1;grid-row:1/3;width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 18%,transparent)}
+.pl b{grid-column:2;grid-row:1;font-weight:600}
+.pl span:not(.pin){grid-column:2;grid-row:2;color:var(--muted);font-size:13px}
+.pl em{grid-column:3;grid-row:1/3;font-style:normal;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--panel);color:var(--text)}
+@media (max-width:900px){.val{grid-template-columns:1fr;gap:28px}.val.flip .val-copy{order:0}}
+@media (max-width:760px){.hero-grid{min-height:0}.see-wrap{margin-top:24px}.val-lead{font-size:16px}.uses li{font-size:15px}.vcard{padding:18px}.bars .b{grid-template-columns:84px 1fr 24px;font-size:13px}}
 </style>
 </head>
 <body>
@@ -802,8 +859,8 @@ footer .tm-note{flex-basis:100%;order:3;font-size:12px;color:var(--muted)}
 <div class="wrap">
 <a href="#top" class="brand" aria-label="Attriform home"><svg viewBox="0 0 64 64" aria-hidden="true"><rect class="m-body" x="29" y="44" width="6" height="14" rx="1.5"/><path class="m-body" d="M22 18 H52 a4 4 0 0 1 4 4 V46 H8 V32 a14 14 0 0 1 14 -14 Z"/><path class="m-slot" d="M16 32 H26" fill="none" stroke-width="3.5" stroke-linecap="round"/><rect x="44" y="4" width="4" height="16" rx="2" fill="#E9A23B"/><path d="M48 4 H58 a2 2 0 0 1 2 2 V10 a2 2 0 0 1 -2 2 H48 Z" fill="#E9A23B"/></svg>Attriform</a>
 <nav aria-label="Page sections">
-<a href="#what" class="lnk">What you get</a>
-<a href="#math" class="lnk">The math</a>
+<a href="#see" class="lnk">See it</a>
+<a href="#source" class="lnk">What you get</a>
 <a href="#pricing" class="lnk">Pricing</a>
 <a href="#how" class="lnk">How it works</a>
 <a href="#faq" class="lnk">FAQs</a>
@@ -822,10 +879,10 @@ footer .tm-note{flex-basis:100%;order:3;font-size:12px;color:var(--muted)}
 <div class="hero-text">
 <p class="simple">We add a small piece of tracking to the RFQ form on your website. You don’t change anything. From then on, every quote request arrives in your inbox or CRM with:</p>
 <ul class="gets">
-<li><b>Where they found you</b><span>Google, Thomasnet, a show, a referral</span></li>
-<li><b>What they read</b><span>Every page, before asking for a quote</span></li>
-<li><b>How often they came</b><span>Number of visits, over how many days</span></li>
-<li><b>Where they are</b><span>City, and phone or desktop</span></li>
+<li><a href="#source"><b>Where they found you</b><span>Google, Thomasnet, a show, a referral</span></a></li>
+<li><a href="#pages"><b>What they read</b><span>Every page, before asking for a quote</span></a></li>
+<li><a href="#visits"><b>How often they came</b><span>Number of visits, over how many days</span></a></li>
+<li><a href="#where"><b>Where they are</b><span>City, and phone or desktop</span></a></li>
 </ul>
 </div>
 <div class="cta">
@@ -836,6 +893,15 @@ footer .tm-note{flex-basis:100%;order:3;font-size:12px;color:var(--muted)}
 <p class="terms"><span>Set up for you in two days</span><span>Nothing changes on your website</span></p>
 </div>
 </div>
+
+</div>
+</section>
+
+<section id="see" class="alt" aria-labelledby="h-see">
+<div class="wrap">
+<h2 id="h-see">See the difference on one RFQ</h2>
+<p class="sub">Same buyer, same RFQ. On the left, what lands in your inbox today. On the right, what you get with Attriform.</p>
+<div class="see-wrap">
 <div class="cmp-wrap">
 <div class="cmp-toggle" role="group" aria-label="Compare"><button type="button" data-v="before" aria-pressed="false">What you get today</button><button type="button" data-v="after" aria-pressed="true">With Attriform</button></div>
 <div class="cmp beam" data-cmp role="img" aria-label="Example RFQ, shown as you get it today (name and email only) and with Attriform (where they came from, pages read, visits and location)">
@@ -847,11 +913,34 @@ footer .tm-note{flex-basis:100%;order:3;font-size:12px;color:var(--muted)}
 <p class="cmp-hint">Drag to compare</p>
 </div>
 </div>
+</div>
 </section>
 
-<section id="math" aria-labelledby="h-math">
+<section id="source" aria-labelledby="h-source">
 <div class="wrap">
-<h2 id="h-math">What does an RFQ from each source cost you?</h2>
+<div class="val">
+<div class="val-copy">
+<span class="val-num" style="--vc:var(--c2);--vs:var(--c2s)">1</span>
+<p class="val-kicker" style="color:var(--c2)">Where they found you</p>
+<h2 id="h-source">Spend your marketing money on what works</h2>
+<p class="val-lead">Every RFQ is labelled with the source that sent it: Google search or ads, Thomasnet, IQS, LinkedIn, a trade show or a referral. Over a few months that adds up to a clear count per source.</p>
+<ul class="uses"><li><b>Renew or cut with numbers.</b> See which directory, ad or show actually sent RFQs before the invoice comes.</li><li><b>Know your Google Ads keywords.</b> Each paid RFQ shows the campaign and search term, so you stop paying for the ones that never bring work.</li><li><b>Track trade shows too.</b> A tagged link and QR code for your booth shows which show sent which RFQ.</li></ul>
+</div>
+<div class="val-vis" aria-hidden="true"><div class="vcard"><div class="vh">RFQs by source <span>Last 90 days</span></div>
+<div class="bars">
+<div class="b"><span>Google Ads</span><i style="--w:100%;--c:var(--c2)"></i><b>14</b></div>
+<div class="b"><span>Thomasnet</span><i style="--w:64%;--c:var(--c1)"></i><b>9</b></div>
+<div class="b"><span>Referrals</span><i style="--w:43%;--c:var(--c3)"></i><b>6</b></div>
+<div class="b"><span>Trade show</span><i style="--w:29%;--c:var(--c4)"></i><b>4</b></div>
+<div class="b zero"><span>IQS</span><i style="--w:4%;--c:#F87171"></i><b>1</b></div>
+</div>
+<p class="vnote">Renewing IQS next month? <b>1 RFQ in 90 days.</b></p></div></div>
+</div>
+</div>
+</section>
+<section id="math" class="alt" aria-labelledby="h-math">
+<div class="wrap">
+<h2 id="h-math">Then put a price on each source</h2>
 <p class="sub">Divide what you pay for a directory, ad or show by the RFQs and jobs it brings in. Today you can’t fill in the second number. With Attriform you can.</p>
 <div class="calc" data-calc>
 <div class="calc-in">
@@ -870,67 +959,65 @@ footer .tm-note{flex-basis:100%;order:3;font-size:12px;color:var(--muted)}
 </div>
 </section>
 
-<section id="what" aria-labelledby="h-story">
+<section id="pages" aria-labelledby="h-pages">
 <div class="wrap">
-<h2 id="h-story">What you’ll know about every RFQ</h2>
-<p class="sub">Here’s one RFQ, read like a story. You get this on every submission, in the inbox or CRM where it gets quoted.</p>
-<div class="story">
-<div class="track" aria-hidden="true"><span></span></div>
-<div class="stop"><span class="dot"></span><span class="lbl">Found you</span><span class="val">Google Ads, “swiss machining 316 stainless”</span><span class="why">Thomasnet, IQS, Google search, Google Ads or a referral, plus the keyword for paid ads.</span></div>
-<div class="stop"><span class="dot"></span><span class="lbl">Came back</span><span class="val">4 visits over 3 weeks</span><span class="why">First visit date, how many times they returned, how long they researched.</span></div>
-<div class="stop"><span class="dot"></span><span class="lbl">Read</span><span class="val">Swiss Turning → Medical → Quality → Medical → RFQ</span><span class="why">Every page, in order. Capabilities and quality pages twice means a real program, not a one-off.</span></div>
-<div class="stop"><span class="dot"></span><span class="lbl">From</span><span class="val">Desktop, Minneapolis MN</span><span class="why">Phone or desktop, city and state.</span></div>
-<div class="stop"><span class="dot"></span><span class="lbl">Sent the RFQ</span><span class="val">“500 pcs, drawing attached, need pricing by Friday.”</span><span class="why">Your RFQ form and file upload, exactly as they work today.</span></div>
+<div class="val flip">
+<div class="val-copy">
+<span class="val-num" style="--vc:var(--c1);--vs:var(--c1s)">2</span>
+<p class="val-kicker" style="color:var(--c1)">What they read</p>
+<h2 id="h-pages">Walk into every quote knowing what the buyer cares about</h2>
+<p class="val-lead">Each RFQ lists the pages the buyer read on your site, in order, before they asked for a quote.</p>
+<ul class="uses"><li><b>Prepare the call.</b> Read medical and quality pages twice? Lead with your ISO 13485 work and medical experience.</li><li><b>Tell real programs from one-offs.</b> Buyers who studied your capabilities and quality pages usually have a real project.</li><li><b>Fix your website.</b> See which pages lead to RFQs and which ones nobody reads.</li></ul>
 </div>
-<p class="story-sum">So before anyone opens the drawing, you know which source sent this buyer, that they came back four times and read your medical page twice. Quote it first, and count it toward that source.</p>
+<div class="val-vis" aria-hidden="true"><div class="vcard"><div class="vh">Dana Kowalski read <span>Before sending the RFQ</span></div>
+<ol class="trail">
+<li>Swiss Turning</li><li class="hot">Medical <em>×2</em></li><li class="hot">Quality · ISO 13485</li><li>Capabilities</li><li class="end">RFQ form</li>
+</ol>
+<p class="vnote">Medical part, quality matters. <b>Lead the call with your ISO 13485 work.</b></p></div></div>
+</div>
+</div>
+</section>
+<section id="visits" class="alt" aria-labelledby="h-visits">
+<div class="wrap">
+<div class="val">
+<div class="val-copy">
+<span class="val-num" style="--vc:var(--c3);--vs:var(--c3s)">3</span>
+<p class="val-kicker" style="color:var(--c3)">How often they came</p>
+<h2 id="h-visits">Quote the hottest RFQ first</h2>
+<p class="val-lead">Each RFQ shows how many times the buyer visited and over how many days.</p>
+<ul class="uses"><li><b>Prioritise the queue.</b> Four visits over three weeks is a buyer comparing suppliers. Answer them first.</li><li><b>Spend estimator time well.</b> A first-visit, two-minute RFQ for a single part can wait until the serious ones are done.</li><li><b>Follow up at the right time.</b> A buyer who returns after your quote is still deciding. That’s when to call.</li></ul>
+</div>
+<div class="val-vis" aria-hidden="true"><div class="vcard"><div class="vh">RFQ inbox <span>Sorted by interest</span></div>
+<div class="inbox">
+<div class="rq top"><b>Dana K.</b><span>500 pcs, 316 SS</span><em class="v4">4th visit · 3 weeks</em><u>Quote first</u></div>
+<div class="rq"><b>Mark P.</b><span>Bracket, qty 2,000</span><em class="v2">2nd visit · 5 days</em></div>
+<div class="rq dim"><b>J. Smith</b><span>One-off, qty 1</span><em class="v1">1st visit · 2 min</em></div>
+</div>
+<p class="vnote">Same inbox, clear order. <b>The buyer who keeps coming back gets the fastest quote.</b></p></div></div>
+</div>
+</div>
+</section>
+<section id="where" aria-labelledby="h-where">
+<div class="wrap">
+<div class="val flip">
+<div class="val-copy">
+<span class="val-num" style="--vc:var(--c4);--vs:var(--c4s)">4</span>
+<p class="val-kicker" style="color:var(--c4)">Where they are</p>
+<h2 id="h-where">Send every RFQ to the right person</h2>
+<p class="val-lead">Each RFQ shows the buyer’s city and whether they were on a phone or a desktop.</p>
+<ul class="uses"><li><b>Route by territory.</b> Send the RFQ straight to the rep or partner who covers that region.</li><li><b>Use being close.</b> A buyer nearby can visit the plant, which often beats a cheaper quote from far away.</li><li><b>Pick how to follow up.</b> On a desktop during work hours usually means a buyer at their desk. Email is fine. On a phone, a quick call can work better.</li></ul>
+</div>
+<div class="val-vis" aria-hidden="true"><div class="vcard"><div class="vh">Where your RFQs come from <span>This month</span></div>
+<div class="places">
+<div class="pl"><span class="pin" style="--c:var(--c1)"></span><b>Minneapolis, MN</b><span>Desktop · 2:14 pm</span><em>Midwest rep</em></div>
+<div class="pl"><span class="pin" style="--c:var(--c2)"></span><b>Austin, TX</b><span>Phone · 7:40 am</span><em>South rep</em></div>
+<div class="pl"><span class="pin" style="--c:var(--c3)"></span><b>Toledo, OH</b><span>Desktop · 10:05 am</span><em>40 miles away</em></div>
+</div>
+<p class="vnote">Toledo is down the road. <b>Offer a plant visit instead of a cold quote.</b></p></div></div>
+</div>
 </div>
 </section>
 
-<section id="vs-analytics" class="alt" aria-labelledby="h-vs">
-<div class="wrap">
-<h2 id="h-vs">Already using Web Traxs or Google Analytics? Good. Here’s what’s missing.</h2>
-<p class="sub">Those tools report traffic in a dashboard. The person quoting the RFQ never sees it. Attriform puts the answer on the RFQ itself.</p>
-<div class="vs">
-<div class="vs-card">
-<div class="viz ga" aria-hidden="true"><b>VISITORS · THIS MONTH</b><i style="--h:42%;--d:0"></i><i style="--h:66%;--d:1"></i><i style="--h:38%;--d:2"></i><i style="--h:80%;--d:3"></i><i style="--h:55%;--d:4"></i><i style="--h:92%;--d:5"></i><i style="--h:61%;--d:6"></i><i style="--h:74%;--d:7"></i></div>
-<h3>Web Traxs and Google Analytics</h3>
-<ul>
-<li>“38 visits from IQS this month”</li>
-<li>Activity and totals, reported in their own dashboard</li>
-<li>Someone has to log in and match it to RFQs by hand</li>
-<li>Hard to say which directory sent the jobs you won</li>
-</ul>
-</div>
-<div class="vs-card on beam">
-<div class="viz lt" aria-hidden="true"><div class="mini" style="--d:0"><span class="av" style="background:var(--c2)">DK</span><span class="sk"><i></i><i></i></span><span class="bd" style="color:var(--c2);background:var(--c2s)">Thomasnet</span></div><div class="mini" style="--d:1"><span class="av" style="background:var(--c4)">JM</span><span class="sk"><i></i><i></i></span><span class="bd" style="color:var(--c4);background:var(--c4s)">IQS directory</span></div><div class="mini" style="--d:2"><span class="av" style="background:var(--c3)">RP</span><span class="sk"><i></i><i></i></span><span class="bd" style="color:var(--c3);background:var(--c3s)">Google Ads</span></div></div>
-<h3>Attriform</h3>
-<ul>
-<li>“Dana came from a Google ad, visited 4 times, read your medical page twice”</li>
-<li>The source, keyword and pages read on each individual RFQ</li>
-<li>In the inbox or CRM, where the person quoting it will see it</li>
-<li>Shows which directory, ad or show sends RFQs worth quoting</li>
-</ul>
-</div>
-</div>
-<p class="vs-note">Keep Web Traxs. Attriform works alongside it and adds nothing for your team to log into.</p>
-</div>
-</section>
-
-<section id="who" aria-labelledby="h-who">
-<div class="wrap">
-<h2 id="h-who">Built for manufacturers who quote from a web form</h2>
-<p class="sub">US shops and contract manufacturers with 10–200 employees, getting RFQs from directories like Thomasnet and IQS, Google, trade shows and referrals.</p>
-<div class="segs">
-<div class="seg"><h3>CNC and Swiss machine shops</h3><p class="who">RFQs from OEM engineers, buyers and hardware startups sending drawings.</p><p class="hook">Your RFQ form tells you the part. Now it also tells you <b>whether Thomasnet, IQS, Google or a referral sent the buyer</b>, while Xometry and Protolabs chase the same people.</p></div>
-<div class="seg"><h3>Sheet metal, laser and waterjet</h3><p class="who">OEM production runs mixed in with one-off brackets and hobby jobs.</p><p class="hook">Spot <b>the 500-piece RFQ from a buyer who came back four times</b> before you spend an hour on a one-off.</p></div>
-<div class="seg"><h3>Custom injection molders</h3><p class="who">OEM buyers, alongside inventors with a sketch and no funding.</p><p class="hook">Quoting a tool takes real hours. Know whether the RFQ came from someone who <b>read your capabilities and medical-molding pages three times</b>, or someone who landed on a “how much does a mold cost” post.</p></div>
-<div class="seg"><h3>Contract electronics (PCBA and box build)</h3><p class="who">BOMs from funded hardware teams and one-off projects alike.</p><p class="hook">Offshore quick-turn shops compete on price. Know <b>which BOM came from a team that read your NPI and box-build pages and came back</b>, and give that one the full quote.</p></div>
-<div class="seg"><h3>Supplement and cosmetics contract manufacturers</h3><p class="who">Brand founders, from first-timers to established brands, triaged by a sales team.</p><p class="hook">Call first <b>the inquiry that read your minimum-order and pricing pages twice and came back three times</b>.</p></div>
-<div class="seg"><h3>Machinery makers who sell direct</h3><p class="who">Dust collectors, industrial ovens, conveyors and custom machines, researched for weeks by engineers.</p><p class="hook">You already watch traffic in Google Analytics or Web Traxs. This puts <b>the source and the spec pages they read on each RFQ itself</b>.</p></div>
-</div>
-<p class="seg-note"><b>Medical contract manufacturing?</b> Medical startups send plenty of RFQs that never get funded. Seeing who read your quality and ISO 13485 pages, and how often they came back, helps you tell the real programs from the long shots.</p>
-</div>
-</section>
 
 <div class="wrap band-wrap">
 <div class="band">
@@ -1150,7 +1237,7 @@ footer .tm-note{flex-basis:100%;order:3;font-size:12px;color:var(--muted)}
 
   /* Desktop polish: sections and cards fade and slide in as they scroll into view (skipped on phones and for reduced motion). */
   if("IntersectionObserver" in window && matchMedia("(min-width:761px)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches){
-    var sel = "section > .wrap > h2, section > .wrap > .sub, .calc-in, .calc-out, .stop, .story-sum, .vs-card, .vs-note, .marquee, .band, .checks li, .tools, .pricebox, .step, details, .seg, .seg-note, .signup";
+    var sel = "section > .wrap > h2, section > .wrap > .sub, .calc-in, .calc-out, .val-copy, .val-vis, .see-wrap, .stop, .story-sum, .vs-card, .vs-note, .marquee, .band, .checks li, .tools, .pricebox, .step, details, .seg, .seg-note, .signup";
     var els = document.querySelectorAll(sel);
     document.documentElement.classList.add("reveal");
     var io = new IntersectionObserver(function(entries){

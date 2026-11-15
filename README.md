@@ -40,6 +40,10 @@ Vercel environment variables:
 - `CALENDLY_TOKEN` (optional): Calendly personal access token (Integrations → API & Webhooks). Without it, `Schedule` is sent without the booker's details.
 - `META_TEST_EVENT_CODE` (optional): code from Events Manager → Test events, so server events show up there while testing. Remove it afterwards.
 
+## Ad landing page
+
+`rfq.html` (at `/rfq`) is the landing page for manufacturing ads: every RFQ source (Thomasnet, IQS, Google Ads, search, LinkedIn, trade shows, referrals) plus a cost-per-RFQ calculator. It is `noindex` so it doesn't compete with `/manufacturing` in search, and it is not in the sitemap.
+
 ## Privacy policy
 
 `privacy.html` (live at `/privacy`, linked from the footer and the contact form) describes what the site collects and shares: the contact form, Calendly bookings, the Meta Pixel and Conversions API, Google Tag Manager, Resend and Vercel, plus the `af_vid`, `af_journey`, `_fbp` and `_fbc` storage. Update it whenever tracking or providers change. Visitors whose browser sends Global Privacy Control are never sent to Meta: the page skips the pixel and server events, and both functions check the `Sec-GPC` header.

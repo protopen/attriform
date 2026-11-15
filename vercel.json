@@ -48,6 +48,11 @@
       "source": "/v1",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/rfq",
+      "destination": "/",
+      "permanent": true
     }
   ]
 }

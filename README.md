@@ -42,7 +42,7 @@ Vercel environment variables:
 
 ## Ad landing page
 
-`rfq.html` (at `/rfq`) is the landing page for manufacturing ads: every RFQ source (Thomasnet, IQS, Google Ads, search, LinkedIn, trade shows, referrals) plus a cost-per-RFQ calculator. It is `noindex` so it doesn't compete with `/manufacturing` in search, and it is not in the sitemap.
+`index.html` is the homepage, written for manufacturers: every quote request shows where the buyer found you, what they looked at, how often they came back and where they are, with one section per detail. `/rfq` redirects here. The previous general small-business homepage is `small-business.html` (at `/small-business`).
 
 ## Privacy policy
 

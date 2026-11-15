@@ -883,6 +883,11 @@ html.reveal .val-vis.in .bars .b i{transform:none}
 .band .cta-pair{grid-template-columns:1fr;width:auto}
 .bar span b{display:block}
 @media (max-width:760px){.hero .cta-row{width:100%}.msg-inline form,.msg-inline .done{padding:18px}}
+/* contact form: message field and required note */
+.msg textarea{font:inherit;font-size:15px;font-weight:400;color:var(--ink);background:var(--bg);border:1px solid var(--line-strong);border-radius:8px;padding:10px 12px;min-height:104px;resize:vertical;box-shadow:var(--shadow-sm);transition:border-color .15s ease,box-shadow .15s ease}
+.msg textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.msg textarea.bad{border-color:var(--red)}
+.msg .req-note{margin:0;font-size:13px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -1105,16 +1110,18 @@ html.reveal .val-vis.in .bars .b i{transform:none}
 <p class="lead-p" style="margin-top:16px">We’ll look at your website and quote form, then email you within one business day with what each quote request would show and how setup works.</p>
 <ul>
 <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>No sales call needed</li>
-<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Live before your 2027 directory and trade show budgets are locked</li>
+<li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Live within an hour</li>
 <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>$99 one time, and you only pay if you go ahead</li>
 </ul>
 </div>
 <div class="book msg msg-inline">
 <form id="msg-form" novalidate>
-<label>Name<input name="name" autocomplete="name" required></label>
-<label>Work email<input name="email" type="email" autocomplete="email" required></label>
-<label>Company name<input name="company" autocomplete="organization" required></label>
-<label>Company website<input name="website" inputmode="url" autocomplete="url" placeholder="yourcompany.com" required></label>
+<p class="req-note">All fields are required.</p>
+<label>Name<input name="name" autocomplete="name" maxlength="100" required></label>
+<label>Work email<input name="email" type="email" autocomplete="email" maxlength="200" placeholder="you@yourcompany.com" required></label>
+<label>Company name<input name="company" autocomplete="organization" maxlength="150" required></label>
+<label>Company website<input name="website" inputmode="url" autocomplete="url" maxlength="300" placeholder="yourcompany.com" required></label>
+<label>Message<textarea name="message" rows="4" maxlength="2000" placeholder="What do you make, and how do quote requests reach you today?" required></textarea></label>
 <label class="hp" aria-hidden="true">Leave this empty<input name="nickname" tabindex="-1" autocomplete="off"></label>
 <p class="err" id="msg-err" role="alert"></p>
 <button type="submit" class="btn">Send my details</button>
@@ -1193,15 +1200,19 @@ html.reveal .val-vis.in .bars .b i{transform:none}
     form.addEventListener("submit", function(e){
       e.preventDefault();
       var f = form.elements, msg = "";
-      [f.name, f.email, f.company, f.website].forEach(function(i){ i.value = i.value.trim(); i.classList.remove("bad"); });
-      if(!f.name.value){ msg = "Please enter your name."; f.name.classList.add("bad"); }
-      else if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(f.email.value)){ msg = "Please enter a valid email."; f.email.classList.add("bad"); }
-      else if(!f.company.value){ msg = "Please enter your company name."; f.company.classList.add("bad"); }
-      else if(!/^(https?:\/\/)?[^\s.\/]+(\.[^\s.\/]+)+(\/\S*)?$/i.test(f.website.value)){ msg = "Please enter your company website, like yourcompany.com."; f.website.classList.add("bad"); }
+      [f.name, f.email, f.company, f.website, f.message].forEach(function(i){ i.value = i.value.trim(); i.classList.remove("bad"); });
+      /* Email: one @, a real-looking domain and a 2+ letter ending. Website: a domain like yourcompany.com, with or without https:// and www. */
+      var EMAIL = /^[A-Za-z0-9._%+'-]+@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}$/;
+      var WEBSITE = /^(?:https?:\/\/)?(?:www\.)?(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}(?::\d+)?(?:[\/?#]\S*)?$/;
+      if(f.name.value.length < 2){ msg = "Please enter your name."; f.name.classList.add("bad"); }
+      else if(!EMAIL.test(f.email.value) || /\.\./.test(f.email.value)){ msg = "Please enter a valid email, like you@yourcompany.com."; f.email.classList.add("bad"); }
+      else if(f.company.value.length < 2){ msg = "Please enter your company name."; f.company.classList.add("bad"); }
+      else if(!WEBSITE.test(f.website.value)){ msg = "Please enter your company website, like yourcompany.com."; f.website.classList.add("bad"); }
+      else if(f.message.value.length < 10){ msg = "Please add a short message (at least 10 characters)."; f.message.classList.add("bad"); }
       err.textContent = msg;
       if(msg){ form.querySelector(".bad").focus(); return; }
       var id = "schedule." + Date.now() + "." + Math.random().toString(36).slice(2, 10), btn = form.querySelector("button[type=submit]");
-      var data = {gpc: navigator.globalPrivacyControl === true, name: f.name.value, email: f.email.value, company: f.company.value, website: f.website.value, nickname: f.nickname.value,
+      var data = {gpc: navigator.globalPrivacyControl === true, name: f.name.value, email: f.email.value, company: f.company.value, website: f.website.value, message: f.message.value, nickname: f.nickname.value,
         elapsed_ms: Date.now() - opened, journey: journey, event_id: id, event_source_url: location.href, referrer_url: document.referrer};
       var ids = window.metaUser ? metaUser() : {};
       for(var k in ids) data[k] = ids[k];

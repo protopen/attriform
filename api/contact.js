@@ -11,8 +11,8 @@ const { ALLOWED_HOSTS, hostOf, hash, baseUserData, sendEvent } = require("../lib
 
 const FROM = "Attriform website <forms@attriform.com>";
 const TO = process.env.CONTACT_TO || "ritwik@attriform.com";
-const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-const WEBSITE = /^(https?:\/\/)?[^\s.\/]+(\.[^\s.\/]+)+(\/\S*)?$/i;
+const EMAIL = /^[A-Za-z0-9._%+'-]+@(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}$/;
+const WEBSITE = /^(?:https?:\/\/)?(?:www\.)?(?:[A-Za-z0-9](?:[A-Za-z0-9-]*[A-Za-z0-9])?\.)+[A-Za-z]{2,}(?::\d+)?(?:[\/?#]\S*)?$/;
 
 const clean = (v, max = 200) => String(v == null ? "" : v).replace(/\s+/g, " ").trim().slice(0, max);
 const esc = (v) => String(v).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -48,11 +48,11 @@ function describeJourney(j, headers) {
   };
 }
 
-async function sendEmail({ name, email, company, website, journey, page }) {
-  const rows = { Name: name, Email: email, Company: company, Website: website, ...journey, "Sent from": page };
+async function sendEmail({ name, email, company, website, message, journey, page }) {
+  const rows = { Name: name, Email: email, Company: company, Website: website, ...(message ? { Message: message } : {}), ...journey, "Sent from": page };
   const html = `<h2 style="font-family:Arial,sans-serif;margin:0 0 12px">New contact from attriform.com</h2>
 <table cellpadding="8" style="font-family:Arial,sans-serif;font-size:14px;border-collapse:collapse">${Object.entries(rows)
-    .map(([k, v]) => `<tr><td style="color:#766C70;border-bottom:1px solid #E6DFE0;white-space:nowrap">${esc(k)}</td><td style="color:#1C1518;border-bottom:1px solid #E6DFE0">${esc(v)}</td></tr>`)
+    .map(([k, v]) => `<tr><td style="color:#766C70;border-bottom:1px solid #E6DFE0;white-space:nowrap">${esc(k)}</td><td style="color:#1C1518;border-bottom:1px solid #E6DFE0;white-space:pre-wrap">${esc(v)}</td></tr>`)
     .join("")}</table>`;
   const text = Object.entries(rows).map(([k, v]) => `${k}: ${v}`).join("\n");
   const r = await fetch("https://api.resend.com/emails", {
@@ -87,9 +87,11 @@ module.exports = async (req, res) => {
   if (clean(body.nickname) || (Number(body.elapsed_ms) >= 0 && Number(body.elapsed_ms) < 2000)) return res.status(200).json({ ok: true });
 
   const name = clean(body.name, 100), email = clean(body.email, 200).toLowerCase(), company = clean(body.company, 150), website = clean(body.website, 300);
-  if (!name || !EMAIL.test(email) || !company || !WEBSITE.test(website)) return res.status(400).json({ error: "Please fill in every field." });
+  // The homepage form also sends a message; older forms on other pages don't, so it's optional here.
+  const message = String(body.message == null ? "" : body.message).replace(/\r\n?/g, "\n").trim().slice(0, 2000);
+  if (name.length < 2 || !EMAIL.test(email) || /\.\./.test(email) || company.length < 2 || !WEBSITE.test(website)) return res.status(400).json({ error: "Please fill in every field." });
 
-  const sent = await sendEmail({ name, email, company, website, journey: describeJourney(body.journey, req.headers), page });
+  const sent = await sendEmail({ name, email, company, website, message, journey: describeJourney(body.journey, req.headers), page });
   if (!sent) return res.status(502).json({ error: "Couldn't send your message." });
 
   // Meta "Schedule", only from the live site so preview deployments don't add test data, and never when the

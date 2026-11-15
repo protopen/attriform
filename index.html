@@ -888,6 +888,9 @@ html.reveal .val-vis.in .bars .b i{transform:none}
 .msg textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
 .msg textarea.bad{border-color:var(--red)}
 .msg .req-note{margin:0;font-size:13px;color:var(--muted)}
+/* time spent on each page, after the page name */
+.cmp .after .chips em i{font-style:normal;font-weight:500;opacity:.7}
+@media (min-width:981px){.cmp .after .cells{grid-template-columns:.85fr 1.05fr 1.3fr 2.6fr .95fr 1.05fr}}
 </style>
 </head>
 <body>
@@ -897,7 +900,7 @@ html.reveal .val-vis.in .bars .b i{transform:none}
 <div class="wrap">
 <a href="#top" class="brand" aria-label="Attriform home"><svg viewBox="0 0 64 64" aria-hidden="true"><rect class="m-body" x="29" y="44" width="6" height="14" rx="1.5"/><path class="m-body" d="M22 18 H52 a4 4 0 0 1 4 4 V46 H8 V32 a14 14 0 0 1 14 -14 Z"/><path class="m-slot" d="M16 32 H26" fill="none" stroke-width="3.5" stroke-linecap="round"/><rect x="44" y="4" width="4" height="16" rx="2" fill="#E9A23B"/><path d="M48 4 H58 a2 2 0 0 1 2 2 V10 a2 2 0 0 1 -2 2 H48 Z" fill="#E9A23B"/></svg>Attriform</a>
 <nav aria-label="Page sections">
-<a href="#see" class="lnk">See it</a>
+<a href="#see" class="lnk">Example</a>
 <a href="#source" class="lnk">What you get</a>
 <a href="#pricing" class="lnk">Pricing</a>
 <a href="#how" class="lnk">How it works</a>
@@ -943,7 +946,7 @@ html.reveal .val-vis.in .bars .b i{transform:none}
 <div class="cmp-toggle" role="group" aria-label="Compare"><button type="button" data-v="before" aria-pressed="false">What you get today</button><button type="button" data-v="after" aria-pressed="true">With Attriform</button></div>
 <div class="cmp beam" data-cmp role="img" aria-label="Example RFQ, shown as you get it today (name and email only) and with Attriform (where they came from, pages read, visits and location)">
 <span class="tagx l">What you get today</span><span class="tagx r">With Attriform</span>
-<div class="lay after"><div class="top">New quote request from your website <span>Just now</span></div><div class="cells"><div class="cell"><small>Name</small><span>Dana Kowalski</span></div><div class="cell"><small>RFQ</small><span>500 pcs, 316 SS</span></div><div class="cell n"><small>Came from</small><span>Google Ads, “swiss machining”</span></div><div class="cell n"><small>Pages read</small><span class="chips"><em>Swiss Turning</em><em>Medical</em><em>Quality</em><em>Medical</em><em>RFQ</em></span></div><div class="cell n"><small>Visits</small><span>4th in 3 weeks</span></div><div class="cell n"><small>From</small><span>Desktop, Minneapolis MN</span></div></div><div class="fixline"><span><b>Quote Dana first.</b> Searched for exactly what you make, came back four times, read your medical page twice.</span></div></div>
+<div class="lay after"><div class="top">New quote request from your website <span>Just now</span></div><div class="cells"><div class="cell"><small>Name</small><span>Dana Kowalski</span></div><div class="cell"><small>RFQ</small><span>500 pcs, 316 SS</span></div><div class="cell n"><small>Came from</small><span>Google Ads, “swiss machining”</span></div><div class="cell n"><small>Pages read</small><span class="chips"><em>Swiss Turning <i>(1m 40s)</i></em><em>Medical <i>(3m 15s)</i></em><em>Quality <i>(2m 05s)</i></em><em>Medical <i>(1m 50s)</i></em><em>RFQ form <i>(2m 30s)</i></em></span></div><div class="cell n"><small>Visits</small><span>4th in 3 weeks</span></div><div class="cell n"><small>From</small><span>Desktop, Minneapolis MN</span></div></div><div class="fixline"><span><b>Quote Dana first.</b> Searched for exactly what you make, came back four times, read your medical page twice.</span></div></div>
 <div class="lay before"><div class="top">New quote request from your website <span>Just now</span></div><div class="cells"><div class="cell"><small>Name</small><span>Dana Kowalski</span></div><div class="cell"><small>RFQ</small><span>500 pcs, 316 SS</span></div><div class="cell n"><small>Came from</small><span>?</span></div><div class="cell n"><small>Pages read</small><span>?</span></div><div class="cell n"><small>Visits</small><span>?</span></div><div class="cell n"><small>From</small><span>?</span></div></div><div class="fixline">No idea which directory sent them. Every quote request waits in the same queue.</div></div>
 <div class="handle" aria-hidden="true"></div>
 </div>
